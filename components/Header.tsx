@@ -117,7 +117,7 @@ const Header: React.FC = () => {
               key={link.name} 
               href={link.href} 
               onClick={handleNavClick} 
-              className="text-2xl font-semibold py-4 text-white hover:text-brand-blue-500 transition-all duration-300"
+              className="text-2xl font-semibold py-4 text-white hover:text-brand-blue-500 transition-opacity transition-transform transition-colors duration-300"
               style={{
                 opacity: isMenuOpen ? 1 : 0,
                 transform: isMenuOpen ? 'translateY(0)' : 'translateY(20px)',
