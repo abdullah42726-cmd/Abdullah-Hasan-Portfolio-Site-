@@ -1,6 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Header: React.FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Effect to disable body scroll when the mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    // Cleanup function to restore scroll on component unmount
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isMenuOpen]);
+
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const targetId = e.currentTarget.getAttribute('href');
@@ -10,6 +25,8 @@ const Header: React.FC = () => {
         targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
+    // Close the mobile menu after a link is clicked
+    setIsMenuOpen(false);
   };
 
   const navLinks = [
@@ -19,10 +36,14 @@ const Header: React.FC = () => {
     { name: 'Project', href: '#portfolio' },
     { name: 'Contact', href: '#contact' },
   ];
+  
+  const allNavLinks = [{ name: 'Home', href: '#home' }, ...navLinks];
+
 
   return (
     <header className="py-4">
-      <nav className="flex items-center justify-between bg-brand-dark text-white rounded-full px-4 py-2">
+      {/* --- Desktop Navigation --- */}
+      <nav className="hidden md:flex items-center justify-between bg-brand-dark text-white rounded-full px-4 py-2">
         <div className="flex items-center space-x-8">
           <a href="#home" onClick={handleNavClick} className="bg-brand-blue-500 text-white px-6 py-2 rounded-full text-sm font-medium">Home</a>
           {navLinks.slice(0, 2).map(link => (
@@ -38,6 +59,44 @@ const Header: React.FC = () => {
           ))}
         </div>
       </nav>
+
+      {/* --- Mobile Navigation --- */}
+      <nav className="md:hidden flex items-center justify-between bg-brand-dark text-white rounded-full px-4 py-2 relative z-50">
+        <a href="#home" onClick={handleNavClick} className="flex items-center space-x-2 font-bold text-lg">
+           <span className="bg-brand-blue-500 text-brand-dark w-8 h-8 flex items-center justify-center rounded-full">A</span>
+        </a>
+        <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2" aria-label="Toggle menu" aria-expanded={isMenuOpen}>
+            {isMenuOpen ? (
+                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            ) : (
+                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+            )}
+        </button>
+      </nav>
+
+      {/* --- Mobile Menu Overlay --- */}
+      <div 
+        className={`md:hidden fixed inset-0 bg-brand-dark z-40 transition-opacity duration-300 ease-in-out ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        aria-hidden={!isMenuOpen}
+      >
+        <div className="flex flex-col items-center justify-center h-full">
+          {allNavLinks.map((link, index) => (
+            <a 
+              key={link.name} 
+              href={link.href} 
+              onClick={handleNavClick} 
+              className="text-2xl font-semibold py-4 text-white hover:text-brand-blue-500 transition-all duration-300"
+              style={{
+                opacity: isMenuOpen ? 1 : 0,
+                transform: isMenuOpen ? 'translateY(0)' : 'translateY(20px)',
+                transitionDelay: isMenuOpen ? `${index * 50}ms` : '0ms'
+              }}
+            >
+              {link.name}
+            </a>
+          ))}
+        </div>
+      </div>
     </header>
   );
 };
