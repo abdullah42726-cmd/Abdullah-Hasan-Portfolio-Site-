@@ -20,9 +20,6 @@ const Services: React.FC = () => {
     <section id="services" className="bg-brand-dark text-white rounded-3xl p-12 my-20">
       <div className="flex justify-between items-start mb-10">
         <h2 className="text-5xl font-bold">My Services</h2>
-        <p className="max-w-sm text-gray-400">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lacus nunc, posuere in justo vulputate, bibendum sodales.
-        </p>
       </div>
       <div className="grid md:grid-cols-3 gap-8">
         <ServiceCard title="UI/UX Design" imageUrl="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?q=80&w=800" />

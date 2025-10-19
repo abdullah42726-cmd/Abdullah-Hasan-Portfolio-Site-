@@ -30,7 +30,7 @@ const Testimonials: React.FC = () => {
             <div className="text-center max-w-2xl mx-auto mb-12">
                 <h2 className="text-5xl font-bold">Testimonials That <br/> Speak to My Results</h2>
                 <p className="text-gray-400 mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue interdum ligula a dignissim. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lobortis orci elementum egestas lobortis.
+                Don't just take my word for it. Here's what my clients have to say about our collaboration and the impact my work has had on their projects.
                 </p>
             </div>
             <div className="grid md:grid-cols-3 gap-8">
@@ -38,19 +38,19 @@ const Testimonials: React.FC = () => {
                     name="James Rodriguez"
                     role="CEO, Lirante"
                     avatarUrl="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200"
-                    text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue interdum ligula a dignissim. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lobortis orci elementum."
+                    text="Abdullah's design sense is incredible. He transformed our vision for Lirante into a beautiful and functional app that our users love. His work was pivotal to our successful launch."
                 />
                 <TestimonialCard 
                     name="Maria Garcia"
                     role="Project Manager, Sugee"
                     avatarUrl="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200"
-                    text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue interdum ligula a dignissim. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lobortis orci elementum."
+                    text="Working with Abdullah was a breeze. He's a proactive communicator, adheres to deadlines, and consistently delivered high-quality designs that exceeded our expectations. A true professional."
                 />
                 <TestimonialCard 
                     name="David Smith"
                     role="Lead Developer, Cinetstox"
                     avatarUrl="https://images.unsplash.com/photo-1554151228-14d9def656e4?q=80&w=200"
-                    text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue interdum ligula a dignissim. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lobortis orci elementum."
+                    text="As a developer, I appreciate Abdullah's meticulous attention to detail. His design systems are well-organized and easy to implement, which made the development process significantly smoother."
                 />
             </div>
         </div>

@@ -43,7 +43,7 @@ const WhyHireMe: React.FC = () => {
         <div>
           <h2 className="text-5xl font-bold"><span className="text-brand-dark">Why</span> <span className="text-brand-blue-500">Hire me?</span></h2>
           <p className="text-gray-500 mt-6 max-w-md">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lacus nunc, posuere in justo vulputate, bibendum sodales
+            With a decade of experience, I blend creative artistry with technical skill to deliver designs that not only look stunning but also drive results and captivate audiences.
           </p>
           <div className="flex space-x-16 mt-8">
             <div>

@@ -36,20 +36,20 @@ const Experience: React.FC = () => {
           company="Cognizant, Mumbai"
           duration="Sep 2016 - July 2020"
           role="Experience Designer"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lacus nunc, posuere in justo vulputate, bibendum sodales"
+          description="Crafted intuitive user experiences and visually compelling interfaces for diverse corporate clients, translating complex requirements into elegant and effective design solutions."
         />
         <ExperienceItem 
           company="Sugee Pvt limited, Mumbai"
           duration="Sep 2020 - July 2023"
           role="UI/UX Designer"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lacus nunc, posuere in justo vulputate, bibendum sodales"
+          description="Led the design of user-centric web and mobile applications, focusing on creating seamless workflows and engaging visual designs that elevated the brand's digital presence."
           isCurrent={true}
         />
         <ExperienceItem 
           company="Cinetstox, Mumbai"
           duration="Sep 2023"
           role="Lead UX Designer"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lacus nunc, posuere in justo vulputate, bibendum sodales"
+          description="Directed user experience strategy and mentored a design team, driving the creation of innovative and user-friendly products from concept to final launch."
         />
       </div>
     </section>

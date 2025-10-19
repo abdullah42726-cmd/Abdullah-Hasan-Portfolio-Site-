@@ -40,7 +40,7 @@ const Portfolio: React.FC = () => {
             </span>
           </h3>
           <p className="text-gray-500 mt-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue interdum ligula a dignissim. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lobortis orci elementum egestas lobortis.
+              Lirante is a comprehensive food delivery platform designed with a user-first approach. I crafted a seamless and intuitive UI/UX, from browsing menus to checkout, ensuring a delightful and efficient ordering experience for customers.
           </p>
       </div>
     </section>
