@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Logo from './icons/Logo';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -50,9 +51,9 @@ const Header: React.FC = () => {
             <a key={link.name} href={link.href} onClick={handleNavClick} className="hover:text-brand-blue-500 transition-colors text-sm font-medium">{link.name}</a>
           ))}
         </div>
-        <div className="flex items-center space-x-2 font-bold text-xl">
-            <span className="bg-brand-blue-500 text-brand-dark w-8 h-8 flex items-center justify-center rounded-full">A</span>
-        </div>
+        <a href="#home" onClick={handleNavClick}>
+            <Logo className="h-8 w-auto text-white" pathClassName="fill-white" />
+        </a>
         <div className="flex items-center space-x-8">
           {navLinks.slice(2).map(link => (
             <a key={link.name} href={link.href} onClick={handleNavClick} className="hover:text-brand-blue-500 transition-colors text-sm font-medium">{link.name}</a>
@@ -63,7 +64,7 @@ const Header: React.FC = () => {
       {/* --- Mobile Navigation --- */}
       <nav className="md:hidden flex items-center justify-between bg-brand-dark text-white rounded-full px-4 py-2 relative z-50">
         <a href="#home" onClick={handleNavClick} className="flex items-center space-x-2 font-bold text-lg">
-           <span className="bg-brand-blue-500 text-brand-dark w-8 h-8 flex items-center justify-center rounded-full">A</span>
+           <Logo className="h-8 w-auto" pathClassName="fill-white"/>
         </a>
         <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2" aria-label="Toggle menu" aria-expanded={isMenuOpen}>
             {isMenuOpen ? (

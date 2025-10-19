@@ -18,7 +18,7 @@ const AwardIcon = () => (
 const ProjectIdea: React.FC = () => {
   return (
     <section id="contact" className="py-20 text-center">
-      <h2 className="text-5xl font-bold">
+      <h2 className="text-5xl font-bold text-brand-dark">
         Have an Awsome Project <br/> Idea? <span className="text-brand-blue-500">Let's Discuss</span>
       </h2>
       
