@@ -64,8 +64,12 @@ const Header: React.FC = () => {
     return 'hover:text-brand-blue-500 transition-colors text-sm font-medium';
   };
 
+  // Determines if the scrolled styles should be applied.
+  // When the mobile menu is open, we want to revert to the initial, non-scrolled state.
+  const showScrolledState = isScrolled && !isMenuOpen;
+
   return (
-    <header className={`sticky top-0 z-50 py-4 transition-all duration-300 ${isScrolled ? 'bg-white/30 backdrop-blur-lg' : ''}`}>
+    <header className={`sticky top-0 z-50 py-4 transition-all duration-300 ${showScrolledState ? 'bg-white/30 backdrop-blur-lg' : ''}`}>
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* --- Desktop Navigation --- */}
         <nav className={`hidden md:flex items-center justify-between rounded-full px-4 py-2 transition-all duration-300 ${isScrolled ? 'bg-transparent text-brand-dark shadow-lg border border-white/20' : 'bg-brand-dark text-white'}`}>
@@ -89,9 +93,9 @@ const Header: React.FC = () => {
         </nav>
 
         {/* --- Mobile Navigation --- */}
-        <nav className={`md:hidden flex items-center justify-between rounded-full px-4 py-2 relative z-50 transition-all duration-300 ${isScrolled ? 'bg-transparent text-brand-dark shadow-lg border border-white/20' : 'bg-brand-dark text-white'}`}>
+        <nav className={`md:hidden flex items-center justify-between rounded-full px-4 py-2 relative z-50 transition-all duration-300 ${showScrolledState ? 'bg-transparent text-brand-dark shadow-lg border border-white/20' : 'bg-brand-dark text-white'}`}>
           <a href="#home" onClick={handleNavClick} className="flex items-center space-x-2 font-bold text-lg">
-            <Logo className="h-8 w-auto" pathClassName={isScrolled ? 'fill-brand-dark' : 'fill-white'}/>
+            <Logo className="h-8 w-auto" pathClassName={showScrolledState ? 'fill-brand-dark' : 'fill-white'}/>
           </a>
           <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2" aria-label="Toggle menu" aria-expanded={isMenuOpen}>
               {isMenuOpen ? (

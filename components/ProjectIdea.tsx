@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import StarIcon from './icons/StarIcon';
 
 const CheckIcon = () => (
@@ -16,13 +16,27 @@ const AwardIcon = () => (
 
 
 const ProjectIdea: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setMessage('Please enter a valid email address.');
+      return;
+    }
+    setMessage(`Thank you! We'll be in touch at ${email} shortly.`);
+    setEmail('');
+    setTimeout(() => setMessage(''), 5000); // Clear message after 5 seconds
+  };
+
   return (
     <section id="contact" className="py-20 text-center">
       <h2 className="text-5xl font-bold text-brand-dark">
         Have an Awsome Project <br/> Idea? <span className="text-brand-blue-500">Let's Discuss</span>
       </h2>
       
-      <form className="mt-10 max-w-lg mx-auto flex items-center bg-white border border-gray-200 rounded-full p-2 shadow-md">
+      <form onSubmit={handleSubmit} className="mt-10 max-w-lg mx-auto flex items-center bg-white border border-gray-200 rounded-full p-2 shadow-md">
         <span className="text-brand-blue-500 pl-4 pr-2">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -31,12 +45,17 @@ const ProjectIdea: React.FC = () => {
         <input 
           type="email" 
           placeholder="Enter Email Address" 
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           className="w-full bg-transparent focus:outline-none text-gray-700"
+          aria-label="Email address for contact"
+          required
         />
-        <button type="submit" className="bg-brand-blue-500 text-white px-8 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-opacity">
+        <button type="submit" className="bg-brand-blue-500 text-white px-8 py-3 rounded-full font-semibold hover:bg-brand-blue-600 transition-colors">
           Send
         </button>
       </form>
+      {message && <p className="mt-4 text-sm text-brand-dark" aria-live="polite">{message}</p>}
 
       <div className="flex justify-center items-center space-x-8 mt-8 text-sm text-gray-600">
         <div className="flex items-center space-x-2">

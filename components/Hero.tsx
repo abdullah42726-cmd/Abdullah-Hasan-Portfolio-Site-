@@ -31,9 +31,9 @@ const Hero: React.FC = () => {
       
       {/* Top elements */}
       <div className="relative z-10">
-        <div className="inline-block relative">
+        <div className="inline-block relative animate-gentle-bounce">
             <div className="absolute -top-3 -right-10 transform scale-75 -rotate-12">
-                 <Swoosh className="w-12 h-auto text-brand-blue-500" />
+                 <Swoosh className="w-12 h-auto text-brand-blue-500 animate-subtle-wave" />
             </div>
             <div className="bg-white border-2 border-brand-dark rounded-full px-5 py-2 text-md shadow-sm text-brand-dark font-medium">
                 Hello!
@@ -44,7 +44,7 @@ const Hero: React.FC = () => {
             I'm <span className="text-brand-blue-500">Abdullah Hasan</span>,<br/>
             <span className="text-4xl md:text-5xl">Graphics Designer &amp; Video Editor</span>
         </h1>
-         <Swoosh className="w-16 h-auto absolute top-full -mt-4 left-4 md:left-1/4 transform rotate-[-25deg] text-brand-blue-500" />
+         <Swoosh className="w-16 h-auto absolute top-full -mt-4 left-4 md:left-1/4 transform rotate-[-25deg] text-brand-blue-500 animate-subtle-wave" />
       </div>
 
       {/* Main content area */}
