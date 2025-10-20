@@ -9,12 +9,11 @@ interface NavLink {
 }
 
 interface HeaderProps {
-  onLoginClick: () => void;
   onLogout: () => void;
   currentUser: User | null;
 }
 
-const Header: React.FC<HeaderProps> = ({ onLoginClick, onLogout, currentUser }) => {
+const Header: React.FC<HeaderProps> = ({ onLogout, currentUser }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState('#home');
@@ -102,7 +101,7 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onLogout, currentUser }) 
   const showScrolledState = isScrolled && !isMenuOpen;
   
   const navBarClassName = `rounded-full px-4 py-2 transition-all duration-300 flex items-center`;
-  const navBarScrolledStyles = 'bg-white/80 backdrop-blur-lg text-brand-dark shadow-lg border border-white/20';
+  const navBarScrolledStyles = 'text-brand-dark glass-effect';
   const navBarTopStyles = 'bg-brand-dark text-white';
   
   const authButtonBaseClasses = 'px-5 py-2 rounded-full text-sm font-medium transition-colors ml-4';
@@ -135,13 +134,11 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onLogout, currentUser }) 
                   </a>
                 ))}
             </div>
-            {currentUser ? (
+            {currentUser && (
               <div className="flex items-center ml-4">
                 <span className={`text-sm font-medium mr-4 ${showScrolledState ? 'text-brand-dark' : 'text-white'}`}>Hi, {currentUser.name}</span>
                 <button onClick={onLogout} className={getAuthButtonClassName()}>Logout</button>
               </div>
-            ) : (
-              <button onClick={onLoginClick} className={getAuthButtonClassName()}>Login</button>
             )}
           </div>
         </nav>
@@ -186,7 +183,7 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onLogout, currentUser }) 
               {link.name}
             </a>
           ))}
-          {currentUser ? (
+          {currentUser && (
               <a
                   href="#"
                   onClick={(e) => { e.preventDefault(); onLogout(); setIsMenuOpen(false); }}
@@ -198,19 +195,6 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onLogout, currentUser }) 
                   }}
               >
                   Logout
-              </a>
-          ) : (
-              <a
-                  href="#"
-                  onClick={(e) => { e.preventDefault(); onLoginClick(); setIsMenuOpen(false); }}
-                  className="text-3xl font-semibold text-white hover:text-brand-blue-500 transition-all duration-300"
-                  style={{
-                    opacity: isMenuOpen ? 1 : 0,
-                    transform: isMenuOpen ? 'translateY(0)' : 'translateY(20px)',
-                    transitionDelay: isMenuOpen ? `${navLinks.length * 70}ms` : '0ms'
-                  }}
-              >
-                  Login
               </a>
           )}
         </div>

@@ -86,7 +86,7 @@ const Hero: React.FC = () => {
       
       {/* Buttons at the bottom */}
        <div className="relative -mt-24 sm:-mt-16 z-30 flex justify-center">
-        <div className="flex items-center bg-white/30 backdrop-blur-lg rounded-full p-2 shadow-lg border border-white/20">
+        <div className="flex items-center rounded-full p-2 glass-effect">
             <a href="#portfolio" onClick={handleNavClick} className="bg-brand-blue-500 text-white px-8 py-3 rounded-full text-sm font-semibold flex items-center hover:bg-brand-blue-600 transition-colors">
                 Portfolio <ArrowRightIcon className="w-5 h-5 ml-2" />
             </a>

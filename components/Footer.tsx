@@ -15,12 +15,16 @@ const FacebookIcon = () => (
     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" role="img" aria-hidden="true"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" /></svg>
 );
 
-const TwitterIcon = () => (
-    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" role="img" aria-hidden="true"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616v.064c0 2.298 1.634 4.212 3.793 4.649-.65.177-1.354.238-2.08.083.606 1.889 2.364 3.268 4.456 3.306-1.784 1.398-4.041 2.23-6.49 2.23-.42 0-.834-.025-1.24-.073 2.304 1.479 5.047 2.344 7.994 2.344 9.59 0 14.84-7.942 14.48-14.843.996-.718 1.86-1.62 2.55-2.65z"/></svg>
+const InstagramIcon = () => (
+    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" role="img" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.644-.069 4.85-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.281-.058-1.689-.072-4.948-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44 1.441-.645 1.441-1.44-.645-1.44-1.441-1.44z"/></svg>
 );
 
 const LinkedInIcon = () => (
     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" role="img" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.7c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.7h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+);
+
+const BehanceIcon = () => (
+    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" role="img" aria-hidden="true"><path d="M22.42 6.4h-6.74v-1.65h6.74v1.65zm-6.03 2.59h5.3v1.62h-5.3v-1.62zm10.61-5.51v13.04c0 1.93-1.57 3.5-3.5 3.5h-13.04c-1.93 0-3.5-1.57-3.5-3.5v-13.04c0-1.93 1.57-3.5 3.5-3.5h13.04c1.93 0 3.5 1.57 3.5 3.5zm-2 0c0-.83-.67-1.5-1.5-1.5h-13.04c-.83 0-1.5.67-1.5 1.5v13.04c0 .83.67 1.5 1.5 1.5h13.04c.83 0 1.5-.67 1.5-1.5v-13.04zm-4.51 9.11c-.53 0-.91-.35-.91-.87 0-.5.37-.88.9-.88h3.33v-1.13c-1.28-.4-2.73-.65-4.14-.65-3.19 0-5.26 1.76-5.26 4.72 0 2.81 1.95 4.59 4.97 4.59 2.73 0 4.55-1.63 4.55-4.04h-3.44zm-.3 2.37c-1.6 0-2.66-1-2.66-2.81 0-1.9 1.11-2.91 2.7-2.91.43 0 .85.06 1.25.14v5.58h-1.29z"/></svg>
 );
 
 interface FooterProps {
@@ -94,9 +98,10 @@ const Footer: React.FC<FooterProps> = ({ onDashboardClick }) => {
             &copy; {new Date().getFullYear()} Abdullah Hasan. All Rights Reserved.
           </p>
           <div className="flex space-x-6">
-            <SocialIcon href="https://facebook.com" label="Facebook"><FacebookIcon /></SocialIcon>
-            <SocialIcon href="https://twitter.com" label="Twitter"><TwitterIcon /></SocialIcon>
-            <SocialIcon href="https://linkedin.com" label="LinkedIn"><LinkedInIcon /></SocialIcon>
+            <SocialIcon href="https://www.facebook.com/ahasand" label="Facebook"><FacebookIcon /></SocialIcon>
+            <SocialIcon href="https://www.instagram.com/abdullah_hasan_d/" label="Instagram"><InstagramIcon /></SocialIcon>
+            <SocialIcon href="https://www.linkedin.com/in/abdullahhasan42726/" label="LinkedIn"><LinkedInIcon /></SocialIcon>
+            <SocialIcon href="https://www.behance.net/abdullahhasan1" label="Behance"><BehanceIcon /></SocialIcon>
           </div>
         </div>
       </div>
