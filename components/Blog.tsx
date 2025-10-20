@@ -29,11 +29,11 @@ const BlogCard: React.FC<BlogCardProps> = ({ imageUrl, category, author, date, t
 const Blog: React.FC = () => {
   return (
     <section className="py-20">
-      <div className="flex justify-between items-center mb-10">
-        <h2 className="text-5xl font-bold">
+      <div className="flex flex-col items-start gap-y-4 sm:flex-row sm:justify-between sm:items-center mb-10">
+        <h2 className="text-4xl md:text-5xl font-bold">
           From my <br/> <span className="text-brand-blue-500">blog post</span>
         </h2>
-        <button className="bg-brand-blue-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-opacity">
+        <button className="bg-brand-blue-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-opacity flex-shrink-0">
           See All
         </button>
       </div>

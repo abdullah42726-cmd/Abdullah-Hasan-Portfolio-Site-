@@ -5,11 +5,11 @@ const Portfolio: React.FC = () => {
     const filters = ['Landing Page', 'Product Design', 'Animation', 'Glassmorphism', 'Cards'];
   return (
     <section id="portfolio" className="py-20">
-      <div className="flex justify-between items-center mb-10">
-        <h2 className="text-5xl font-bold">
+      <div className="flex flex-col items-start gap-y-4 sm:flex-row sm:justify-between sm:items-center mb-10">
+        <h2 className="text-4xl md:text-5xl font-bold">
           <span className="text-brand-dark">Lets have a look at my </span><span className="text-brand-blue-500">Portfolio</span>
         </h2>
-        <button className="bg-brand-blue-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-opacity">
+        <button className="bg-brand-blue-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-opacity flex-shrink-0">
           See All
         </button>
       </div>
@@ -33,9 +33,9 @@ const Portfolio: React.FC = () => {
       </div>
 
       <div className="text-center max-w-2xl mx-auto">
-          <h3 className="text-4xl font-bold flex items-center justify-center gap-4 text-brand-dark">
+          <h3 className="text-3xl md:text-4xl font-bold flex items-center justify-center gap-4 text-brand-dark">
             Lirante - Food Dilvery Solution
-            <span className="bg-brand-blue-500 text-white w-10 h-10 rounded-full flex items-center justify-center">
+            <span className="bg-brand-blue-500 text-white w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0">
                 <ArrowRightIcon className="w-6 h-6" />
             </span>
           </h3>

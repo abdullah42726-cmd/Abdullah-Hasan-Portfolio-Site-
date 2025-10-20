@@ -77,19 +77,14 @@ const Header: React.FC = () => {
     setIsMenuOpen(false);
   };
 
-  const leftNavLinks: NavLink[] = [
+  const navLinks: NavLink[] = [
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#experience' },
     { name: 'Service', href: '#services' },
-  ];
-
-  const rightNavLinks: NavLink[] = [
-    { name: 'Resume', href: 'https://drive.google.com/file/d/1HqozSuhNjKC7O-Bxl0RkTX_ReeNV39Oh/view?usp=sharing', external: true },
     { name: 'Project', href: '#portfolio' },
+    { name: 'Resume', href: 'https://drive.google.com/file/d/1HqozSuhNjKC7O-Bxl0RkTX_ReeNV39Oh/view?usp=sharing', external: true },
     { name: 'Contact', href: '#contact' },
   ];
-  
-  const allNavLinksForMobile: NavLink[] = [...leftNavLinks, ...rightNavLinks];
 
   const getLinkClassName = (href: string) => {
     if (activeLink === href) {
@@ -116,21 +111,14 @@ const Header: React.FC = () => {
     <header className="sticky top-0 z-50 py-4">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* --- Desktop Navigation --- */}
-        <nav className={`hidden md:flex justify-between ${navBarClassName} ${showScrolledState ? navBarScrolledStyles : navBarTopStyles}`}>
-          <div className="flex items-center space-x-8">
-            {leftNavLinks.map(link => (
-              <a key={`${link.name}-${link.href}-left`} href={link.href} onClick={handleNavClick} className={getLinkClassName(link.href)}>
-                {link.name}
-              </a>
-            ))}
-          </div>
+        <nav className={`hidden md:flex justify-between items-center ${navBarClassName} ${showScrolledState ? navBarScrolledStyles : navBarTopStyles}`}>
           <a href="#home" onClick={handleNavClick} aria-label="Go to homepage">
               <Logo className="h-8 w-auto" pathClassName={showScrolledState ? 'fill-brand-dark' : 'fill-white'} />
           </a>
           <div className="flex items-center space-x-8">
-            {rightNavLinks.map(link => (
+            {navLinks.map(link => (
               <a 
-                key={`${link.name}-${link.href}-right`} 
+                key={`${link.name}-${link.href}-desktop`} 
                 href={link.href} 
                 onClick={link.external ? undefined : handleNavClick}
                 target={link.external ? '_blank' : undefined}
@@ -165,7 +153,7 @@ const Header: React.FC = () => {
         aria-hidden={!isMenuOpen}
       >
         <div className="flex flex-col items-center justify-center h-full space-y-4">
-          {allNavLinksForMobile.map((link, index) => (
+          {navLinks.map((link, index) => (
             <a 
               key={link.name} 
               href={link.href} 

@@ -25,10 +25,10 @@ const TestimonialCard: React.FC<{ name: string; role: string; text: string; avat
 
 const Testimonials: React.FC = () => {
   return (
-    <section className="bg-brand-dark text-white rounded-t-3xl p-12 my-20">
+    <section className="bg-brand-dark text-white rounded-t-3xl p-8 md:p-12 my-20">
         <div className="max-w-screen-xl mx-auto">
             <div className="text-center max-w-2xl mx-auto mb-12">
-                <h2 className="text-5xl font-bold">Testimonials That <br/> Speak to My Results</h2>
+                <h2 className="text-4xl md:text-5xl font-bold">Testimonials That <br/> Speak to My Results</h2>
                 <p className="text-gray-400 mt-4">
                 Don't just take my word for it. Here's what my clients have to say about our collaboration and the impact my work has had on their projects.
                 </p>

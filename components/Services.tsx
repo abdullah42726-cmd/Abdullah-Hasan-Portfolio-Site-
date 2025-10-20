@@ -17,9 +17,9 @@ const ServiceCard: React.FC<{ title: string; imageUrl: string }> = ({ title, ima
 
 const Services: React.FC = () => {
   return (
-    <section id="services" className="bg-brand-dark text-white rounded-3xl p-12 my-20">
+    <section id="services" className="bg-brand-dark text-white rounded-3xl p-8 md:p-12 my-20">
       <div className="flex justify-between items-start mb-10">
-        <h2 className="text-5xl font-bold">My Services</h2>
+        <h2 className="text-4xl md:text-5xl font-bold">My Services</h2>
       </div>
       <div className="grid md:grid-cols-3 gap-8">
         <ServiceCard title="UI/UX Design" imageUrl="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?q=80&w=800" />

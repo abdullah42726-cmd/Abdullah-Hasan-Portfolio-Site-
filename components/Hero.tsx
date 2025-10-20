@@ -40,15 +40,15 @@ const Hero: React.FC = () => {
             </div>
         </div>
         
-        <h1 className="text-5xl md:text-6xl font-extrabold text-brand-dark leading-tight mt-6 relative max-w-4xl mx-auto">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-brand-dark leading-tight mt-6 relative max-w-4xl mx-auto">
             I'm <span className="text-brand-blue-500">Abdullah Hasan</span>,<br/>
-            <span className="text-4xl md:text-5xl">Graphics Designer &amp; Video Editor</span>
+            <span className="text-3xl sm:text-4xl md:text-5xl">Graphics Designer &amp; Video Editor</span>
         </h1>
          <Swoosh className="w-16 h-auto absolute top-full -mt-4 left-4 md:left-1/4 transform rotate-[-25deg] text-brand-blue-500 animate-subtle-wave" />
       </div>
 
       {/* Main content area */}
-      <div className="mt-12 md:-mt-8 relative flex justify-center items-center h-[550px]">
+      <div className="mt-12 md:-mt-8 relative flex justify-center items-center h-[480px] md:h-[550px]">
         
         {/* Left Testimonial */}
         <div className="hidden md:block absolute left-0 top-1/4 max-w-[220px] text-left z-20 bg-white p-6 rounded-xl shadow-lg">
@@ -68,9 +68,9 @@ const Hero: React.FC = () => {
         </div>
 
         {/* Centerpiece Image & Background */}
-        <div className="absolute bottom-0 w-[550px] h-[550px] opacity-0 motion-safe:animate-slide-up-hero">
+        <div className="absolute bottom-0 w-full max-w-[480px] md:max-w-[550px] h-full opacity-0 motion-safe:animate-slide-up-hero">
           {/* The blue semi-circle background */}
-          <div className="absolute bottom-0 w-full h-[275px] bg-brand-blue-200 rounded-t-full" />
+          <div className="absolute bottom-0 w-full h-1/2 bg-brand-blue-200 rounded-t-full" />
           {/* The image container */}
           <div 
             className="relative w-full h-full flex justify-center items-end"
@@ -85,7 +85,7 @@ const Hero: React.FC = () => {
       </div>
       
       {/* Buttons at the bottom */}
-       <div className="relative -mt-16 z-30 flex justify-center">
+       <div className="relative -mt-24 sm:-mt-16 z-30 flex justify-center">
         <div className="flex items-center bg-white/30 backdrop-blur-lg rounded-full p-2 shadow-lg border border-white/20">
             <a href="#portfolio" onClick={handleNavClick} className="bg-brand-blue-500 text-white px-8 py-3 rounded-full text-sm font-semibold flex items-center hover:bg-brand-blue-600 transition-colors">
                 Portfolio <ArrowRightIcon className="w-5 h-5 ml-2" />
