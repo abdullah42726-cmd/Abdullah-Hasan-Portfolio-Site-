@@ -12,6 +12,7 @@ import ProjectIdea from './components/ProjectIdea';
 import Marquee from './components/Marquee';
 import Blog from './components/Blog';
 import Footer from './components/Footer';
+import BackToTopButton from './components/BackToTopButton';
 
 const App: React.FC = () => {
   return (
@@ -41,6 +42,7 @@ const App: React.FC = () => {
         <Blog />
       </div>
       <Footer />
+      <BackToTopButton />
     </div>
   );
 };
