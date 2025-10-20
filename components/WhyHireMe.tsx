@@ -15,29 +15,18 @@ const WhyHireMe: React.FC = () => {
     }
   };
   
-  // Reverted WebP to original PNG.
-  const imageUrl = `https://i.imgur.com/mJ2JB0f.png`;
+  // Replaced broken image link with a working one.
+  const imageUrl = `https://i.imgur.com/ZoHJxFb.png`;
 
   return (
     <section ref={ref} className="bg-brand-gray rounded-3xl p-8 md:p-12 my-20">
       <div className="grid md:grid-cols-2 gap-12 items-center">
         {/* Visuals Column */}
         <div className={`relative h-[450px] flex justify-center items-end scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`}>
-          {/* Blue circle purely for background color */}
-          <div className="absolute w-[404px] h-[404px] bg-brand-blue-500 rounded-full bottom-0"></div>
-
-          {/* The image, positioned on top, with a clip-path */}
           <img
               src={imageUrl}
               alt="Abdullah Hasan"
-              className="relative h-[505px] object-contain"
-              style={{
-                  // This creates a circular clip area with a 202px radius (half of 404px).
-                  // The center of the circle is positioned horizontally at 50% and vertically
-                  // at 303px from the top of the image. This aligns the bottom of the clip
-                  // circle with the bottom of the image, while leaving the top part (head) unclipped.
-                  clipPath: 'circle(202px at 50% 303px)'
-              }}
+              className="relative h-full object-contain gradient-mask-bottom"
           />
         </div>
         
@@ -45,7 +34,7 @@ const WhyHireMe: React.FC = () => {
         <div className={`scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`} style={{ transitionDelay: '200ms' }}>
           <h2 className="text-4xl md:text-5xl font-bold"><span className="text-brand-dark">Why</span> <span className="text-brand-blue-500">Hire me?</span></h2>
           <p className="text-gray-500 mt-6 max-w-md">
-            With a decade of experience, I blend creative artistry with technical skill to deliver designs that not only look stunning but also drive results and captivate audiences.
+            With over six years of experience, I blend creative artistry with technical skill to deliver designs that not only look stunning but also drive results and captivate audiences.
           </p>
           <div className="flex flex-col space-y-6 sm:flex-row sm:space-y-0 sm:space-x-12 mt-8">
             <div>

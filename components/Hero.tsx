@@ -25,8 +25,8 @@ const Hero: React.FC = () => {
     }
   };
   
-  // Reverted WebP to original PNG.
-  const imageUrl = `https://i.imgur.com/mJ2JB0f.png`;
+  // Replaced broken image link with a working one.
+  const imageUrl = 'https://i.imgur.com/Lasn8cQ.png';
 
   return (
     <section id="home" ref={ref} className="relative pt-12 pb-24 text-center overflow-x-clip">
@@ -67,7 +67,7 @@ const Hero: React.FC = () => {
             <div className="flex text-brand-blue-500">
                 <StarIcon className="w-5 h-5"/><StarIcon className="w-5 h-5"/><StarIcon className="w-5 h-5"/><StarIcon className="w-5 h-5"/><StarIcon className="w-5 h-5"/>
             </div>
-            <p className="text-4xl font-bold text-brand-dark mt-2">10 Years</p>
+            <p className="text-4xl font-bold text-brand-dark mt-2">6+ Years</p>
             <p className="text-gray-500">Experience</p>
         </div>
 
