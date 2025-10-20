@@ -81,37 +81,37 @@ const PortfolioEditorModal: React.FC<PortfolioEditorModalProps> = ({ isOpen, onC
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-            <div ref={modalRef} className="bg-white rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] flex flex-col">
+            <div ref={modalRef} className="bg-white dark:bg-brand-dark-2 rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] flex flex-col">
                 <form onSubmit={handleSubmit} className="flex flex-col h-full">
                     <div className="p-6 overflow-y-auto">
-                        <h2 className="text-2xl font-bold text-brand-dark mb-4">{itemData ? 'Edit Portfolio Item' : 'Create New Portfolio Item'}</h2>
+                        <h2 className="text-2xl font-bold text-brand-dark dark:text-white mb-4">{itemData ? 'Edit Portfolio Item' : 'Create New Portfolio Item'}</h2>
                         
                         <div className="mb-4">
-                            <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">Title</label>
-                            <input type="text" name="title" id="title" value={item.title} onChange={handleMainChange} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-blue-500 focus:border-brand-blue-500" required />
+                            <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Title</label>
+                            <input type="text" name="title" id="title" value={item.title} onChange={handleMainChange} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-blue-500 focus:border-brand-blue-500 dark:bg-brand-dark dark:border-gray-600 dark:text-white" required />
                         </div>
                         
                         <div className="mb-4">
-                            <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                            <textarea name="description" id="description" value={item.description} onChange={handleMainChange} rows={5} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-blue-500 focus:border-brand-blue-500" />
+                            <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description</label>
+                            <textarea name="description" id="description" value={item.description} onChange={handleMainChange} rows={5} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-blue-500 focus:border-brand-blue-500 dark:bg-brand-dark dark:border-gray-600 dark:text-white" />
                         </div>
 
                         <div className="mb-4">
-                            <label htmlFor="coverImage" className="block text-sm font-medium text-gray-700 mb-1">Cover Image URL</label>
+                            <label htmlFor="coverImage" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Cover Image URL</label>
                             <input
                                 type="text"
                                 name="coverImage"
                                 id="coverImage"
                                 value={item.coverImage}
                                 onChange={handleMainChange}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-brand-dark dark:border-gray-600 dark:text-white"
                                 placeholder="https://example.com/cover-image.png"
                                 required
                             />
                         </div>
 
                         <div className="mb-4">
-                             <label className="block text-sm font-medium text-gray-700 mb-2">Gallery Images</label>
+                             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Gallery Images</label>
                              <div className="space-y-3">
                                 {item.galleryImages.map((imgUrl, index) => (
                                     <div key={index} className="flex items-center space-x-3">
@@ -119,7 +119,7 @@ const PortfolioEditorModal: React.FC<PortfolioEditorModalProps> = ({ isOpen, onC
                                             type="text"
                                             value={imgUrl}
                                             onChange={(e) => handleGalleryImageChange(index, e.target.value)}
-                                            className="flex-grow px-3 py-2 border border-gray-300 rounded-md"
+                                            className="flex-grow px-3 py-2 border border-gray-300 rounded-md dark:bg-brand-dark dark:border-gray-600 dark:text-white"
                                             placeholder="https://example.com/gallery-image.png"
                                         />
                                         <button type="button" onClick={() => handleRemoveGalleryImage(index)} className="text-red-500 hover:text-red-700">
@@ -135,13 +135,13 @@ const PortfolioEditorModal: React.FC<PortfolioEditorModalProps> = ({ isOpen, onC
                         </div>
 
                         <div className="mb-4">
-                            <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                            <input type="text" name="category" id="category" value={item.category} onChange={handleMainChange} className="w-full px-3 py-2 border border-gray-300 rounded-md" />
+                            <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Category</label>
+                            <input type="text" name="category" id="category" value={item.category} onChange={handleMainChange} className="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-brand-dark dark:border-gray-600 dark:text-white" />
                         </div>
                     </div>
 
-                    <div className="bg-gray-50 px-6 py-3 flex justify-end space-x-3 mt-auto border-t">
-                        <button type="button" onClick={onClose} className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50">Cancel</button>
+                    <div className="bg-gray-50 dark:bg-brand-dark px-6 py-3 flex justify-end space-x-3 mt-auto border-t dark:border-gray-700">
+                        <button type="button" onClick={onClose} className="bg-white dark:bg-gray-600 py-2 px-4 border border-gray-300 dark:border-gray-500 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-500">Cancel</button>
                         <button type="submit" className="bg-brand-blue-500 text-white py-2 px-4 rounded-md text-sm font-semibold hover:bg-brand-blue-600">{itemData ? 'Update Item' : 'Save Item'}</button>
                     </div>
                 </form>

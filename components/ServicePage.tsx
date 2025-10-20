@@ -7,7 +7,7 @@ interface ServicePageProps {
 
 const ServicePage: React.FC<ServicePageProps> = ({ service }) => {
     return (
-        <div className="bg-white font-sans">
+        <div className="bg-white dark:bg-brand-dark font-sans">
             <div 
                 className="h-64 md:h-80 bg-cover bg-center"
                 style={{ backgroundImage: `url(${service.imageUrl})` }}
@@ -21,7 +21,7 @@ const ServicePage: React.FC<ServicePageProps> = ({ service }) => {
 
             <main className="max-w-screen-md mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
                 <article>
-                    <div className="prose prose-lg max-w-none text-gray-800">
+                    <div className="prose prose-lg max-w-none text-gray-800 dark:text-gray-200">
                         {/* In a real app, this content might be HTML. For now, we split by newline to create paragraphs. */}
                         {service.content.split('\n').map((paragraph, index) => (
                             <p key={index}>{paragraph}</p>

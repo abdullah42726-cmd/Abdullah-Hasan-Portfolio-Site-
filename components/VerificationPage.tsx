@@ -18,19 +18,19 @@ const VerificationPage: React.FC<VerificationPageProps> = ({ user, onVerify, onE
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-brand-gray">
-            <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg text-center">
-                <Logo className="h-12 w-auto mx-auto" pathClassName="fill-brand-dark" />
+        <div className="flex items-center justify-center min-h-screen bg-brand-gray dark:bg-brand-dark">
+            <div className="w-full max-w-md p-8 space-y-6 bg-white dark:bg-brand-dark-2 rounded-lg shadow-lg text-center">
+                <Logo className="h-12 w-auto mx-auto" pathClassName="fill-brand-dark dark:fill-white" />
                 
                 {!isVerified ? (
                     <>
-                        <h2 className="mt-6 text-2xl font-bold text-brand-dark">
+                        <h2 className="mt-6 text-2xl font-bold text-brand-dark dark:text-white">
                             Almost there, {user.name}!
                         </h2>
-                        <p className="mt-2 text-gray-600">
-                            We've sent a verification link to <span className="font-semibold text-brand-dark">{user.email}</span>. Please check your inbox and follow the instructions.
+                        <p className="mt-2 text-gray-600 dark:text-gray-300">
+                            We've sent a verification link to <span className="font-semibold text-brand-dark dark:text-white">{user.email}</span>. Please check your inbox and follow the instructions.
                         </p>
-                        <p className="mt-4 text-sm text-gray-500">
+                        <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
                             (For this demo, just click the button below to simulate verifying your email.)
                         </p>
                         <div className="mt-8">
@@ -47,7 +47,7 @@ const VerificationPage: React.FC<VerificationPageProps> = ({ user, onVerify, onE
                         <h2 className="mt-6 text-2xl font-bold text-green-600">
                             Success!
                         </h2>
-                        <p className="mt-2 text-gray-600">
+                        <p className="mt-2 text-gray-600 dark:text-gray-300">
                             Your account has been successfully verified.
                         </p>
                         <div className="mt-8">
@@ -63,7 +63,7 @@ const VerificationPage: React.FC<VerificationPageProps> = ({ user, onVerify, onE
 
                  <button 
                     onClick={onExit} 
-                    className="mt-6 text-sm font-medium text-gray-600 hover:text-brand-blue-500"
+                    className="mt-6 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-brand-blue-500"
                     >
                     &larr; Back to main site
                 </button>

@@ -37,6 +37,31 @@ const App: React.FC = () => {
   const [services, setServices] = useState<Service[]>(mockServicesData);
   const [userToVerify, setUserToVerify] = useState<User | null>(null);
   const [scrollToSection, setScrollToSection] = useState<string | null>(null);
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme === 'light' || storedTheme === 'dark') {
+      return storedTheme;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+    return 'light';
+  });
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+  };
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+  }, [theme]);
 
   // Check for logged in user in localStorage on initial load
   useEffect(() => {
@@ -280,13 +305,15 @@ const App: React.FC = () => {
   const showGlobalLayout = view === 'site' || view === 'portfolioPage' || !!activePost || !!activeService;
 
   return (
-    <div className="bg-white font-sans">
+    <div className="bg-white dark:bg-brand-dark font-sans transition-colors duration-300">
       {showGlobalLayout && (
         <Header 
           onLogout={handleLogout} 
           currentUser={currentUser} 
           onNavigateHome={handleBackToHome}
           isHomePage={isHomePage}
+          theme={theme}
+          onToggleTheme={toggleTheme}
         />
       )}
 
@@ -298,6 +325,8 @@ const App: React.FC = () => {
             onDashboardClick={showLoginPage}
             onNavigateHome={handleBackToHome}
             isHomePage={isHomePage}
+            theme={theme}
+            onToggleTheme={toggleTheme}
           />
           <BackToTopButton />
         </>

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import Logo from './icons/Logo';
 import { User } from '../types';
 import ResumeArrowIcon from './icons/ResumeArrowIcon';
+import SunIcon from './icons/SunIcon';
+import MoonIcon from './icons/MoonIcon';
 
 interface NavLink {
   name: string;
@@ -14,9 +16,11 @@ interface HeaderProps {
   currentUser: User | null;
   onNavigateHome: (targetId?: string) => void;
   isHomePage: boolean;
+  theme: 'light' | 'dark';
+  onToggleTheme: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ onLogout, currentUser, onNavigateHome, isHomePage }) => {
+const Header: React.FC<HeaderProps> = ({ onLogout, currentUser, onNavigateHome, isHomePage, theme, onToggleTheme }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState('#home');
@@ -133,16 +137,30 @@ const Header: React.FC<HeaderProps> = ({ onLogout, currentUser, onNavigateHome, 
   const showScrolledState = isScrolled && !isMenuOpen;
   
   const navBarClassName = `rounded-full px-4 py-2 transition-all duration-300 flex items-center`;
-  const navBarScrolledStyles = 'text-brand-dark glass-effect';
+  const navBarScrolledStyles = 'text-brand-dark dark:text-white glass-effect dark:bg-brand-dark-2/60 dark:border dark:border-white/10';
   const navBarTopStyles = 'bg-brand-dark text-white';
   
   const authButtonBaseClasses = 'px-5 py-2 rounded-full text-sm font-medium transition-colors ml-4';
   const getAuthButtonClassName = () => {
     if (showScrolledState) {
-        return `${authButtonBaseClasses} bg-brand-dark/5 hover:bg-brand-dark/10 text-brand-dark border border-brand-dark/20`;
+        return `${authButtonBaseClasses} bg-brand-dark/5 hover:bg-brand-dark/10 text-brand-dark border border-brand-dark/20 dark:bg-white/10 dark:hover:bg-white/20 dark:text-white dark:border-white/20`;
     }
     return `${authButtonBaseClasses} bg-white/10 hover:bg-white/20 text-white`;
   };
+  
+  const ThemeToggleButton: React.FC<{ isMobile?: boolean }> = ({ isMobile = false }) => (
+    <button 
+      onClick={isMobile ? () => { onToggleTheme(); setIsMenuOpen(false); } : onToggleTheme} 
+      className={`p-2 rounded-full transition-colors ${isMobile ? 'absolute top-6 right-6 text-white' : (showScrolledState ? 'hover:bg-brand-dark/10 dark:hover:bg-white/10' : 'hover:bg-white/20')}`} 
+      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+    >
+      {theme === 'light' ? (
+        <MoonIcon className={`${isMobile ? 'w-6 h-6' : 'w-5 h-5'} ${showScrolledState ? 'text-brand-dark dark:text-white' : 'text-white'}`} />
+      ) : (
+        <SunIcon className={`${isMobile ? 'w-6 h-6' : 'w-5 h-5'} text-yellow-400`} />
+      )}
+    </button>
+  );
 
   return (
     <header className="sticky top-0 z-50 py-4">
@@ -150,7 +168,7 @@ const Header: React.FC<HeaderProps> = ({ onLogout, currentUser, onNavigateHome, 
         {/* --- Desktop Navigation --- */}
         <nav className={`hidden md:flex justify-between items-center ${navBarClassName} ${showScrolledState ? navBarScrolledStyles : navBarTopStyles}`}>
           <a href="#home" onClick={(e) => handleLinkClick(e)} aria-label="Go to homepage">
-              <Logo className="h-10 w-auto" pathClassName={showScrolledState ? 'fill-brand-dark' : 'fill-white'} />
+              <Logo className="h-10 w-auto" pathClassName={showScrolledState ? 'fill-brand-dark dark:fill-white' : 'fill-white'} />
           </a>
           <div className="flex items-center">
             <div className="flex items-center space-x-8">
@@ -167,9 +185,12 @@ const Header: React.FC<HeaderProps> = ({ onLogout, currentUser, onNavigateHome, 
                   </a>
                 ))}
             </div>
+             <div className="ml-4">
+                <ThemeToggleButton />
+            </div>
             {currentUser && (
-              <div className="flex items-center ml-4">
-                <span className={`text-sm font-medium mr-4 ${showScrolledState ? 'text-brand-dark' : 'text-white'}`}>Hi, {currentUser.name}</span>
+              <div className="flex items-center">
+                <span className={`text-sm font-medium mr-4 ${showScrolledState ? 'text-brand-dark dark:text-white' : 'text-white'}`}>Hi, {currentUser.name}</span>
                 <button onClick={onLogout} className={getAuthButtonClassName()}>Logout</button>
               </div>
             )}
@@ -180,7 +201,7 @@ const Header: React.FC<HeaderProps> = ({ onLogout, currentUser, onNavigateHome, 
         <div className="md:hidden">
             <nav className={`relative z-50 justify-between ${navBarClassName} ${showScrolledState ? navBarScrolledStyles : navBarTopStyles}`}>
                 <a href="#home" onClick={(e) => handleLinkClick(e)} className="flex items-center space-x-2 font-bold text-lg">
-                    <Logo className="h-10 w-auto" pathClassName={showScrolledState ? 'fill-brand-dark' : 'fill-white'}/>
+                    <Logo className="h-10 w-auto" pathClassName={showScrolledState ? 'fill-brand-dark dark:fill-white' : 'fill-white'}/>
                 </a>
                 <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2" aria-label="Toggle menu" aria-expanded={isMenuOpen}>
                     {isMenuOpen ? (
@@ -198,6 +219,7 @@ const Header: React.FC<HeaderProps> = ({ onLogout, currentUser, onNavigateHome, 
         className={`md:hidden fixed inset-0 bg-brand-dark z-40 transition-opacity duration-300 ease-in-out ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         aria-hidden={!isMenuOpen}
       >
+        <ThemeToggleButton isMobile={true} />
         <div className="flex flex-col items-center justify-center h-full space-y-6">
           {navLinks.map((link, index) => (
             <a 

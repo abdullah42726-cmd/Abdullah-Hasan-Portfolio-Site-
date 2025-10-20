@@ -37,12 +37,12 @@ const Hero: React.FC = () => {
             <div className={`absolute -top-3 -right-10 transform scale-75 -rotate-12 scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`} style={{ transitionDelay: '300ms' }}>
                  <Swoosh className="w-12 h-auto text-brand-blue-500 animate-subtle-wave" />
             </div>
-            <div className="bg-white border-2 border-brand-dark rounded-full px-5 py-2 text-md shadow-sm text-brand-dark font-medium">
+            <div className="bg-white dark:bg-brand-dark-2 border-2 border-brand-dark dark:border-gray-600 rounded-full px-5 py-2 text-md shadow-sm text-brand-dark dark:text-white font-medium">
                 Hello!
             </div>
         </div>
         
-        <h1 className={`text-4xl sm:text-5xl md:text-6xl font-extrabold text-brand-dark leading-tight mt-6 relative max-w-4xl mx-auto scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`} style={{ transitionDelay: '200ms' }}>
+        <h1 className={`text-4xl sm:text-5xl md:text-6xl font-extrabold text-brand-dark dark:text-white leading-tight mt-6 relative max-w-4xl mx-auto scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`} style={{ transitionDelay: '200ms' }}>
             I'm <span className="text-brand-blue-500">Abdullah Hasan</span>,<br/>
             <span className="text-3xl sm:text-4xl md:text-5xl">Graphics Designer &amp; Video Editor</span>
         </h1>
@@ -52,23 +52,23 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Main content area */}
-      <div className="mt-12 md:-mt-8 relative flex justify-center items-center h-[480px] md:h-[550px]">
+      <div className="mt-12 md:-mt-8 relative flex justify-center items-center h-[420px] md:h-[550px]">
         
         {/* Left Testimonial */}
-        <div className={`hidden md:block absolute left-0 top-1/4 max-w-[220px] text-left z-20 bg-white p-6 rounded-xl shadow-lg scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`} style={{ transitionDelay: '400ms' }}>
-            <span className="text-5xl text-gray-400 font-serif leading-none block -mb-4">“</span>
-            <p className="text-gray-700 text-sm font-medium">
+        <div className={`hidden md:block absolute left-0 top-1/4 max-w-[220px] text-left z-20 bg-white dark:bg-brand-dark-2 p-6 rounded-xl shadow-lg scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`} style={{ transitionDelay: '400ms' }}>
+            <span className="text-5xl text-gray-400 dark:text-gray-600 font-serif leading-none block -mb-4">“</span>
+            <p className="text-gray-700 dark:text-gray-300 text-sm font-medium">
                 Abdullah's Exceptional design work ensures our website's success. Highly Recommended
             </p>
         </div>
 
         {/* Right Experience */}
-        <div className={`hidden md:block absolute right-0 top-1/4 max-w-xs text-left z-20 bg-white p-6 rounded-xl shadow-lg scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`} style={{ transitionDelay: '400ms' }}>
+        <div className={`hidden md:block absolute right-0 top-1/4 max-w-xs text-left z-20 bg-white dark:bg-brand-dark-2 p-6 rounded-xl shadow-lg scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`} style={{ transitionDelay: '400ms' }}>
             <div className="flex text-brand-blue-500">
                 <StarIcon className="w-5 h-5"/><StarIcon className="w-5 h-5"/><StarIcon className="w-5 h-5"/><StarIcon className="w-5 h-5"/><StarIcon className="w-5 h-5"/>
             </div>
-            <p className="text-4xl font-bold text-brand-dark mt-2">6+ Years</p>
-            <p className="text-gray-500">Experience</p>
+            <p className="text-4xl font-bold text-brand-dark dark:text-white mt-2">6+ Years</p>
+            <p className="text-gray-500 dark:text-gray-400">Experience</p>
         </div>
 
         {/* Centerpiece Image & Background */}
@@ -89,12 +89,12 @@ const Hero: React.FC = () => {
       </div>
       
       {/* Buttons at the bottom */}
-       <div className={`relative -mt-24 sm:-mt-16 z-30 flex justify-center scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`} style={{ transitionDelay: '600ms' }}>
-        <div className="flex items-center rounded-full p-2 glass-effect">
+       <div className={`relative -mt-20 sm:-mt-16 z-30 flex justify-center scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`} style={{ transitionDelay: '600ms' }}>
+        <div className="flex items-center rounded-full p-2 glass-effect dark:bg-brand-dark-2/30 dark:border-white/20">
             <a href="#portfolio" onClick={handleNavClick} className="bg-brand-blue-500 text-white px-8 py-3 rounded-full text-sm font-semibold flex items-center hover:bg-brand-blue-600 transition-colors">
                 Portfolio <ArrowRightIcon className="w-5 h-5 ml-2" />
             </a>
-            <a href="#contact" onClick={handleNavClick} className="text-brand-dark px-8 py-3 rounded-full text-sm font-semibold hover:bg-white/50 transition-colors">
+            <a href="#contact" onClick={handleNavClick} className="text-brand-dark dark:text-white px-8 py-3 rounded-full text-sm font-semibold hover:bg-white/50 dark:hover:bg-brand-dark-2/80 transition-colors">
                 Hire me
             </a>
         </div>

@@ -1,5 +1,7 @@
 import React from 'react';
 import Logo from './icons/Logo';
+import SunIcon from './icons/SunIcon';
+import MoonIcon from './icons/MoonIcon';
 
 const SocialIcon: React.FC<{ children: React.ReactNode, href: string, label: string }> = ({ children, href, label }) => (
   <a href={href} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors" aria-label={label}>
@@ -27,9 +29,11 @@ interface FooterProps {
   onDashboardClick: () => void;
   onNavigateHome: (targetId?: string) => void;
   isHomePage: boolean;
+  theme: 'light' | 'dark';
+  onToggleTheme: () => void;
 }
 
-const Footer: React.FC<FooterProps> = ({ onDashboardClick, onNavigateHome, isHomePage }) => {
+const Footer: React.FC<FooterProps> = ({ onDashboardClick, onNavigateHome, isHomePage, theme, onToggleTheme }) => {
     const navLinks = [
         { name: 'About', href: '#experience' },
         { name: 'Service', href: '#services' },
@@ -105,7 +109,10 @@ const Footer: React.FC<FooterProps> = ({ onDashboardClick, onNavigateHome, isHom
           <p className="text-sm text-gray-500 mb-4 sm:mb-0">
             &copy; {new Date().getFullYear()} Abdullah Hasan. All Rights Reserved.
           </p>
-          <div className="flex space-x-6">
+          <div className="flex items-center space-x-6">
+            <button onClick={onToggleTheme} className="text-gray-400 hover:text-white transition-colors" aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}>
+                {theme === 'light' ? <MoonIcon className="w-6 h-6" /> : <SunIcon className="w-6 h-6 text-yellow-400" />}
+            </button>
             <SocialIcon href="https://www.facebook.com/ahasand" label="Facebook"><FacebookIcon /></SocialIcon>
             <SocialIcon href="https://www.instagram.com/abdullah_hasan_d/" label="Instagram"><InstagramIcon /></SocialIcon>
             <SocialIcon href="https://www.linkedin.com/in/abdullahhasan42726/" label="LinkedIn"><LinkedInIcon /></SocialIcon>
