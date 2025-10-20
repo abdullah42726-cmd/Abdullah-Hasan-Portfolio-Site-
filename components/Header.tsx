@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Logo from './icons/Logo';
 import { User } from '../types';
+import ResumeArrowIcon from './icons/ResumeArrowIcon';
 
 interface NavLink {
   name: string;
@@ -11,9 +12,11 @@ interface NavLink {
 interface HeaderProps {
   onLogout: () => void;
   currentUser: User | null;
+  onNavigateHome: () => void;
+  isHomePage: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ onLogout, currentUser }) => {
+const Header: React.FC<HeaderProps> = ({ onLogout, currentUser, onNavigateHome, isHomePage }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState('#home');
@@ -29,6 +32,9 @@ const Header: React.FC<HeaderProps> = ({ onLogout, currentUser }) => {
   }, []);
   
   useEffect(() => {
+    // Only set up observer if on the homepage where sections exist
+    if (!isHomePage) return;
+
     const sections = document.querySelectorAll('section[id]');
     
     if (observer.current) {
@@ -57,13 +63,13 @@ const Header: React.FC<HeaderProps> = ({ onLogout, currentUser }) => {
         observer.current.disconnect();
       }
     };
-  }, []);
+  }, [isHomePage]);
 
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto';
   }, [isMenuOpen]);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleScrollToSection = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const targetId = e.currentTarget.getAttribute('href');
     if (targetId) {
@@ -74,25 +80,49 @@ const Header: React.FC<HeaderProps> = ({ onLogout, currentUser }) => {
     }
     setIsMenuOpen(false);
   };
+  
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, external?: boolean) => {
+    if (external) {
+      if (isMenuOpen) setIsMenuOpen(false);
+      return;
+    }
+    
+    e.preventDefault();
+    if (isHomePage) {
+      handleScrollToSection(e);
+    } else {
+      onNavigateHome();
+      if (isMenuOpen) setIsMenuOpen(false);
+    }
+  };
 
   const navLinks: NavLink[] = [
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#experience' },
     { name: 'Service', href: '#services' },
-    { name: 'Project', href: '#portfolio' },
-    { name: 'Resume', href: 'https://drive.google.com/file/d/1HqozSuhNjKC7O-Bxl0RkTX_ReeNV39Oh/view?usp=sharing', external: true },
+    { name: 'Projects', href: '#portfolio' },
     { name: 'Contact', href: '#contact' },
+    { name: 'Resume', href: 'https://drive.google.com/file/d/1HqozSuhNjKC7O-Bxl0RkTX_ReeNV39Oh/view?usp=sharing', external: true },
   ];
 
-  const getLinkClassName = (href: string) => {
-    if (activeLink === href) {
+  const getLinkClassName = (link: NavLink) => {
+    const isResume = link.name === 'Resume';
+    const isActive = isHomePage && activeLink === link.href;
+
+    if (isResume) {
+        return 'bg-brand-blue-500 text-white px-6 py-2 rounded-full text-sm font-medium transition-colors flex items-center gap-x-2';
+    }
+    if (isActive) {
       return 'bg-brand-blue-500 text-white px-6 py-2 rounded-full text-sm font-medium transition-colors';
     }
     return 'hover:text-brand-blue-500 transition-colors text-sm font-medium';
   };
   
-  const getMobileLinkClassName = (href: string) => {
-    if (activeLink === href) {
+  const getMobileLinkClassName = (link: NavLink) => {
+    const isResume = link.name === 'Resume';
+    const isActive = isHomePage && activeLink === link.href;
+
+    if (isActive || isResume) {
         return "text-brand-blue-200";
     }
     return "text-white hover:text-brand-blue-500";
@@ -117,8 +147,8 @@ const Header: React.FC<HeaderProps> = ({ onLogout, currentUser }) => {
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* --- Desktop Navigation --- */}
         <nav className={`hidden md:flex justify-between items-center ${navBarClassName} ${showScrolledState ? navBarScrolledStyles : navBarTopStyles}`}>
-          <a href="#home" onClick={handleNavClick} aria-label="Go to homepage">
-              <Logo className="h-8 w-auto" pathClassName={showScrolledState ? 'fill-brand-dark' : 'fill-white'} />
+          <a href="#home" onClick={(e) => handleLinkClick(e)} aria-label="Go to homepage">
+              <Logo className="h-10 w-auto" pathClassName={showScrolledState ? 'fill-brand-dark' : 'fill-white'} />
           </a>
           <div className="flex items-center">
             <div className="flex items-center space-x-8">
@@ -126,11 +156,12 @@ const Header: React.FC<HeaderProps> = ({ onLogout, currentUser }) => {
                   <a 
                     key={`${link.name}-${link.href}-desktop`} 
                     href={link.href} 
-                    onClick={link.external ? undefined : handleNavClick}
+                    onClick={(e) => handleLinkClick(e, link.external)}
                     target={link.external ? '_blank' : undefined}
                     rel={link.external ? 'noopener noreferrer' : undefined}
-                    className={getLinkClassName(link.href)}>
-                    {link.name}
+                    className={getLinkClassName(link)}>
+                    <span>{link.name}</span>
+                    {link.name === 'Resume' && <ResumeArrowIcon className="w-4 h-4" />}
                   </a>
                 ))}
             </div>
@@ -146,8 +177,8 @@ const Header: React.FC<HeaderProps> = ({ onLogout, currentUser }) => {
         {/* --- Mobile Navigation --- */}
         <div className="md:hidden">
             <nav className={`relative z-50 justify-between ${navBarClassName} ${showScrolledState ? navBarScrolledStyles : navBarTopStyles}`}>
-                <a href="#home" onClick={handleNavClick} className="flex items-center space-x-2 font-bold text-lg">
-                    <Logo className="h-8 w-auto" pathClassName={showScrolledState ? 'fill-brand-dark' : 'fill-white'}/>
+                <a href="#home" onClick={(e) => handleLinkClick(e)} className="flex items-center space-x-2 font-bold text-lg">
+                    <Logo className="h-10 w-auto" pathClassName={showScrolledState ? 'fill-brand-dark' : 'fill-white'}/>
                 </a>
                 <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2" aria-label="Toggle menu" aria-expanded={isMenuOpen}>
                     {isMenuOpen ? (
@@ -170,17 +201,18 @@ const Header: React.FC<HeaderProps> = ({ onLogout, currentUser }) => {
             <a 
               key={link.name} 
               href={link.href} 
-              onClick={link.external ? () => setIsMenuOpen(false) : handleNavClick} 
+              onClick={(e) => handleLinkClick(e, link.external)} 
               target={link.external ? '_blank' : undefined}
               rel={link.external ? 'noopener noreferrer' : undefined}
-              className={`text-3xl font-semibold transition-all duration-300 ${getMobileLinkClassName(link.href)}`}
+              className={`text-3xl font-semibold transition-all duration-300 flex items-center gap-x-3 ${getMobileLinkClassName(link)}`}
               style={{
                 opacity: isMenuOpen ? 1 : 0,
                 transform: isMenuOpen ? 'translateY(0)' : 'translateY(20px)',
                 transitionDelay: isMenuOpen ? `${index * 70}ms` : '0ms'
               }}
             >
-              {link.name}
+              <span>{link.name}</span>
+              {link.name === 'Resume' && <ResumeArrowIcon className="w-7 h-7" />}
             </a>
           ))}
           {currentUser && (

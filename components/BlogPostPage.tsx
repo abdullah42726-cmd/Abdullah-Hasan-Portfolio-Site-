@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { Post, User, Comment } from '../types';
-import Header from './Header';
-import Footer from './Footer';
 
 interface CommentFormProps {
     onSubmit: (commentText: string) => void;
@@ -76,21 +74,11 @@ interface BlogPostPageProps {
     post: Post;
     currentUser: User | null;
     onAddComment: (postId: number, commentText: string) => void;
-    onBack: () => void;
 }
 
-const BlogPostPage: React.FC<BlogPostPageProps> = ({ post, currentUser, onAddComment, onBack }) => {
+const BlogPostPage: React.FC<BlogPostPageProps> = ({ post, currentUser, onAddComment }) => {
     return (
         <div className="bg-white font-sans">
-            {/* Minimal header for the blog post page */}
-             <header className="py-4">
-                 <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <button onClick={onBack} className="text-brand-blue-500 hover:underline font-semibold">
-                        &larr; Back to all posts
-                    </button>
-                 </div>
-             </header>
-
             <main className="max-w-screen-md mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <article>
                     <header className="mb-8">
@@ -115,8 +103,6 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post, currentUser, onAddCom
 
                 <CommentsSection post={post} currentUser={currentUser} onAddComment={onAddComment} onLoginClick={() => { /* This should probably navigate to login view */ }} />
             </main>
-            
-            <Footer onDashboardClick={() => {}} />
         </div>
     );
 };

@@ -18,11 +18,12 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import BlogPostPage from './components/BlogPostPage';
 import VerificationPage from './components/VerificationPage';
+import PortfolioPage from './components/PortfolioPage';
 import { User, Post, Comment, PortfolioItem } from './types';
 import { mockPostsData, mockUsers, mockPortfolioData } from './mockData';
 
 
-type View = 'site' | 'login' | 'signup' | 'dashboard' | 'pendingVerification';
+type View = 'site' | 'login' | 'signup' | 'dashboard' | 'pendingVerification' | 'portfolioPage';
 
 const App: React.FC = () => {
   const [view, setView] = useState<View>('site');
@@ -125,6 +126,11 @@ const App: React.FC = () => {
       setView('site');
   }
 
+  const handleViewAllPortfolio = () => {
+    setActivePost(null);
+    setView('portfolioPage');
+  };
+
   const handleSavePost = (postToSave: Post) => {
     if (postToSave.id) {
         setPosts(posts.map(p => p.id === postToSave.id ? postToSave : p));
@@ -178,12 +184,16 @@ const App: React.FC = () => {
     }
 
     if (activePost) {
-        return <BlogPostPage post={activePost} currentUser={currentUser} onAddComment={handleAddComment} onBack={handleBackToHome} />;
+        return <BlogPostPage post={activePost} currentUser={currentUser} onAddComment={handleAddComment} />;
     }
 
+    if (view === 'portfolioPage') {
+        return <PortfolioPage items={portfolioItems} />;
+    }
+
+    // Default view: Site homepage
     return (
       <>
-        <Header onLogout={handleLogout} currentUser={currentUser} />
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <Hero />
         </div>
@@ -192,7 +202,7 @@ const App: React.FC = () => {
           <WhyHireMe />
           <Skills />
           <Services />
-          <Portfolio items={portfolioItems} />
+          <Portfolio items={portfolioItems} onSeeAll={handleViewAllPortfolio} />
         </div>
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <LogoCloud />
@@ -207,15 +217,35 @@ const App: React.FC = () => {
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <Blog posts={posts} onPostSelect={handlePostSelect} />
         </div>
-        <Footer onDashboardClick={showLoginPage} />
-        <BackToTopButton />
       </>
     );
   };
 
+  const showGlobalLayout = view === 'site' || view === 'portfolioPage' || !!activePost;
+
   return (
     <div className="bg-white font-sans">
+      {showGlobalLayout && (
+        <Header 
+          onLogout={handleLogout} 
+          currentUser={currentUser} 
+          onNavigateHome={handleBackToHome}
+          isHomePage={view === 'site'}
+        />
+      )}
+
       {renderContent()}
+
+      {showGlobalLayout && (
+        <>
+          <Footer 
+            onDashboardClick={showLoginPage}
+            onNavigateHome={handleBackToHome}
+            isHomePage={view === 'site'}
+          />
+          <BackToTopButton />
+        </>
+      )}
     </div>
   );
 };

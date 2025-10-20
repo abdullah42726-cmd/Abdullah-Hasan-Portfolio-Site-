@@ -4,9 +4,10 @@ import { PortfolioItem } from '../types';
 
 interface PortfolioProps {
   items: PortfolioItem[];
+  onSeeAll: () => void;
 }
 
-const Portfolio: React.FC<PortfolioProps> = ({ items }) => {
+const Portfolio: React.FC<PortfolioProps> = ({ items, onSeeAll }) => {
     const [activeIndex, setActiveIndex] = useState(0);
 
     if (!items || items.length === 0) {
@@ -33,7 +34,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ items }) => {
         <h2 className="text-4xl md:text-5xl font-bold">
           <span className="text-brand-dark">Lets have a look at my </span><span className="text-brand-blue-500">Portfolio</span>
         </h2>
-        <button className="bg-brand-blue-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-opacity flex-shrink-0">
+        <button onClick={onSeeAll} className="bg-brand-blue-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-opacity flex-shrink-0">
           See All
         </button>
       </div>
