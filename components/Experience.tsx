@@ -63,23 +63,29 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({ company, duration, role
 const Experience: React.FC = () => {
   const experiences = [
     {
-      company: "Cognizant, Mumbai",
-      duration: "Sep 2016 - July 2020",
-      role: "Experience Designer",
-      description: "Crafted intuitive user experiences and visually compelling interfaces for diverse corporate clients, translating complex requirements into elegant and effective design solutions.",
+      company: "Anthony Young Garments LTD, Gazipur",
+      duration: "May 2020 - April 2021",
+      role: "Junior Executive Graphic Designer",
+      description: "Designed 20+ T-shirt graphics and mockups for product visualization. Performed precise clipping path work to enhance garment images for marketing. Examined 50+ design samples to ensure quality and consistency with production standards.",
     },
     {
-      company: "Sugee Pvt limited, Mumbai",
-      duration: "Sep 2020 - July 2023",
-      role: "UI/UX Designer",
-      description: "Led the design of user-centric web and mobile applications, focusing on creating seamless workflows and engaging visual designs that elevated the brand's digital presence.",
+      company: "FARA IT Fusion, Dhaka",
+      duration: "May 2021 - Dec 2021",
+      role: "Executive Creative Designer",
+      description: "Created 20+ UI wireframes to streamline website development and user flow. Designed 50+ social media posts, ensuring impactful and engaging visuals. Enhanced low-quality client graphics into high-resolution assets, clipping path and vector conversions.",
+    },
+    {
+      company: "Professional Bangladesh Community Manager, Bogura Sadar",
+      duration: "Nov 2021 - Apr 2022",
+      role: "Creative Designer (Remote: Part-time)",
+      description: "Designed 100+ static posts, banners, and event covers to engage the community. Created 20+ video intros and motion graphics to enhance community visibility. Developed branded merchandise, including stickers, T-shirts, and mugs, for community events.",
+    },
+    {
+      company: "Renssoft Solution Ltd, Dhaka",
+      duration: "Jan 2022 - Present",
+      role: "Executive Graphic Designer & video Editor",
+      description: "Designed 2,000+ static social media posts and 500+ videos. Created 10+ UI/UX designs for in-house software, websites, and apps, enhancing user experience. Tailored engaging content for medical professionals, contributing to a 5% company growth. Edited and refined video productions, ensuring top-notch quality across all projects.",
       isCurrent: true,
-    },
-    {
-      company: "Cinetstox, Mumbai",
-      duration: "Sep 2023",
-      role: "Lead UX Designer",
-      description: "Directed user experience strategy and mentored a design team, driving the creation of innovative and user-friendly products from concept to final launch.",
     },
   ];
 

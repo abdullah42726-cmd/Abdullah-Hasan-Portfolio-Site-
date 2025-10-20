@@ -25,3 +25,11 @@ export interface Post {
     imageUrl?: string;
     comments?: Comment[];
 }
+
+export interface PortfolioItem {
+    id: number | null;
+    title: string;
+    description: string;
+    imageUrl: string;
+    category: string;
+}

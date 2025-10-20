@@ -1,8 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ArrowRightIcon from './icons/ArrowRightIcon';
+import { PortfolioItem } from '../types';
 
-const Portfolio: React.FC = () => {
-    const filters = ['Landing Page', 'Product Design', 'Animation', 'Glassmorphism', 'Cards'];
+interface PortfolioProps {
+  items: PortfolioItem[];
+}
+
+const Portfolio: React.FC<PortfolioProps> = ({ items }) => {
+    const [activeIndex, setActiveIndex] = useState(0);
+
+    if (!items || items.length === 0) {
+        return (
+            <section id="portfolio" className="py-20 text-center">
+                <h2 className="text-4xl md:text-5xl font-bold">
+                    <span className="text-brand-dark">My </span><span className="text-brand-blue-500">Portfolio</span>
+                </h2>
+                <p className="text-gray-500 mt-4">No portfolio items to display yet.</p>
+            </section>
+        );
+    }
+    
+    const activeItem = items[activeIndex];
+    const nextItemIndex = (activeIndex + 1) % items.length;
+    const nextItem = items[nextItemIndex];
+    
+    const goToNext = () => setActiveIndex(nextItemIndex);
+    const goToIndex = (index: number) => setActiveIndex(index);
+
   return (
     <section id="portfolio" className="py-20">
       <div className="flex flex-col items-start gap-y-4 sm:flex-row sm:justify-between sm:items-center mb-10">
@@ -15,32 +39,34 @@ const Portfolio: React.FC = () => {
       </div>
 
       <div className="grid md:grid-cols-2 gap-8 mb-10">
-          <img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=800" alt="Portfolio item 1" className="rounded-2xl" />
-          <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=800" alt="Portfolio item 2" className="rounded-2xl" />
+          <img src={activeItem.imageUrl} alt={activeItem.title} className="rounded-2xl w-full h-full object-cover" />
+          <img src={nextItem.imageUrl} alt={nextItem.title} className="rounded-2xl w-full h-full object-cover hidden md:block" />
       </div>
       
       <div className="flex justify-center space-x-2 mb-10">
-        <span className="block w-6 h-2 rounded-full bg-brand-blue-500"></span>
-        <span className="block w-2 h-2 rounded-full bg-gray-300"></span>
-        <span className="block w-2 h-2 rounded-full bg-gray-300"></span>
-        <span className="block w-2 h-2 rounded-full bg-gray-300"></span>
-      </div>
-
-      <div className="flex justify-center flex-wrap gap-3 mb-10">
-          {filters.map(filter => (
-              <button key={filter} className="bg-gray-100 text-gray-700 px-5 py-2 rounded-full font-medium hover:bg-gray-200 transition-colors">{filter}</button>
-          ))}
+        {items.map((_, index) => (
+             <button 
+               key={index} 
+               onClick={() => goToIndex(index)} 
+               className={`block h-2 rounded-full transition-all duration-300 ${index === activeIndex ? 'w-6 bg-brand-blue-500' : 'w-2 bg-gray-300 hover:bg-gray-400'}`}
+               aria-label={`Go to slide ${index + 1}`}
+            />
+        ))}
       </div>
 
       <div className="text-center max-w-2xl mx-auto">
           <h3 className="text-3xl md:text-4xl font-bold flex items-center justify-center gap-4 text-brand-dark">
-            Lirante - Food Dilvery Solution
-            <span className="bg-brand-blue-500 text-white w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0">
+            {activeItem.title}
+            <button 
+                onClick={goToNext} 
+                className="bg-brand-blue-500 text-white w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 hover:bg-brand-blue-600 transition-colors"
+                aria-label="Next project"
+            >
                 <ArrowRightIcon className="w-6 h-6" />
-            </span>
+            </button>
           </h3>
           <p className="text-gray-500 mt-4">
-              Lirante is a comprehensive food delivery platform designed with a user-first approach. I crafted a seamless and intuitive UI/UX, from browsing menus to checkout, ensuring a delightful and efficient ordering experience for customers.
+              {activeItem.description}
           </p>
       </div>
     </section>

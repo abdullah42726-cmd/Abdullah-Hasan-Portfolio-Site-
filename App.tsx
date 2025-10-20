@@ -18,8 +18,8 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import BlogPostPage from './components/BlogPostPage';
 import VerificationPage from './components/VerificationPage';
-import { User, Post, Comment } from './types';
-import { mockPostsData, mockUsers } from './mockData';
+import { User, Post, Comment, PortfolioItem } from './types';
+import { mockPostsData, mockUsers, mockPortfolioData } from './mockData';
 
 
 type View = 'site' | 'login' | 'signup' | 'dashboard' | 'pendingVerification';
@@ -29,6 +29,7 @@ const App: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [activePost, setActivePost] = useState<Post | null>(null);
   const [posts, setPosts] = useState<Post[]>(mockPostsData);
+  const [portfolioItems, setPortfolioItems] = useState<PortfolioItem[]>(mockPortfolioData);
   const [userToVerify, setUserToVerify] = useState<User | null>(null);
 
   // Check for logged in user in localStorage on initial load
@@ -124,9 +125,44 @@ const App: React.FC = () => {
       setView('site');
   }
 
+  const handleSavePost = (postToSave: Post) => {
+    if (postToSave.id) {
+        setPosts(posts.map(p => p.id === postToSave.id ? postToSave : p));
+    } else {
+        const newPost = { ...postToSave, id: Date.now() };
+        setPosts([newPost, ...posts]);
+    }
+  };
+
+  const handleDeletePost = (postId: number) => {
+      setPosts(posts.filter(p => p.id !== postId));
+  };
+
+  const handleSavePortfolioItem = (itemToSave: PortfolioItem) => {
+      if (itemToSave.id) {
+          setPortfolioItems(portfolioItems.map(i => i.id === itemToSave.id ? itemToSave : i));
+      } else {
+          const newItem = { ...itemToSave, id: Date.now() };
+          setPortfolioItems([newItem, ...portfolioItems]);
+      }
+  };
+
+  const handleDeletePortfolioItem = (itemId: number) => {
+      setPortfolioItems(portfolioItems.filter(i => i.id !== itemId));
+  };
+
+
   const renderContent = () => {
     if (view === 'dashboard' && currentUser?.role === 'admin') {
-      return <Dashboard onLogout={handleLogout} />;
+      return <Dashboard
+                onLogout={handleLogout}
+                posts={posts}
+                portfolioItems={portfolioItems}
+                onSavePost={handleSavePost}
+                onDeletePost={handleDeletePost}
+                onSavePortfolioItem={handleSavePortfolioItem}
+                onDeletePortfolioItem={handleDeletePortfolioItem}
+            />;
     }
     
     if (view === 'login') {
@@ -156,7 +192,7 @@ const App: React.FC = () => {
           <WhyHireMe />
           <Skills />
           <Services />
-          <Portfolio />
+          <Portfolio items={portfolioItems} />
         </div>
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <LogoCloud />
