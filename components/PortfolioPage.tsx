@@ -7,7 +7,7 @@ interface PortfolioCardProps {
 }
 
 const PortfolioCard: React.FC<PortfolioCardProps> = ({ item }) => (
-    <div className="group rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 bg-white">
+    <div className="group rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 bg-white">
         <div className="relative">
             <img src={item.imageUrl} alt={item.title} className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" />
             <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-40 transition-opacity duration-300"></div>
@@ -16,7 +16,7 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({ item }) => (
             <p className="text-sm font-semibold text-brand-blue-500 uppercase tracking-wider">{item.category}</p>
             <h3 className="text-xl font-bold text-brand-dark mt-2 mb-3">{item.title}</h3>
             <p className="text-gray-600 text-sm mb-4 line-clamp-3">{item.description}</p>
-            <button className="font-semibold text-brand-blue-500 hover:text-brand-blue-600 flex items-center group-hover:translate-x-1 transition-transform">
+            <button className="font-semibold text-brand-blue-500 hover:text-brand-blue-600 flex items-center group-hover:translate-x-1 transition-transform duration-300">
                 View Project <ArrowRightIcon className="w-5 h-5 ml-1" />
             </button>
         </div>
