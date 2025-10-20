@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from './icons/Logo';
 import SunIcon from './icons/SunIcon';
 import MoonIcon from './icons/MoonIcon';
@@ -34,6 +34,12 @@ interface FooterProps {
 }
 
 const Footer: React.FC<FooterProps> = ({ onDashboardClick, onNavigateHome, isHomePage, theme, onToggleTheme }) => {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('');
+    const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+    const [error, setError] = useState('');
+
     const navLinks = [
         { name: 'About', href: '#experience' },
         { name: 'Service', href: '#services' },
@@ -61,6 +67,37 @@ const Footer: React.FC<FooterProps> = ({ onDashboardClick, onNavigateHome, isHom
             onNavigateHome(targetId || undefined);
         }
     }
+    
+    const validateEmail = (email: string) => {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        setError('');
+
+        if (!name.trim() || !email.trim() || !message.trim()) {
+            setError('All fields are required.');
+            setStatus('error');
+            return;
+        }
+        if (!validateEmail(email)) {
+            setError('Please enter a valid email address.');
+            setStatus('error');
+            return;
+        }
+
+        setStatus('submitting');
+        // Simulate form submission
+        setTimeout(() => {
+            setStatus('success');
+            setName('');
+            setEmail('');
+            setMessage('');
+            setTimeout(() => setStatus('idle'), 3000); // Reset form status after 3 seconds
+        }, 1000);
+    };
+
 
   return (
     <footer className="bg-brand-dark text-white">
@@ -95,13 +132,32 @@ const Footer: React.FC<FooterProps> = ({ onDashboardClick, onNavigateHome, isHom
             </ul>
           </div>
 
-          {/* Column 3: Contact Info */}
+          {/* Column 3: Contact Form */}
           <div>
              <h4 className="text-lg font-semibold mb-4">Get In Touch</h4>
-             <p className="text-gray-400 text-sm mb-4">Have a project in mind? Let's talk!</p>
-             <a href="#contact" onClick={handleLinkClick} className="inline-block bg-brand-blue-500 text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-brand-blue-600 transition-colors">
-                Contact Me
-             </a>
+             <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                    <label htmlFor="footer-name" className="sr-only">Name</label>
+                    <input type="text" id="footer-name" name="name" placeholder="Your Name" value={name} onChange={e => setName(e.target.value)}
+                           className="w-full bg-gray-800 border-gray-700 text-white text-sm rounded-lg focus:ring-brand-blue-500 focus:border-brand-blue-500 block p-2.5 placeholder-gray-400" />
+                </div>
+                 <div>
+                    <label htmlFor="footer-email" className="sr-only">Email</label>
+                    <input type="email" id="footer-email" name="email" placeholder="Your Email" value={email} onChange={e => setEmail(e.target.value)}
+                           className="w-full bg-gray-800 border-gray-700 text-white text-sm rounded-lg focus:ring-brand-blue-500 focus:border-brand-blue-500 block p-2.5 placeholder-gray-400" />
+                </div>
+                 <div>
+                    <label htmlFor="footer-message" className="sr-only">Message</label>
+                    <textarea id="footer-message" name="message" rows={3} placeholder="Your Message" value={message} onChange={e => setMessage(e.target.value)}
+                              className="w-full bg-gray-800 border-gray-700 text-white text-sm rounded-lg focus:ring-brand-blue-500 focus:border-brand-blue-500 block p-2.5 placeholder-gray-400"></textarea>
+                </div>
+                <button type="submit" disabled={status === 'submitting'}
+                        className="w-full bg-brand-blue-500 text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-brand-blue-600 transition-colors disabled:bg-brand-blue-500/50">
+                   {status === 'submitting' ? 'Sending...' : 'Send Message'}
+                </button>
+                {status === 'success' && <p className="text-sm text-green-400 text-center">Thank you! Your message has been sent.</p>}
+                {status === 'error' && <p className="text-sm text-red-400 text-center">{error}</p>}
+             </form>
           </div>
         </div>
 

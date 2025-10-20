@@ -28,14 +28,20 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({ company, duration, role
 
   return (
     <div ref={ref} className="relative">
-      {/* --- Mobile Layout --- */}
-      <div className="md:hidden flex items-start pb-8">
-        <div className="flex flex-col items-center mr-4 mt-1 flex-shrink-0">
-          <div className={`w-6 h-6 rounded-full ${isCurrent ? 'bg-brand-dark dark:bg-white' : 'bg-brand-blue-500'} border-4 border-white dark:border-brand-dark ring-2 ring-gray-200 dark:ring-gray-700 z-10`}></div>
-          {!isLast && <div className="flex-grow w-px bg-gray-300 dark:bg-gray-700 border-l-2 border-dashed border-gray-300 dark:border-gray-700"></div>}
+      {/* --- New Mobile Layout --- */}
+      <div className={`md:hidden flex ${isLast ? '' : 'pb-10'}`}>
+        {/* Timeline graphics column */}
+        <div className="flex flex-col items-center mr-6">
+          <div className={`relative z-10 w-6 h-6 rounded-full ${isCurrent ? 'bg-brand-dark dark:bg-white' : 'bg-brand-blue-500'} border-4 border-white dark:border-brand-dark ring-2 ring-gray-200 dark:ring-gray-700`}></div>
+          {!isLast && <div className="w-px h-full bg-gray-300 dark:bg-gray-700 border-l-2 border-dashed border-gray-300 dark:border-gray-700"></div>}
         </div>
-        <div>{contentBlock}</div>
+        
+        {/* Content column */}
+        <div className="flex-1 pt-1 text-left">
+            {contentBlock}
+        </div>
       </div>
+
 
       {/* --- Desktop Layout --- */}
       <div className="hidden md:flex items-start pb-16 relative">

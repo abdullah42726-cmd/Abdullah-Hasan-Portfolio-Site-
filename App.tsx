@@ -56,11 +56,12 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const root = window.document.documentElement;
-    if (theme === 'dark') {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
-    }
+    root.classList.toggle('dark', theme === 'dark');
+
+    const body = window.document.body;
+    // Clean up old classes and apply the correct one for the theme
+    body.classList.remove('bg-white', 'bg-brand-dark');
+    body.classList.add(theme === 'dark' ? 'bg-brand-dark' : 'bg-white');
   }, [theme]);
 
   // Check for logged in user in localStorage on initial load
@@ -305,7 +306,7 @@ const App: React.FC = () => {
   const showGlobalLayout = view === 'site' || view === 'portfolioPage' || !!activePost || !!activeService;
 
   return (
-    <div className="bg-white dark:bg-brand-dark font-sans transition-colors duration-300">
+    <div className="font-sans">
       {showGlobalLayout && (
         <Header 
           onLogout={handleLogout} 
