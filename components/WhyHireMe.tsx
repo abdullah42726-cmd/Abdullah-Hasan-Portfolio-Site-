@@ -15,9 +15,8 @@ const WhyHireMe: React.FC = () => {
     }
   };
   
-  // The image will be cached by the browser.
-  // To update it, change the URL to a new image link.
-  const imageUrl = `https://i.imgur.com/bFQGSGk.png`;
+  // Reverted WebP to original PNG.
+  const imageUrl = `https://i.imgur.com/mJ2JB0f.png`;
 
   return (
     <section ref={ref} className="bg-brand-gray rounded-3xl p-8 md:p-12 my-20">

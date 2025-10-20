@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
+import { User, Post, Comment, PortfolioItem } from './types';
+import { mockPostsData, mockUsers, mockPortfolioData } from './mockData';
+
+// Reverted from lazy-loading to direct imports
 import LogoCloud from './components/LogoCloud';
 import Services from './components/Services';
 import Experience from './components/Experience';
@@ -19,9 +23,6 @@ import SignUp from './components/SignUp';
 import BlogPostPage from './components/BlogPostPage';
 import VerificationPage from './components/VerificationPage';
 import PortfolioPage from './components/PortfolioPage';
-import { User, Post, Comment, PortfolioItem } from './types';
-import { mockPostsData, mockUsers, mockPortfolioData } from './mockData';
-
 
 type View = 'site' | 'login' | 'signup' | 'dashboard' | 'pendingVerification' | 'portfolioPage';
 
@@ -186,7 +187,7 @@ const App: React.FC = () => {
     if (activePost) {
         return <BlogPostPage post={activePost} currentUser={currentUser} onAddComment={handleAddComment} />;
     }
-
+    
     if (view === 'portfolioPage') {
         return <PortfolioPage items={portfolioItems} />;
     }

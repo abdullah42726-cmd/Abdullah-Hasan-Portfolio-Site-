@@ -6,7 +6,7 @@ const ServiceCard: React.FC<{ title: string; imageUrl: string; isVisible: boolea
   <div className={`bg-brand-dark-2 rounded-3xl p-6 flex flex-col scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`} style={{ transitionDelay: delay }}>
     <h3 className="text-2xl font-bold">{title}</h3>
     <div className="flex-grow my-4 relative overflow-hidden rounded-2xl">
-        <img src={imageUrl} alt={title} className="w-full h-full object-cover"/>
+        <img src={imageUrl} alt={title} className="w-full h-full object-cover" />
     </div>
     <div className="flex justify-end">
       <button className="bg-gray-800 hover:bg-gray-700 transition-colors w-16 h-16 rounded-full flex items-center justify-center">

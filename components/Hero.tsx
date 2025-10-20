@@ -25,9 +25,8 @@ const Hero: React.FC = () => {
     }
   };
   
-  // The image will be cached by the browser.
-  // To update it, change the URL to a new image link.
-  const imageUrl = `https://i.imgur.com/bFQGSGk.png`;
+  // Reverted WebP to original PNG.
+  const imageUrl = `https://i.imgur.com/mJ2JB0f.png`;
 
   return (
     <section id="home" ref={ref} className="relative pt-12 pb-24 text-center overflow-x-clip">
@@ -82,8 +81,8 @@ const Hero: React.FC = () => {
           >
               <img 
                   src={imageUrl}
-                  alt="Abdullah Hasan, Graphics Designer and Video Editor" 
-                  className="h-[95%] w-auto object-contain" 
+                  alt="Abdullah Hasan, a smiling graphics designer and video editor." 
+                  className="h-[95%] w-auto object-contain"
               />
           </div>
         </div>
