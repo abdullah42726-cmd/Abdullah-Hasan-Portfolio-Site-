@@ -1,32 +1,34 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Logo from './icons/Logo';
+import { User } from '../types';
 
-// Fix: Add NavLink interface to ensure type safety for navigation links.
-// This resolves TypeScript errors where the 'external' property was not recognized
-// on all link objects, especially when combining different link arrays.
 interface NavLink {
   name: string;
   href: string;
   external?: boolean;
 }
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  onLoginClick: () => void;
+  onLogout: () => void;
+  currentUser: User | null;
+}
+
+const Header: React.FC<HeaderProps> = ({ onLoginClick, onLogout, currentUser }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState('#home');
   const observer = useRef<IntersectionObserver | null>(null);
 
-  // Effect to detect scroll for header background changes
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Check on initial load
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
-  // Effect for active link highlighting on scroll (Scrollspy)
   useEffect(() => {
     const sections = document.querySelectorAll('section[id]');
     
@@ -34,7 +36,6 @@ const Header: React.FC = () => {
         observer.current.disconnect();
     }
 
-    // This sets the active link when a section is centered in the viewport
     observer.current = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
@@ -42,7 +43,6 @@ const Header: React.FC = () => {
             }
         });
     }, { 
-        // Sets the "viewport" for checking intersection to be a horizontal line in the middle of the screen
         rootMargin: '-50% 0px -50% 0px',
         threshold: 0.5
     });
@@ -60,7 +60,6 @@ const Header: React.FC = () => {
     };
   }, []);
 
-  // Effect to disable body scroll when the mobile menu is open
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto';
   }, [isMenuOpen]);
@@ -100,12 +99,19 @@ const Header: React.FC = () => {
     return "text-white hover:text-brand-blue-500";
   };
   
-  // Scrolled state should not apply when mobile menu is open for a cleaner look
   const showScrolledState = isScrolled && !isMenuOpen;
   
   const navBarClassName = `rounded-full px-4 py-2 transition-all duration-300 flex items-center`;
   const navBarScrolledStyles = 'bg-white/80 backdrop-blur-lg text-brand-dark shadow-lg border border-white/20';
   const navBarTopStyles = 'bg-brand-dark text-white';
+  
+  const authButtonBaseClasses = 'px-5 py-2 rounded-full text-sm font-medium transition-colors ml-4';
+  const getAuthButtonClassName = () => {
+    if (showScrolledState) {
+        return `${authButtonBaseClasses} bg-brand-dark/5 hover:bg-brand-dark/10 text-brand-dark border border-brand-dark/20`;
+    }
+    return `${authButtonBaseClasses} bg-white/10 hover:bg-white/20 text-white`;
+  };
 
   return (
     <header className="sticky top-0 z-50 py-4">
@@ -115,18 +121,28 @@ const Header: React.FC = () => {
           <a href="#home" onClick={handleNavClick} aria-label="Go to homepage">
               <Logo className="h-8 w-auto" pathClassName={showScrolledState ? 'fill-brand-dark' : 'fill-white'} />
           </a>
-          <div className="flex items-center space-x-8">
-            {navLinks.map(link => (
-              <a 
-                key={`${link.name}-${link.href}-desktop`} 
-                href={link.href} 
-                onClick={link.external ? undefined : handleNavClick}
-                target={link.external ? '_blank' : undefined}
-                rel={link.external ? 'noopener noreferrer' : undefined}
-                className={getLinkClassName(link.href)}>
-                {link.name}
-              </a>
-            ))}
+          <div className="flex items-center">
+            <div className="flex items-center space-x-8">
+                {navLinks.map(link => (
+                  <a 
+                    key={`${link.name}-${link.href}-desktop`} 
+                    href={link.href} 
+                    onClick={link.external ? undefined : handleNavClick}
+                    target={link.external ? '_blank' : undefined}
+                    rel={link.external ? 'noopener noreferrer' : undefined}
+                    className={getLinkClassName(link.href)}>
+                    {link.name}
+                  </a>
+                ))}
+            </div>
+            {currentUser ? (
+              <div className="flex items-center ml-4">
+                <span className={`text-sm font-medium mr-4 ${showScrolledState ? 'text-brand-dark' : 'text-white'}`}>Hi, {currentUser.name}</span>
+                <button onClick={onLogout} className={getAuthButtonClassName()}>Logout</button>
+              </div>
+            ) : (
+              <button onClick={onLoginClick} className={getAuthButtonClassName()}>Login</button>
+            )}
           </div>
         </nav>
 
@@ -152,7 +168,7 @@ const Header: React.FC = () => {
         className={`md:hidden fixed inset-0 bg-brand-dark z-40 transition-opacity duration-300 ease-in-out ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         aria-hidden={!isMenuOpen}
       >
-        <div className="flex flex-col items-center justify-center h-full space-y-4">
+        <div className="flex flex-col items-center justify-center h-full space-y-6">
           {navLinks.map((link, index) => (
             <a 
               key={link.name} 
@@ -170,6 +186,33 @@ const Header: React.FC = () => {
               {link.name}
             </a>
           ))}
+          {currentUser ? (
+              <a
+                  href="#"
+                  onClick={(e) => { e.preventDefault(); onLogout(); setIsMenuOpen(false); }}
+                  className="text-3xl font-semibold text-white hover:text-brand-blue-500 transition-all duration-300"
+                  style={{
+                    opacity: isMenuOpen ? 1 : 0,
+                    transform: isMenuOpen ? 'translateY(0)' : 'translateY(20px)',
+                    transitionDelay: isMenuOpen ? `${navLinks.length * 70}ms` : '0ms'
+                  }}
+              >
+                  Logout
+              </a>
+          ) : (
+              <a
+                  href="#"
+                  onClick={(e) => { e.preventDefault(); onLoginClick(); setIsMenuOpen(false); }}
+                  className="text-3xl font-semibold text-white hover:text-brand-blue-500 transition-all duration-300"
+                  style={{
+                    opacity: isMenuOpen ? 1 : 0,
+                    transform: isMenuOpen ? 'translateY(0)' : 'translateY(20px)',
+                    transitionDelay: isMenuOpen ? `${navLinks.length * 70}ms` : '0ms'
+                  }}
+              >
+                  Login
+              </a>
+          )}
         </div>
       </div>
     </header>
