@@ -1,6 +1,9 @@
 import React from 'react';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 const WhyHireMe: React.FC = () => {
+  const { ref, isVisible } = useScrollAnimation();
+  
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const targetId = e.currentTarget.getAttribute('href');
@@ -17,10 +20,10 @@ const WhyHireMe: React.FC = () => {
   const imageUrl = `https://i.imgur.com/bFQGSGk.png`;
 
   return (
-    <section className="bg-brand-gray rounded-3xl p-8 md:p-12 my-20">
+    <section ref={ref} className="bg-brand-gray rounded-3xl p-8 md:p-12 my-20">
       <div className="grid md:grid-cols-2 gap-12 items-center">
         {/* Visuals Column */}
-        <div className="relative h-[450px] flex justify-center items-end">
+        <div className={`relative h-[450px] flex justify-center items-end scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`}>
           {/* Blue circle purely for background color */}
           <div className="absolute w-[404px] h-[404px] bg-brand-blue-500 rounded-full bottom-0"></div>
 
@@ -40,7 +43,7 @@ const WhyHireMe: React.FC = () => {
         </div>
         
         {/* Text Content Column */}
-        <div>
+        <div className={`scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`} style={{ transitionDelay: '200ms' }}>
           <h2 className="text-4xl md:text-5xl font-bold"><span className="text-brand-dark">Why</span> <span className="text-brand-blue-500">Hire me?</span></h2>
           <p className="text-gray-500 mt-6 max-w-md">
             With a decade of experience, I blend creative artistry with technical skill to deliver designs that not only look stunning but also drive results and captivate audiences.

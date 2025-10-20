@@ -1,6 +1,7 @@
 import React from 'react';
 import StarIcon from './icons/StarIcon';
 import WhatsAppIcon from './icons/WhatsAppIcon';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 const CheckIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
@@ -17,13 +18,15 @@ const AwardIcon = () => (
 
 
 const ProjectIdea: React.FC = () => {
+  const { ref, isVisible } = useScrollAnimation();
+  
   return (
-    <section id="contact" className="py-20 text-center">
-      <h2 className="text-4xl md:text-5xl font-bold text-brand-dark">
+    <section id="contact" ref={ref} className="py-20 text-center">
+      <h2 className={`text-4xl md:text-5xl font-bold text-brand-dark scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`}>
         Have an Awsome Project <br/> Idea? <span className="text-brand-blue-500">Let's Discuss</span>
       </h2>
       
-      <div className="mt-10">
+      <div className={`mt-10 scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`} style={{ transitionDelay: '150ms' }}>
         <a 
           href="https://wa.me/8801725796895"
           target="_blank"
@@ -36,7 +39,7 @@ const ProjectIdea: React.FC = () => {
         </a>
       </div>
 
-      <div className="flex flex-col items-center space-y-4 sm:flex-row sm:justify-center sm:items-center sm:space-y-0 sm:space-x-8 mt-12 text-sm text-gray-600">
+      <div className={`flex flex-col items-center space-y-4 sm:flex-row sm:justify-center sm:items-center sm:space-y-0 sm:space-x-8 mt-12 text-sm text-gray-600 scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`} style={{ transitionDelay: '300ms' }}>
         <div className="flex items-center space-x-2">
             <StarIcon className="text-yellow-400 w-5 h-5"/>
             <span>4.9/5 Average Ratings</span>

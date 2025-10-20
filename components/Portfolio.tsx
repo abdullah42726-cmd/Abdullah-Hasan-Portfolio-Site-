@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ArrowRightIcon from './icons/ArrowRightIcon';
 import { PortfolioItem } from '../types';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 interface PortfolioProps {
   items: PortfolioItem[];
@@ -9,6 +10,7 @@ interface PortfolioProps {
 
 const Portfolio: React.FC<PortfolioProps> = ({ items, onSeeAll }) => {
     const [activeIndex, setActiveIndex] = useState(0);
+    const { ref, isVisible } = useScrollAnimation();
 
     if (!items || items.length === 0) {
         return (
@@ -29,8 +31,8 @@ const Portfolio: React.FC<PortfolioProps> = ({ items, onSeeAll }) => {
     const goToIndex = (index: number) => setActiveIndex(index);
 
   return (
-    <section id="portfolio" className="py-20">
-      <div className="flex flex-col items-start gap-y-4 sm:flex-row sm:justify-between sm:items-center mb-10">
+    <section id="portfolio" ref={ref} className="py-20">
+      <div className={`flex flex-col items-start gap-y-4 sm:flex-row sm:justify-between sm:items-center mb-10 scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`}>
         <h2 className="text-4xl md:text-5xl font-bold">
           <span className="text-brand-dark">Lets have a look at my </span><span className="text-brand-blue-500">Portfolio</span>
         </h2>
@@ -39,12 +41,12 @@ const Portfolio: React.FC<PortfolioProps> = ({ items, onSeeAll }) => {
         </button>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8 mb-10">
+      <div className={`grid md:grid-cols-2 gap-8 mb-10 scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`} style={{ transitionDelay: '150ms' }}>
           <img src={activeItem.imageUrl} alt={activeItem.title} className="rounded-2xl w-full h-full object-cover" />
           <img src={nextItem.imageUrl} alt={nextItem.title} className="rounded-2xl w-full h-full object-cover hidden md:block" />
       </div>
       
-      <div className="flex justify-center space-x-2 mb-10">
+      <div className={`flex justify-center space-x-2 mb-10 scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`} style={{ transitionDelay: '300ms' }}>
         {items.map((_, index) => (
              <button 
                key={index} 
@@ -55,7 +57,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ items, onSeeAll }) => {
         ))}
       </div>
 
-      <div className="text-center max-w-2xl mx-auto">
+      <div className={`text-center max-w-2xl mx-auto scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`} style={{ transitionDelay: '450ms' }}>
           <h3 className="text-3xl md:text-4xl font-bold flex items-center justify-center gap-4 text-brand-dark">
             {activeItem.title}
             <button 

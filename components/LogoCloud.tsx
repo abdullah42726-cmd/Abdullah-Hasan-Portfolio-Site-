@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 // --- SVG LOGO PLACEHOLDERS ---
 // You can replace the content of these components with your actual SVG code.
@@ -86,6 +87,7 @@ const Logo: React.FC<{ name: string; component: React.ReactNode }> = ({ name, co
 );
 
 const LogoCloud: React.FC = () => {
+    const { ref, isVisible } = useScrollAnimation();
     const logos = [
         { name: 'Google', component: <GoogleLogo /> },
         { name: 'Amazon', component: <AmazonLogo /> },
@@ -98,9 +100,9 @@ const LogoCloud: React.FC = () => {
     ];
 
     return (
-        <section className="py-20 text-center">
-            <h2 className="text-xl font-semibold text-gray-600 mb-8">Trusted by The Best</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <section ref={ref} className="py-20 text-center">
+            <h2 className={`text-xl font-semibold text-gray-600 mb-8 scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`}>Trusted by The Best</h2>
+            <div className={`grid grid-cols-2 md:grid-cols-4 gap-8 scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`} style={{ transitionDelay: '150ms' }}>
                 {logos.map(logo => <Logo key={logo.name} name={logo.name} component={logo.component} />)}
             </div>
         </section>

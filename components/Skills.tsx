@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 const AnimatedSkillBar: React.FC<{ name: string; level: number, isVisible: boolean }> = ({ name, level, isVisible }) => (
     <div className="mb-6">
@@ -17,38 +18,7 @@ const AnimatedSkillBar: React.FC<{ name: string; level: number, isVisible: boole
 
 
 const Skills: React.FC = () => {
-    const [isVisible, setIsVisible] = useState(false);
-    const skillsRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                // Check if the element is intersecting
-                if (entries[0].isIntersecting) {
-                    setIsVisible(true);
-                    // Disconnect the observer once the animation is triggered
-                    observer.unobserve(entries[0].target);
-                }
-            },
-            { 
-                threshold: 0.2, // Trigger when 20% of the element is visible
-                // Fix: Removed 'triggerOnce' property as it's not a valid IntersectionObserverInit option.
-                // The "trigger once" functionality is handled by `observer.unobserve()` above.
-            }
-        );
-
-        const currentRef = skillsRef.current;
-        if (currentRef) {
-            observer.observe(currentRef);
-        }
-
-        return () => {
-            if (currentRef) {
-                observer.unobserve(currentRef);
-            }
-        };
-    }, []);
-
+    const { ref, isVisible } = useScrollAnimation({ threshold: 0.3 });
     const skillsData = [
         { name: "Graphic Design", level: 95 },
         { name: "Video Editing", level: 95 },
@@ -58,9 +28,9 @@ const Skills: React.FC = () => {
     ];
 
     return (
-         <section id="skills" className="py-20">
+         <section id="skills" ref={ref} className="py-20">
             <div className="grid md:grid-cols-2 gap-12 items-center">
-                <div>
+                <div className={`scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`}>
                      <h2 className="text-5xl font-bold mb-6">
                        <span className="text-brand-dark">My Professional</span> <span className="text-brand-blue-500">Skillset</span>
                      </h2>
@@ -68,7 +38,7 @@ const Skills: React.FC = () => {
                         I specialize in a comprehensive suite of design and editing tools, enabling me to bring creative visions to life with precision and flair. My expertise spans across the entire design process, from initial concept to final polished product.
                      </p>
                 </div>
-                <div ref={skillsRef}>
+                <div className={`scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`} style={{transitionDelay: '200ms'}}>
                     {skillsData.map((skill) => (
                         <AnimatedSkillBar key={skill.name} name={skill.name} level={skill.level} isVisible={isVisible} />
                     ))}

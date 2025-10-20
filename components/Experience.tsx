@@ -1,4 +1,5 @@
 import React from 'react';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 // Sub-component for a single experience entry
 interface ExperienceItemProps {
@@ -12,11 +13,12 @@ interface ExperienceItemProps {
 }
 
 const ExperienceItem: React.FC<ExperienceItemProps> = ({ company, duration, role, description, isCurrent = false, isLast = false, index }) => {
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.3 });
   // Determine if the content should be on the left or right of the timeline for desktop
   const isLeftOfTimeline = index % 2 === 0;
 
   const contentBlock = (
-    <div>
+    <div className={`scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`}>
       <h3 className="text-xl md:text-2xl font-bold text-brand-dark">{company}</h3>
       <p className="text-sm md:text-base text-gray-500 mt-1 mb-2">{duration}</p>
       <h4 className="text-xl md:text-2xl font-bold text-brand-dark mt-4">{role}</h4>
@@ -25,7 +27,7 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({ company, duration, role
   );
 
   return (
-    <div className="relative">
+    <div ref={ref} className="relative">
       {/* --- Mobile Layout --- */}
       <div className="md:hidden flex items-start pb-8">
         <div className="flex flex-col items-center mr-4 mt-1 flex-shrink-0">
@@ -61,6 +63,7 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({ company, duration, role
 
 // Main Experience component
 const Experience: React.FC = () => {
+  const { ref, isVisible } = useScrollAnimation();
   const experiences = [
     {
       company: "Anthony Young Garments LTD, Gazipur",
@@ -91,7 +94,7 @@ const Experience: React.FC = () => {
 
   return (
     <section id="experience" className="py-20 text-center">
-      <h2 className="text-4xl md:text-5xl font-bold mb-16">
+      <h2 ref={ref} className={`text-4xl md:text-5xl font-bold mb-16 scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`}>
         <span className="text-brand-dark">My Work</span> <span className="text-brand-blue-500">Experience</span>
       </h2>
       {/* Container for the timeline */}

@@ -1,14 +1,17 @@
 import React from 'react';
 import ArrowRightIcon from './icons/ArrowRightIcon';
 import { Post } from '../types';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 interface BlogCardProps {
     post: Post;
     onPostSelect: (id: number) => void;
+    isVisible: boolean;
+    delay: string;
 }
 
-const BlogCard: React.FC<BlogCardProps> = ({ post, onPostSelect }) => (
-    <div className="cursor-pointer group" onClick={() => onPostSelect(post.id)}>
+const BlogCard: React.FC<BlogCardProps> = ({ post, onPostSelect, isVisible, delay }) => (
+    <div className={`cursor-pointer group scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`} style={{ transitionDelay: delay }} onClick={() => onPostSelect(post.id)}>
         <div className="relative mb-4 overflow-hidden rounded-3xl">
             <img 
                 src={post.imageUrl} 
@@ -34,9 +37,11 @@ interface BlogProps {
 }
 
 const Blog: React.FC<BlogProps> = ({ posts, onPostSelect }) => {
+  const { ref, isVisible } = useScrollAnimation();
+
   return (
-    <section className="py-20">
-      <div className="flex flex-col items-start gap-y-4 sm:flex-row sm:justify-between sm:items-center mb-10">
+    <section ref={ref} className="py-20">
+      <div className={`flex flex-col items-start gap-y-4 sm:flex-row sm:justify-between sm:items-center mb-10 scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`}>
         <h2 className="text-4xl md:text-5xl font-bold">
           From my <br/> <span className="text-brand-blue-500">blog post</span>
         </h2>
@@ -45,11 +50,13 @@ const Blog: React.FC<BlogProps> = ({ posts, onPostSelect }) => {
         </button>
       </div>
       <div className="grid md:grid-cols-3 gap-8">
-        {posts.filter(p => p.status === 'Published').map(post => (
+        {posts.filter(p => p.status === 'Published').map((post, index) => (
             <BlogCard 
                 key={post.id}
                 post={post}
                 onPostSelect={onPostSelect}
+                isVisible={isVisible}
+                delay={`${150 + index * 150}ms`}
             />
         ))}
       </div>
