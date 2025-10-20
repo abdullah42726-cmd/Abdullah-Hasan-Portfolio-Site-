@@ -26,6 +26,10 @@ const Portfolio: React.FC<PortfolioProps> = ({ items, onSeeAll }) => {
     const activeItem = items[activeIndex];
     const nextItemIndex = (activeIndex + 1) % items.length;
     const nextItem = items[nextItemIndex];
+
+    const getCoverImageUrl = (item: PortfolioItem) => {
+        return item?.coverImage || `https://via.placeholder.com/800x600.png?text=Project+Image`;
+    };
     
     const goToNext = () => setActiveIndex(nextItemIndex);
     const goToIndex = (index: number) => setActiveIndex(index);
@@ -42,8 +46,8 @@ const Portfolio: React.FC<PortfolioProps> = ({ items, onSeeAll }) => {
       </div>
 
       <div className={`grid md:grid-cols-2 gap-8 mb-10 scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`} style={{ transitionDelay: '150ms' }}>
-          <img src={activeItem.imageUrl} alt={activeItem.title} className="rounded-2xl w-full h-full object-cover" />
-          <img src={nextItem.imageUrl} alt={nextItem.title} className="rounded-2xl w-full h-full object-cover hidden md:block" />
+          <img src={getCoverImageUrl(activeItem)} alt={activeItem.title} className="rounded-2xl w-full h-full object-cover" />
+          <img src={getCoverImageUrl(nextItem)} alt={nextItem.title} className="rounded-2xl w-full h-full object-cover hidden md:block" />
       </div>
       
       <div className={`flex justify-center space-x-2 mb-10 scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`} style={{ transitionDelay: '300ms' }}>

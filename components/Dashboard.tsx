@@ -6,36 +6,46 @@ import TrashIcon from './icons/TrashIcon';
 import SortIcon from './icons/SortIcon';
 import PostEditorModal from './PostEditorModal';
 import PortfolioEditorModal from './PortfolioEditorModal';
+import ServiceEditorModal from './ServiceEditorModal';
 import PaginationControls from './PaginationControls';
 import { useTableManager } from '../hooks/useTableManager';
-import { Post, PortfolioItem } from '../types';
+import { Post, PortfolioItem, Service } from '../types';
 
 interface DashboardProps {
   onLogout: () => void;
   posts: Post[];
   portfolioItems: PortfolioItem[];
+  services: Service[];
   onSavePost: (post: Post) => void;
   onDeletePost: (postId: number) => void;
   onSavePortfolioItem: (item: PortfolioItem) => void;
   onDeletePortfolioItem: (itemId: number) => void;
+  onSaveService: (service: Service) => void;
+  onDeleteService: (serviceId: number) => void;
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ 
     onLogout, 
     posts, 
-    portfolioItems, 
+    portfolioItems,
+    services,
     onSavePost, 
     onDeletePost, 
     onSavePortfolioItem, 
-    onDeletePortfolioItem 
+    onDeletePortfolioItem,
+    onSaveService,
+    onDeleteService
 }) => {
-    const [activeTab, setActiveTab] = useState<'posts' | 'portfolio'>('posts');
+    const [activeTab, setActiveTab] = useState<'posts' | 'portfolio' | 'services'>('posts');
     
     const [isPostModalOpen, setIsPostModalOpen] = useState(false);
     const [editingPost, setEditingPost] = useState<Post | null>(null);
     
     const [isPortfolioModalOpen, setIsPortfolioModalOpen] = useState(false);
     const [editingPortfolioItem, setEditingPortfolioItem] = useState<PortfolioItem | null>(null);
+
+    const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
+    const [editingService, setEditingService] = useState<Service | null>(null);
 
     const { 
         currentItems: currentPosts, 
@@ -54,6 +64,15 @@ const Dashboard: React.FC<DashboardProps> = ({
         setCurrentPage: setCurrentPortfolioPage,
         pageCount: portfolioPageCount
     } = useTableManager<PortfolioItem>(portfolioItems, 5);
+
+    const { 
+        currentItems: currentServices, 
+        requestSort: requestServiceSort, 
+        sortConfig: serviceSortConfig,
+        currentPage: currentServicePage,
+        setCurrentPage: setCurrentServicePage,
+        pageCount: servicePageCount
+    } = useTableManager<Service>(services, 5);
 
     const handleAddNewPost = () => {
         setEditingPost(null);
@@ -85,7 +104,22 @@ const Dashboard: React.FC<DashboardProps> = ({
         setIsPortfolioModalOpen(false);
     }
 
-    const TabButton: React.FC<{tabName: 'posts' | 'portfolio', label: string}> = ({ tabName, label }) => (
+    const handleAddNewService = () => {
+        setEditingService(null);
+        setIsServiceModalOpen(true);
+    };
+
+    const handleEditService = (service: Service) => {
+        setEditingService(service);
+        setIsServiceModalOpen(true);
+    };
+    
+    const handleSaveServiceWithClose = (service: Service) => {
+        onSaveService(service);
+        setIsServiceModalOpen(false);
+    }
+
+    const TabButton: React.FC<{tabName: 'posts' | 'portfolio' | 'services', label: string}> = ({ tabName, label }) => (
         <button
             onClick={() => setActiveTab(tabName)}
             className={`px-4 py-2 text-sm font-semibold rounded-md transition-colors ${activeTab === tabName ? 'bg-brand-blue-500 text-white' : 'text-gray-600 hover:bg-gray-200'}`}
@@ -102,6 +136,10 @@ const Dashboard: React.FC<DashboardProps> = ({
                 <SortIcon className="w-4 h-4 text-gray-400 group-hover:text-gray-600" direction={direction} />
             </button>
         );
+    };
+    
+    const getPortfolioCoverImage = (item: PortfolioItem) => {
+        return item.coverImage || `https://via.placeholder.com/96x64.png?text=No+Image`;
     };
 
     return (
@@ -125,6 +163,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                 <div className="flex items-center space-x-2 mb-6 border-b border-gray-200 pb-4">
                     <TabButton tabName="posts" label="Manage Posts" />
                     <TabButton tabName="portfolio" label="Manage Portfolio" />
+                    <TabButton tabName="services" label="Manage Services" />
                 </div>
                 
                 {activeTab === 'posts' && (
@@ -195,7 +234,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                                <table className="min-w-full divide-y divide-gray-200">
                                     <thead className="bg-gray-50">
                                         <tr>
-                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
+                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cover Image</th>
                                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                  <TableHeaderButton<PortfolioItem> sortKey="title" label="Title" requestSort={requestPortfolioSort} sortConfig={portfolioSortConfig} />
                                             </th>
@@ -209,7 +248,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                                         {currentPortfolioItems.map(item => (
                                             <tr key={item.id}>
                                                 <td className="px-6 py-4 whitespace-nowrap">
-                                                    <img src={item.imageUrl} alt={item.title} className="w-24 h-16 object-cover rounded-md"/>
+                                                    <img src={getPortfolioCoverImage(item)} alt={item.title} className="w-24 h-16 object-cover rounded-md bg-gray-100"/>
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium text-gray-900 max-w-xs truncate">{item.title}</div></td>
                                                 <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm text-gray-500">{item.category}</div></td>
@@ -230,6 +269,52 @@ const Dashboard: React.FC<DashboardProps> = ({
                         </div>
                     </div>
                 )}
+                
+                {activeTab === 'services' && (
+                     <div>
+                        <div className="flex justify-between items-center mb-6">
+                            <h1 className="text-3xl font-bold text-brand-dark">Manage Services</h1>
+                            <button onClick={handleAddNewService} className="bg-brand-blue-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-brand-blue-600 transition-colors flex items-center space-x-2">
+                                <PlusIcon className="w-5 h-5" />
+                                <span>Create New Service</span>
+                            </button>
+                        </div>
+                        <div className="bg-white rounded-lg shadow overflow-hidden">
+                            <div className="overflow-x-auto">
+                               <table className="min-w-full divide-y divide-gray-200">
+                                    <thead className="bg-gray-50">
+                                        <tr>
+                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
+                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                 <TableHeaderButton<Service> sortKey="title" label="Title" requestSort={requestServiceSort} sortConfig={serviceSortConfig} />
+                                            </th>
+                                            <th scope="col" className="relative px-6 py-3"><span className="sr-only">Actions</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="bg-white divide-y divide-gray-200">
+                                        {currentServices.map(item => (
+                                            <tr key={item.id}>
+                                                <td className="px-6 py-4 whitespace-nowrap">
+                                                    <img src={item.imageUrl} alt={item.title} className="w-24 h-16 object-cover rounded-md"/>
+                                                </td>
+                                                <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium text-gray-900 max-w-xs truncate">{item.title}</div></td>
+                                                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                    <div className="flex items-center justify-end space-x-4">
+                                                        <button onClick={() => handleEditService(item)} className="text-brand-blue-500 hover:text-brand-blue-600"><PencilIcon className="w-5 h-5"/></button>
+                                                        <button onClick={() => onDeleteService(item.id!)} className="text-red-500 hover:text-red-700"><TrashIcon className="w-5 h-5"/></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div className="p-4 border-t border-gray-200">
+                                <PaginationControls currentPage={currentServicePage} pageCount={servicePageCount} onPageChange={setCurrentServicePage} />
+                            </div>
+                        </div>
+                    </div>
+                )}
             </main>
             
             <PostEditorModal
@@ -244,6 +329,13 @@ const Dashboard: React.FC<DashboardProps> = ({
                 onClose={() => setIsPortfolioModalOpen(false)}
                 onSave={handleSavePortfolioItemWithClose}
                 itemData={editingPortfolioItem}
+            />
+
+            <ServiceEditorModal
+                isOpen={isServiceModalOpen}
+                onClose={() => setIsServiceModalOpen(false)}
+                onSave={handleSaveServiceWithClose}
+                serviceData={editingService}
             />
         </div>
     );

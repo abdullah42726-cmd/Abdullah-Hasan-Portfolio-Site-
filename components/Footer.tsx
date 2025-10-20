@@ -25,7 +25,7 @@ const BehanceIcon = () => (
 
 interface FooterProps {
   onDashboardClick: () => void;
-  onNavigateHome: () => void;
+  onNavigateHome: (targetId?: string) => void;
   isHomePage: boolean;
 }
 
@@ -50,10 +50,11 @@ const Footer: React.FC<FooterProps> = ({ onDashboardClick, onNavigateHome, isHom
 
     const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
+        const targetId = e.currentTarget.getAttribute('href');
         if (isHomePage) {
             handleScrollToSection(e);
         } else {
-            onNavigateHome();
+            onNavigateHome(targetId || undefined);
         }
     }
 

@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { PortfolioItem } from '../types';
+import TrashIcon from './icons/TrashIcon';
+import PlusIcon from './icons/PlusIcon';
+
 
 interface PortfolioEditorModalProps {
     isOpen: boolean;
@@ -13,7 +16,8 @@ const PortfolioEditorModal: React.FC<PortfolioEditorModalProps> = ({ isOpen, onC
         id: null,
         title: '',
         description: '',
-        imageUrl: '',
+        coverImage: '',
+        galleryImages: [],
         category: '',
     };
 
@@ -22,20 +26,43 @@ const PortfolioEditorModal: React.FC<PortfolioEditorModalProps> = ({ isOpen, onC
 
     useEffect(() => {
         if (itemData) {
-            setItem(itemData);
+            setItem({
+                ...itemData,
+                galleryImages: itemData.galleryImages || [], // Ensure galleryImages is an array
+            });
         } else {
             setItem(initialItemState);
         }
     }, [itemData, isOpen]);
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    
+    const handleMainChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setItem(prev => ({ ...prev, [name]: value }));
     };
+    
+    const handleGalleryImageChange = (index: number, value: string) => {
+        const newImages = [...item.galleryImages];
+        newImages[index] = value;
+        setItem(prev => ({ ...prev, galleryImages: newImages }));
+    };
+
+    const handleAddGalleryImage = () => {
+        setItem(prev => ({ ...prev, galleryImages: [...prev.galleryImages, ''] }));
+    };
+
+    const handleRemoveGalleryImage = (indexToRemove: number) => {
+        const newImages = item.galleryImages.filter((_, index) => index !== indexToRemove);
+        setItem(prev => ({ ...prev, galleryImages: newImages }));
+    };
+
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        onSave(item);
+        const finalItem = {
+            ...item,
+            galleryImages: item.galleryImages.filter(img => img && img.trim() !== ''),
+        };
+        onSave(finalItem);
     };
     
     useEffect(() => {
@@ -54,33 +81,66 @@ const PortfolioEditorModal: React.FC<PortfolioEditorModalProps> = ({ isOpen, onC
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-            <div ref={modalRef} className="bg-white rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
-                <form onSubmit={handleSubmit}>
-                    <div className="p-6">
+            <div ref={modalRef} className="bg-white rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] flex flex-col">
+                <form onSubmit={handleSubmit} className="flex flex-col h-full">
+                    <div className="p-6 overflow-y-auto">
                         <h2 className="text-2xl font-bold text-brand-dark mb-4">{itemData ? 'Edit Portfolio Item' : 'Create New Portfolio Item'}</h2>
                         
                         <div className="mb-4">
                             <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">Title</label>
-                            <input type="text" name="title" id="title" value={item.title} onChange={handleChange} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-blue-500 focus:border-brand-blue-500" required />
+                            <input type="text" name="title" id="title" value={item.title} onChange={handleMainChange} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-blue-500 focus:border-brand-blue-500" required />
                         </div>
                         
                         <div className="mb-4">
                             <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                            <textarea name="description" id="description" value={item.description} onChange={handleChange} rows={5} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-blue-500 focus:border-brand-blue-500" />
+                            <textarea name="description" id="description" value={item.description} onChange={handleMainChange} rows={5} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-blue-500 focus:border-brand-blue-500" />
                         </div>
 
                         <div className="mb-4">
-                            <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
-                            <input type="text" name="imageUrl" id="imageUrl" value={item.imageUrl} onChange={handleChange} className="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="https://example.com/image.png" />
+                            <label htmlFor="coverImage" className="block text-sm font-medium text-gray-700 mb-1">Cover Image URL</label>
+                            <input
+                                type="text"
+                                name="coverImage"
+                                id="coverImage"
+                                value={item.coverImage}
+                                onChange={handleMainChange}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                                placeholder="https://example.com/cover-image.png"
+                                required
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                             <label className="block text-sm font-medium text-gray-700 mb-2">Gallery Images</label>
+                             <div className="space-y-3">
+                                {item.galleryImages.map((imgUrl, index) => (
+                                    <div key={index} className="flex items-center space-x-3">
+                                        <input
+                                            type="text"
+                                            value={imgUrl}
+                                            onChange={(e) => handleGalleryImageChange(index, e.target.value)}
+                                            className="flex-grow px-3 py-2 border border-gray-300 rounded-md"
+                                            placeholder="https://example.com/gallery-image.png"
+                                        />
+                                        <button type="button" onClick={() => handleRemoveGalleryImage(index)} className="text-red-500 hover:text-red-700">
+                                            <TrashIcon className="w-5 h-5"/>
+                                        </button>
+                                    </div>
+                                ))}
+                             </div>
+                             <button type="button" onClick={handleAddGalleryImage} className="mt-3 text-sm font-semibold text-brand-blue-500 hover:text-brand-blue-600 flex items-center space-x-1">
+                                <PlusIcon className="w-4 h-4" />
+                                <span>Add Gallery Image</span>
+                             </button>
                         </div>
 
                         <div className="mb-4">
                             <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                            <input type="text" name="category" id="category" value={item.category} onChange={handleChange} className="w-full px-3 py-2 border border-gray-300 rounded-md" />
+                            <input type="text" name="category" id="category" value={item.category} onChange={handleMainChange} className="w-full px-3 py-2 border border-gray-300 rounded-md" />
                         </div>
                     </div>
 
-                    <div className="bg-gray-50 px-6 py-3 flex justify-end space-x-3">
+                    <div className="bg-gray-50 px-6 py-3 flex justify-end space-x-3 mt-auto border-t">
                         <button type="button" onClick={onClose} className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50">Cancel</button>
                         <button type="submit" className="bg-brand-blue-500 text-white py-2 px-4 rounded-md text-sm font-semibold hover:bg-brand-blue-600">{itemData ? 'Update Item' : 'Save Item'}</button>
                     </div>

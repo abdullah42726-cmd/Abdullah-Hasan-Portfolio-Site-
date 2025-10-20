@@ -30,6 +30,15 @@ export interface PortfolioItem {
     id: number | null;
     title: string;
     description: string;
-    imageUrl: string;
+    coverImage: string;
+    galleryImages: string[];
     category: string;
+}
+
+export interface Service {
+    id: number | null;
+    title: string;
+    description: string; // Short description for the card
+    imageUrl: string;
+    content: string; // Long description/content for the individual page
 }

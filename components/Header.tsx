@@ -12,7 +12,7 @@ interface NavLink {
 interface HeaderProps {
   onLogout: () => void;
   currentUser: User | null;
-  onNavigateHome: () => void;
+  onNavigateHome: (targetId?: string) => void;
   isHomePage: boolean;
 }
 
@@ -88,10 +88,12 @@ const Header: React.FC<HeaderProps> = ({ onLogout, currentUser, onNavigateHome, 
     }
     
     e.preventDefault();
+    const targetId = e.currentTarget.getAttribute('href');
+
     if (isHomePage) {
       handleScrollToSection(e);
     } else {
-      onNavigateHome();
+      onNavigateHome(targetId || undefined);
       if (isMenuOpen) setIsMenuOpen(false);
     }
   };

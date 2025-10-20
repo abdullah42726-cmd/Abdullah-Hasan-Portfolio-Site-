@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import { User, Post, Comment, PortfolioItem } from './types';
-import { mockPostsData, mockUsers, mockPortfolioData } from './mockData';
+import { User, Post, Comment, PortfolioItem, Service } from './types';
+import { mockPostsData, mockUsers, mockPortfolioData, mockServicesData } from './mockData';
 
 // Reverted from lazy-loading to direct imports
 import LogoCloud from './components/LogoCloud';
@@ -23,6 +23,7 @@ import SignUp from './components/SignUp';
 import BlogPostPage from './components/BlogPostPage';
 import VerificationPage from './components/VerificationPage';
 import PortfolioPage from './components/PortfolioPage';
+import ServicePage from './components/ServicePage';
 
 type View = 'site' | 'login' | 'signup' | 'dashboard' | 'pendingVerification' | 'portfolioPage';
 
@@ -30,9 +31,12 @@ const App: React.FC = () => {
   const [view, setView] = useState<View>('site');
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [activePost, setActivePost] = useState<Post | null>(null);
+  const [activeService, setActiveService] = useState<Service | null>(null);
   const [posts, setPosts] = useState<Post[]>(mockPostsData);
   const [portfolioItems, setPortfolioItems] = useState<PortfolioItem[]>(mockPortfolioData);
+  const [services, setServices] = useState<Service[]>(mockServicesData);
   const [userToVerify, setUserToVerify] = useState<User | null>(null);
+  const [scrollToSection, setScrollToSection] = useState<string | null>(null);
 
   // Check for logged in user in localStorage on initial load
   useEffect(() => {
@@ -46,6 +50,16 @@ const App: React.FC = () => {
       localStorage.removeItem('currentUser');
     }
   }, []);
+  
+  useEffect(() => {
+    if (scrollToSection) {
+      const targetElement = document.querySelector(scrollToSection);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      setScrollToSection(null); // Reset after scrolling
+    }
+  }, [scrollToSection]);
 
   const handleLoginSuccess = (user: User) => {
     setCurrentUser(user);
@@ -81,10 +95,12 @@ const App: React.FC = () => {
     localStorage.removeItem('currentUser');
     setView('site');
     setActivePost(null);
+    setActiveService(null);
   };
   
   const showLoginPage = () => {
     setActivePost(null);
+    setActiveService(null);
     if (currentUser?.role === 'admin') {
       setView('dashboard');
     } else {
@@ -94,7 +110,18 @@ const App: React.FC = () => {
   
   const handlePostSelect = (postId: number) => {
       const post = posts.find(p => p.id === postId);
-      if(post) setActivePost(post);
+      if(post) {
+        setActivePost(post);
+        setActiveService(null);
+      }
+  };
+
+  const handleServiceSelect = (serviceId: number) => {
+    const service = services.find(s => s.id === serviceId);
+    if(service) {
+      setActiveService(service);
+      setActivePost(null);
+    }
   };
   
   const handleAddComment = (postId: number, commentText: string) => {
@@ -122,13 +149,20 @@ const App: React.FC = () => {
       }
   };
   
-  const handleBackToHome = () => {
+  const handleBackToHome = (targetId?: string) => {
       setActivePost(null);
+      setActiveService(null);
       setView('site');
+      if (targetId && targetId.startsWith('#')) {
+        setScrollToSection(targetId);
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
   }
 
   const handleViewAllPortfolio = () => {
     setActivePost(null);
+    setActiveService(null);
     setView('portfolioPage');
   };
 
@@ -157,6 +191,19 @@ const App: React.FC = () => {
   const handleDeletePortfolioItem = (itemId: number) => {
       setPortfolioItems(portfolioItems.filter(i => i.id !== itemId));
   };
+  
+  const handleSaveService = (serviceToSave: Service) => {
+    if (serviceToSave.id) {
+        setServices(services.map(s => s.id === serviceToSave.id ? serviceToSave : s));
+    } else {
+        const newService = { ...serviceToSave, id: Date.now() };
+        setServices([newService, ...services]);
+    }
+  };
+
+  const handleDeleteService = (serviceId: number) => {
+      setServices(services.filter(s => s.id !== serviceId));
+  };
 
 
   const renderContent = () => {
@@ -165,10 +212,13 @@ const App: React.FC = () => {
                 onLogout={handleLogout}
                 posts={posts}
                 portfolioItems={portfolioItems}
+                services={services}
                 onSavePost={handleSavePost}
                 onDeletePost={handleDeletePost}
                 onSavePortfolioItem={handleSavePortfolioItem}
                 onDeletePortfolioItem={handleDeletePortfolioItem}
+                onSaveService={handleSaveService}
+                onDeleteService={handleDeleteService}
             />;
     }
     
@@ -188,6 +238,10 @@ const App: React.FC = () => {
         return <BlogPostPage post={activePost} currentUser={currentUser} onAddComment={handleAddComment} />;
     }
     
+    if (activeService) {
+        return <ServicePage service={activeService} />;
+    }
+    
     if (view === 'portfolioPage') {
         return <PortfolioPage items={portfolioItems} />;
     }
@@ -202,7 +256,7 @@ const App: React.FC = () => {
           <Experience />
           <WhyHireMe />
           <Skills />
-          <Services />
+          <Services services={services} onServiceSelect={handleServiceSelect} />
           <Portfolio items={portfolioItems} onSeeAll={handleViewAllPortfolio} />
         </div>
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -221,8 +275,9 @@ const App: React.FC = () => {
       </>
     );
   };
-
-  const showGlobalLayout = view === 'site' || view === 'portfolioPage' || !!activePost;
+  
+  const isHomePage = view === 'site' && !activePost && !activeService;
+  const showGlobalLayout = view === 'site' || view === 'portfolioPage' || !!activePost || !!activeService;
 
   return (
     <div className="bg-white font-sans">
@@ -231,7 +286,7 @@ const App: React.FC = () => {
           onLogout={handleLogout} 
           currentUser={currentUser} 
           onNavigateHome={handleBackToHome}
-          isHomePage={view === 'site'}
+          isHomePage={isHomePage}
         />
       )}
 
@@ -242,7 +297,7 @@ const App: React.FC = () => {
           <Footer 
             onDashboardClick={showLoginPage}
             onNavigateHome={handleBackToHome}
-            isHomePage={view === 'site'}
+            isHomePage={isHomePage}
           />
           <BackToTopButton />
         </>
