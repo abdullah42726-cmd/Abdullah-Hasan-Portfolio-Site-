@@ -43,7 +43,7 @@ const Header: React.FC = () => {
   ];
 
   const rightNavLinks = [
-    { name: 'Resume', href: '#experience' },
+    { name: 'Resume', href: 'https://drive.google.com/file/d/1HqozSuhNjKC7O-Bxl0RkTX_ReeNV39Oh/view?usp=sharing', external: true },
     { name: 'Project', href: '#portfolio' },
     { name: 'Contact', href: '#contact' },
   ];
@@ -52,7 +52,7 @@ const Header: React.FC = () => {
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#experience' },
     { name: 'Service', href: '#services' },
-    { name: 'Resume', href: '#experience' },
+    { name: 'Resume', href: 'https://drive.google.com/file/d/1HqozSuhNjKC7O-Bxl0RkTX_ReeNV39Oh/view?usp=sharing', external: true },
     { name: 'Project', href: '#portfolio' },
     { name: 'Contact', href: '#contact' },
   ];
@@ -85,7 +85,13 @@ const Header: React.FC = () => {
           </a>
           <div className="flex items-center space-x-8">
             {rightNavLinks.map(link => (
-              <a key={`${link.name}-${link.href}-right`} href={link.href} onClick={handleNavClick} className={getLinkClassName(link.href)}>
+              <a 
+                key={`${link.name}-${link.href}-right`} 
+                href={link.href} 
+                onClick={link.external ? undefined : handleNavClick}
+                target={link.external ? '_blank' : undefined}
+                rel={link.external ? 'noopener noreferrer' : undefined}
+                className={getLinkClassName(link.href)}>
                 {link.name}
               </a>
             ))}
@@ -116,7 +122,9 @@ const Header: React.FC = () => {
             <a 
               key={link.name} 
               href={link.href} 
-              onClick={handleNavClick} 
+              onClick={link.external ? () => setIsMenuOpen(false) : handleNavClick} 
+              target={link.external ? '_blank' : undefined}
+              rel={link.external ? 'noopener noreferrer' : undefined}
               className="text-2xl font-semibold py-4 text-white hover:text-brand-blue-500 transition-opacity transition-transform transition-colors duration-300"
               style={{
                 opacity: isMenuOpen ? 1 : 0,
