@@ -50,11 +50,11 @@ const Skills: React.FC = () => {
     }, []);
 
     const skillsData = [
-        { name: "UI/UX Design", level: 95 },
-        { name: "Graphic Design", level: 90 },
-        { name: "Video Editing", level: 85 },
-        { name: "Motion Graphics", level: 80 },
-        { name: "Web Design", level: 75 },
+        { name: "Graphic Design", level: 95 },
+        { name: "Video Editing", level: 95 },
+        { name: "Motion Graphics", level: 60 },
+        { name: "UI/UX Design", level: 80 },
+        { name: "Web Design", level: 80 },
     ];
 
     return (
