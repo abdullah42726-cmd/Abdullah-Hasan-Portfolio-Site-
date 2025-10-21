@@ -1,8 +1,9 @@
 import React from 'react';
 import StarIcon from './icons/StarIcon';
+import AnimatedSection from './AnimatedSection';
 
 const TestimonialCard: React.FC<{ name: string; role: string; text: string; avatarUrl: string }> = ({ name, role, text, avatarUrl }) => (
-    <div className="bg-brand-dark-2 rounded-3xl p-8 relative">
+    <div className="bg-brand-dark-2 rounded-3xl p-8 relative h-full transition-transform duration-300 hover:-translate-y-2">
         <span className="text-8xl text-gray-700 font-serif absolute top-4 left-4 opacity-50">“</span>
         <div className="relative z-10">
             <div className="flex items-center mb-4">
@@ -24,34 +25,44 @@ const TestimonialCard: React.FC<{ name: string; role: string; text: string; avat
 );
 
 const Testimonials: React.FC = () => {
+    const testimonials = [
+        { 
+            name: "James Rodriguez",
+            role: "CEO, Lirante",
+            avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200",
+            text: "Abdullah's design sense is incredible. He transformed our vision for Lirante into a beautiful and functional app that our users love. His work was pivotal to our successful launch."
+        },
+        { 
+            name: "Maria Garcia",
+            role: "Project Manager, Sugee",
+            avatarUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200",
+            text: "Working with Abdullah was a breeze. He's a proactive communicator, adheres to deadlines, and consistently delivered high-quality designs that exceeded our expectations. A true professional."
+        },
+        { 
+            name: "David Smith",
+            role: "Lead Developer, Cinetstox",
+            avatarUrl: "https://images.unsplash.com/photo-1554151228-14d9def656e4?q=80&w=200",
+            text: "As a developer, I appreciate Abdullah's meticulous attention to detail. His design systems are well-organized and easy to implement, which made the development process significantly smoother."
+        },
+    ];
+
   return (
     <section className="bg-brand-dark text-white rounded-t-3xl p-8 md:p-12 my-20">
         <div className="max-w-screen-xl mx-auto">
-            <div className="text-center max-w-2xl mx-auto mb-12">
-                <h2 className="text-4xl md:text-5xl font-bold">Testimonials That <br/> Speak to My Results</h2>
-                <p className="text-gray-400 mt-4">
-                Don't just take my word for it. Here's what my clients have to say about our collaboration and the impact my work has had on their projects.
-                </p>
-            </div>
+            <AnimatedSection>
+                <div className="text-center max-w-2xl mx-auto mb-12">
+                    <h2 className="text-4xl md:text-5xl font-bold">Testimonials That <br/> Speak to My Results</h2>
+                    <p className="text-gray-400 mt-4">
+                    Don't just take my word for it. Here's what my clients have to say about our collaboration and the impact my work has had on their projects.
+                    </p>
+                </div>
+            </AnimatedSection>
             <div className="grid md:grid-cols-3 gap-8">
-                <TestimonialCard 
-                    name="James Rodriguez"
-                    role="CEO, Lirante"
-                    avatarUrl="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200"
-                    text="Abdullah's design sense is incredible. He transformed our vision for Lirante into a beautiful and functional app that our users love. His work was pivotal to our successful launch."
-                />
-                <TestimonialCard 
-                    name="Maria Garcia"
-                    role="Project Manager, Sugee"
-                    avatarUrl="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200"
-                    text="Working with Abdullah was a breeze. He's a proactive communicator, adheres to deadlines, and consistently delivered high-quality designs that exceeded our expectations. A true professional."
-                />
-                <TestimonialCard 
-                    name="David Smith"
-                    role="Lead Developer, Cinetstox"
-                    avatarUrl="https://images.unsplash.com/photo-1554151228-14d9def656e4?q=80&w=200"
-                    text="As a developer, I appreciate Abdullah's meticulous attention to detail. His design systems are well-organized and easy to implement, which made the development process significantly smoother."
-                />
+                {testimonials.map((testimonial, index) => (
+                    <AnimatedSection key={testimonial.name} delay={index * 150}>
+                        <TestimonialCard {...testimonial} />
+                    </AnimatedSection>
+                ))}
             </div>
         </div>
     </section>

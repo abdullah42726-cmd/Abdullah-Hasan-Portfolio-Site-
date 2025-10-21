@@ -1,5 +1,6 @@
 
 import React from 'react';
+import AnimatedSection from './AnimatedSection';
 
 // --- SVG LOGO PLACEHOLDERS ---
 // You can replace the content of these components with your actual SVG code.
@@ -80,7 +81,7 @@ const FigmaLogo = () => (
 
 
 const Logo: React.FC<{ name: string; component: React.ReactNode }> = ({ name, component }) => (
-    <div title={name} className="flex justify-center items-center p-4 text-gray-400 grayscale hover:grayscale-0 hover:scale-110 transition-all duration-300 cursor-pointer">
+    <div title={name} className="flex justify-center items-center p-4 text-gray-400 dark:text-gray-500 grayscale hover:grayscale-0 dark:hover:text-gray-300 hover:scale-110 transition-all duration-300 cursor-pointer">
         {component}
     </div>
 );
@@ -99,9 +100,15 @@ const LogoCloud: React.FC = () => {
 
     return (
         <section className="py-20 text-center">
-            <h2 className="text-xl font-semibold text-gray-600 mb-8">Trusted by The Best</h2>
+            <AnimatedSection>
+              <h2 className="text-xl font-semibold text-gray-600 dark:text-gray-400 mb-8">Trusted by The Best</h2>
+            </AnimatedSection>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                {logos.map(logo => <Logo key={logo.name} name={logo.name} component={logo.component} />)}
+                {logos.map((logo, index) => (
+                  <AnimatedSection key={logo.name} delay={index * 100}>
+                    <Logo name={logo.name} component={logo.component} />
+                  </AnimatedSection>
+                ))}
             </div>
         </section>
     );

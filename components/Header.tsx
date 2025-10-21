@@ -1,19 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Logo from './icons/Logo';
-import { User } from '../types';
+import WhatsAppIcon from './icons/WhatsAppIcon';
+import ExternalLinkIcon from './icons/ExternalLinkIcon';
+import ThemeToggle from './ThemeToggle';
 
 interface NavLink {
   name: string;
   href: string;
   external?: boolean;
+  specialStyle?: 'whatsapp' | 'resume';
 }
 
-interface HeaderProps {
-  onLogout: () => void;
-  currentUser: User | null;
-}
-
-const Header: React.FC<HeaderProps> = ({ onLogout, currentUser }) => {
+const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState('#home');
@@ -80,8 +78,8 @@ const Header: React.FC<HeaderProps> = ({ onLogout, currentUser }) => {
     { name: 'About', href: '#experience' },
     { name: 'Service', href: '#services' },
     { name: 'Project', href: '#portfolio' },
-    { name: 'Resume', href: 'https://drive.google.com/file/d/1HqozSuhNjKC7O-Bxl0RkTX_ReeNV39Oh/view?usp=sharing', external: true },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Connect', href: '#contact', specialStyle: 'whatsapp' },
+    { name: 'Resume', href: 'https://drive.google.com/file/d/1HqozSuhNjKC7O-Bxl0RkTX_ReeNV39Oh/view?usp=sharing', external: true, specialStyle: 'resume' },
   ];
 
   const getLinkClassName = (href: string) => {
@@ -91,55 +89,76 @@ const Header: React.FC<HeaderProps> = ({ onLogout, currentUser }) => {
     return 'hover:text-brand-blue-500 transition-colors text-sm font-medium';
   };
   
-  const getMobileLinkClassName = (href: string) => {
-    if (activeLink === href) {
-        return "text-brand-blue-200";
-    }
+  const getMobileLinkClassName = (link: NavLink) => {
+    if (link.specialStyle === 'whatsapp') return "text-[#25D366] hover:text-[#1DAE52]";
+    if (link.specialStyle === 'resume') return "text-brand-blue-200 hover:text-brand-blue-500";
+    if (activeLink === link.href) return "text-brand-blue-200";
+    
     return "text-white hover:text-brand-blue-500";
   };
   
   const showScrolledState = isScrolled && !isMenuOpen;
   
   const navBarClassName = `rounded-full px-4 py-2 transition-all duration-300 flex items-center`;
-  const navBarScrolledStyles = 'text-brand-dark glass-effect';
+  const navBarScrolledStyles = 'text-brand-dark dark:text-white glass-effect';
   const navBarTopStyles = 'bg-brand-dark text-white';
   
-  const authButtonBaseClasses = 'px-5 py-2 rounded-full text-sm font-medium transition-colors ml-4';
-  const getAuthButtonClassName = () => {
-    if (showScrolledState) {
-        return `${authButtonBaseClasses} bg-brand-dark/5 hover:bg-brand-dark/10 text-brand-dark border border-brand-dark/20`;
-    }
-    return `${authButtonBaseClasses} bg-white/10 hover:bg-white/20 text-white`;
-  };
+  const renderDesktopLink = (link: NavLink) => {
+    const baseClasses = 'px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 hover:scale-105 hover:-translate-y-0.5';
 
+    if (link.specialStyle === 'whatsapp') {
+      return (
+        <a 
+          key={`${link.name}-desktop`} 
+          href={link.href} 
+          onClick={handleNavClick}
+          className={`${baseClasses} bg-[#25D366] hover:bg-[#1DAE52] text-white`}>
+          <WhatsAppIcon className="w-5 h-5" />
+          {link.name}
+        </a>
+      );
+    }
+    
+    if (link.specialStyle === 'resume') {
+       return (
+        <a 
+          key={`${link.name}-desktop`} 
+          href={link.href} 
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${baseClasses} bg-brand-blue-500 hover:bg-brand-blue-600 text-white`}>
+          {link.name}
+          <ExternalLinkIcon className="w-5 h-5" />
+        </a>
+      );
+    }
+
+    return (
+       <a 
+        key={`${link.name}-desktop`} 
+        href={link.href} 
+        onClick={handleNavClick}
+        className={getLinkClassName(link.href)}>
+        {link.name}
+      </a>
+    );
+  };
+  
   return (
-    <header className="sticky top-0 z-50 py-4">
+    <header className="sticky top-0 z-50 py-4 animate-fade-in-down">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* --- Desktop Navigation --- */}
         <nav className={`hidden md:flex justify-between items-center ${navBarClassName} ${showScrolledState ? navBarScrolledStyles : navBarTopStyles}`}>
           <a href="#home" onClick={handleNavClick} aria-label="Go to homepage">
-              <Logo className="h-8 w-auto" pathClassName={showScrolledState ? 'fill-brand-dark' : 'fill-white'} />
+              <Logo className="h-8 w-auto" pathClassName={showScrolledState ? 'fill-brand-dark dark:fill-white' : 'fill-white'} />
           </a>
           <div className="flex items-center">
-            <div className="flex items-center space-x-8">
-                {navLinks.map(link => (
-                  <a 
-                    key={`${link.name}-${link.href}-desktop`} 
-                    href={link.href} 
-                    onClick={link.external ? undefined : handleNavClick}
-                    target={link.external ? '_blank' : undefined}
-                    rel={link.external ? 'noopener noreferrer' : undefined}
-                    className={getLinkClassName(link.href)}>
-                    {link.name}
-                  </a>
-                ))}
+            <div className="flex items-center space-x-2">
+                {navLinks.map(renderDesktopLink)}
             </div>
-            {currentUser && (
-              <div className="flex items-center ml-4">
-                <span className={`text-sm font-medium mr-4 ${showScrolledState ? 'text-brand-dark' : 'text-white'}`}>Hi, {currentUser.name}</span>
-                <button onClick={onLogout} className={getAuthButtonClassName()}>Logout</button>
-              </div>
-            )}
+            <div className="ml-4">
+              <ThemeToggle />
+            </div>
           </div>
         </nav>
 
@@ -147,15 +166,18 @@ const Header: React.FC<HeaderProps> = ({ onLogout, currentUser }) => {
         <div className="md:hidden">
             <nav className={`relative z-50 justify-between ${navBarClassName} ${showScrolledState ? navBarScrolledStyles : navBarTopStyles}`}>
                 <a href="#home" onClick={handleNavClick} className="flex items-center space-x-2 font-bold text-lg">
-                    <Logo className="h-8 w-auto" pathClassName={showScrolledState ? 'fill-brand-dark' : 'fill-white'}/>
+                    <Logo className="h-8 w-auto" pathClassName={showScrolledState ? 'fill-brand-dark dark:fill-white' : 'fill-white'}/>
                 </a>
-                <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2" aria-label="Toggle menu" aria-expanded={isMenuOpen}>
-                    {isMenuOpen ? (
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                    ) : (
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
-                    )}
-                </button>
+                <div className="flex items-center">
+                  <ThemeToggle />
+                  <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2" aria-label="Toggle menu" aria-expanded={isMenuOpen}>
+                      {isMenuOpen ? (
+                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                      ) : (
+                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+                      )}
+                  </button>
+                </div>
             </nav>
         </div>
       </div>
@@ -173,30 +195,18 @@ const Header: React.FC<HeaderProps> = ({ onLogout, currentUser }) => {
               onClick={link.external ? () => setIsMenuOpen(false) : handleNavClick} 
               target={link.external ? '_blank' : undefined}
               rel={link.external ? 'noopener noreferrer' : undefined}
-              className={`text-3xl font-semibold transition-all duration-300 ${getMobileLinkClassName(link.href)}`}
+              className={`text-3xl font-semibold transition-all duration-300 flex items-center justify-center gap-3 ${getMobileLinkClassName(link)}`}
               style={{
                 opacity: isMenuOpen ? 1 : 0,
                 transform: isMenuOpen ? 'translateY(0)' : 'translateY(20px)',
                 transitionDelay: isMenuOpen ? `${index * 70}ms` : '0ms'
               }}
             >
+              {link.specialStyle === 'whatsapp' && <WhatsAppIcon className="w-7 h-7" />}
               {link.name}
+              {link.specialStyle === 'resume' && <ExternalLinkIcon className="w-7 h-7" />}
             </a>
           ))}
-          {currentUser && (
-              <a
-                  href="#"
-                  onClick={(e) => { e.preventDefault(); onLogout(); setIsMenuOpen(false); }}
-                  className="text-3xl font-semibold text-white hover:text-brand-blue-500 transition-all duration-300"
-                  style={{
-                    opacity: isMenuOpen ? 1 : 0,
-                    transform: isMenuOpen ? 'translateY(0)' : 'translateY(20px)',
-                    transitionDelay: isMenuOpen ? `${navLinks.length * 70}ms` : '0ms'
-                  }}
-              >
-                  Logout
-              </a>
-          )}
         </div>
       </div>
     </header>
