@@ -25,8 +25,7 @@ const Hero: React.FC = () => {
     }
   };
   
-  // Replaced broken image link with a working one.
-  const imageUrl = 'https://i.imgur.com/Lasn8cQ.png';
+  const imageUrl = 'https://images.unsplash.com/photo-1558191053-c03db210086b?q=80&w=800';
 
   return (
     <section id="home" ref={ref} className="relative pt-12 pb-24 text-center overflow-x-clip">

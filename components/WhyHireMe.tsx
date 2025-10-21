@@ -15,8 +15,7 @@ const WhyHireMe: React.FC = () => {
     }
   };
   
-  // Replaced broken image link with a working one.
-  const imageUrl = `https://i.imgur.com/ZoHJxFb.png`;
+  const imageUrl = `https://images.unsplash.com/photo-1629904853716-f0bc54eea481?q=80&w=800`;
 
   return (
     <section ref={ref} className="bg-brand-gray dark:bg-brand-dark-2 rounded-3xl p-8 md:p-12 my-20">
