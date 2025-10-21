@@ -9,7 +9,6 @@ interface ServiceEditorModalProps {
 }
 
 const ServiceEditorModal: React.FC<ServiceEditorModalProps> = ({ isOpen, onClose, onSave, serviceData }) => {
-    // FIX: Removed `id: null` to conform to the `Service` type from `types.ts` where `id` is optional (number | undefined).
     const initialServiceState: Service = {
         title: '',
         description: '',

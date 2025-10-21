@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Post } from '../types';
+import { supabase } from '../supabaseClient';
 
 interface PostEditorModalProps {
     isOpen: boolean;
@@ -9,7 +10,6 @@ interface PostEditorModalProps {
 }
 
 const PostEditorModal: React.FC<PostEditorModalProps> = ({ isOpen, onClose, onSave, postData }) => {
-    // FIX: Removed `id: null` to conform to the `Post` type from `types.ts` where `id` is optional (number | undefined).
     const initialPostState: Post = {
         title: '',
         author: 'Abdullah Hasan',
@@ -22,6 +22,7 @@ const PostEditorModal: React.FC<PostEditorModalProps> = ({ isOpen, onClose, onSa
 
     const [post, setPost] = useState<Post>(initialPostState);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const [isUploading, setIsUploading] = useState(false);
     const modalRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -39,18 +40,39 @@ const PostEditorModal: React.FC<PostEditorModalProps> = ({ isOpen, onClose, onSa
         setPost(prev => ({ ...prev, [name]: value }));
     };
     
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            const file = e.target.files[0];
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setImagePreview(reader.result as string);
-                // In a real app, you would upload this file and get back a URL.
-                // For this mock, we'll just store the base64 preview.
-                setPost(prev => ({ ...prev, imageUrl: reader.result as string }));
-            };
-            reader.readAsDataURL(file);
+    const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!e.target.files || e.target.files.length === 0) {
+            return;
         }
+        const file = e.target.files[0];
+        setIsUploading(true);
+        // Create a unique file name to avoid collisions
+        const fileName = `${Date.now()}_${file.name}`;
+        const filePath = `public/${fileName}`;
+
+        const { error: uploadError } = await supabase.storage
+            .from('post-images') // Assumes a public bucket named 'post-images' exists
+            .upload(filePath, file);
+
+        if (uploadError) {
+            console.error("Error uploading image:", uploadError);
+            alert("Error uploading image. Please check the console and ensure the 'post-images' storage bucket is public.");
+            setIsUploading(false);
+            return;
+        }
+
+        const { data } = supabase.storage
+            .from('post-images')
+            .getPublicUrl(filePath);
+        
+        if (data.publicUrl) {
+            const publicUrl = data.publicUrl;
+            setImagePreview(publicUrl);
+            setPost(prev => ({ ...prev, imageUrl: publicUrl }));
+        } else {
+             alert("Image uploaded, but could not get public URL.");
+        }
+        setIsUploading(false);
     };
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -97,7 +119,7 @@ const PostEditorModal: React.FC<PostEditorModalProps> = ({ isOpen, onClose, onSa
                                 <div className="w-32 h-20 bg-slate-700 rounded-md flex items-center justify-center overflow-hidden">
                                     {imagePreview ? <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" /> : <span className="text-xs text-slate-400">Preview</span>}
                                 </div>
-                                <input type="file" name="coverImage" id="coverImage" onChange={handleImageChange} className="text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-blue-500/20 file:text-brand-blue-200 hover:file:bg-brand-blue-500/30" />
+                                <input type="file" name="coverImage" id="coverImage" onChange={handleImageChange} accept="image/*" className="text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-blue-500/20 file:text-brand-blue-200 hover:file:bg-brand-blue-500/30" />
                              </div>
                         </div>
 
@@ -122,7 +144,9 @@ const PostEditorModal: React.FC<PostEditorModalProps> = ({ isOpen, onClose, onSa
 
                     <div className="bg-slate-900/50 px-6 py-3 flex justify-end space-x-3 sticky bottom-0 border-t border-slate-700">
                         <button type="button" onClick={onClose} className="bg-slate-600 py-2 px-4 border border-slate-500 rounded-md shadow-sm text-sm font-medium text-white hover:bg-slate-500">Cancel</button>
-                        <button type="submit" className="bg-brand-blue-500 text-white py-2 px-4 rounded-md text-sm font-semibold hover:bg-brand-blue-600">{postData ? 'Update Post' : 'Save Post'}</button>
+                        <button type="submit" disabled={isUploading} className="bg-brand-blue-500 text-white py-2 px-4 rounded-md text-sm font-semibold hover:bg-brand-blue-600 disabled:opacity-50 disabled:cursor-wait">
+                           {isUploading ? 'Uploading...' : (postData ? 'Update Post' : 'Save Post')}
+                        </button>
                     </div>
                 </form>
             </div>
