@@ -19,7 +19,7 @@ const Certifications: React.FC = () => {
   return (
     <section className="py-20">
       <AnimatedSection>
-        <h2 className="text-4xl md:text-5xl font-bold text-brand-dark dark:text-white text-center">
+        <h2 className="text-4xl md:text-5xl font-bold text-white text-center">
           Certifications
         </h2>
         <div className="w-24 h-1 bg-brand-blue-500 mx-auto mt-4 mb-12"></div>
@@ -29,9 +29,9 @@ const Certifications: React.FC = () => {
         <ul className="space-y-6">
           {certifications.map((cert, index) => (
             <AnimatedSection delay={index * 100} key={index}>
-              <li className="flex items-center p-4 rounded-lg bg-brand-gray dark:bg-brand-dark-2 shadow-sm hover:shadow-md transition-shadow duration-300">
+              <li className="flex items-center p-4 rounded-lg bg-brand-dark-2 shadow-sm hover:shadow-md transition-shadow duration-300">
                 <CheckmarkIcon />
-                <span className="text-lg text-brand-dark dark:text-white">{cert}</span>
+                <span className="text-lg text-white">{cert}</span>
               </li>
             </AnimatedSection>
           ))}

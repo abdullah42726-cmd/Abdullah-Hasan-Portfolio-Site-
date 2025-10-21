@@ -25,8 +25,8 @@ const PortfolioCard: React.FC<{ item: PortfolioItem; onViewProject: (item: Portf
           loading="lazy"
         />
       </div>
-      <h3 className="text-xl font-bold text-brand-dark dark:text-white group-hover:text-brand-blue-500 transition-colors">{item.title}</h3>
-      <p className="text-gray-500 dark:text-gray-400">{item.category}</p>
+      <h3 className="text-xl font-bold text-white group-hover:text-brand-blue-500 transition-colors">{item.title}</h3>
+      <p className="text-gray-400">{item.category}</p>
     </div>
   );
 };
@@ -37,10 +37,10 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ items, onViewProject }) =
       <AnimatedSection>
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold">
-            <span className="text-brand-dark dark:text-white">My </span>
+            <span className="text-white">My </span>
             <span className="text-brand-blue-500">Portfolio</span>
           </h1>
-          <p className="text-gray-500 dark:text-gray-400 mt-4 max-w-2xl mx-auto">
+          <p className="text-gray-400 mt-4 max-w-2xl mx-auto">
             Here's a selection of some of my recent work. Click on any project to see more details or view a live version.
           </p>
         </div>

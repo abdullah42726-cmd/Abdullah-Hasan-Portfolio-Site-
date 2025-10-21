@@ -4,10 +4,10 @@ import AnimatedSection from './AnimatedSection';
 const AnimatedSkillBar: React.FC<{ name: string; level: number, isVisible: boolean }> = ({ name, level, isVisible }) => (
     <div className="mb-6">
       <div className="flex justify-between items-center mb-2">
-        <span className="text-lg font-medium text-brand-dark dark:text-white">{name}</span>
-        <span className="text-sm font-medium text-gray-500 dark:text-gray-400">{level}%</span>
+        <span className="text-lg font-medium text-white">{name}</span>
+        <span className="text-sm font-medium text-gray-400">{level}%</span>
       </div>
-      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+      <div className="w-full bg-gray-700 rounded-full h-2.5">
         <div 
           className="bg-brand-blue-500 h-2.5 rounded-full transition-all duration-1000 ease-out" 
           style={{ width: isVisible ? `${level}%` : '0%' }}
@@ -62,9 +62,9 @@ const Skills: React.FC = () => {
                 <AnimatedSection animation="fade-in-left">
                      <div>
                        <h2 className="text-5xl font-bold mb-6">
-                         <span className="text-brand-dark dark:text-white">My Professional</span> <span className="text-brand-blue-500">Skillset</span>
+                         <span className="text-white">My Professional</span> <span className="text-brand-blue-500">Skillset</span>
                        </h2>
-                       <p className="text-gray-500 dark:text-gray-400 mt-6 max-w-md">
+                       <p className="text-gray-400 mt-6 max-w-md">
                           I specialize in a comprehensive suite of design and editing tools, enabling me to bring creative visions to life with precision and flair. My expertise spans across the entire design process, from initial concept to final polished product.
                        </p>
                     </div>

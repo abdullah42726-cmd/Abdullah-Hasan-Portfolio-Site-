@@ -38,26 +38,26 @@ const VolunteerExperience: React.FC = () => {
   return (
     <div className="text-left">
       <AnimatedSection>
-        <h2 className="text-4xl md:text-5xl font-bold text-brand-dark dark:text-white text-center">
+        <h2 className="text-4xl md:text-5xl font-bold text-white text-center">
           Volunteer Experience
         </h2>
         <div className="w-24 h-1 bg-brand-blue-500 mx-auto mt-4 mb-12"></div>
       </AnimatedSection>
 
-      <div className="max-w-4xl mx-auto p-8 rounded-lg bg-brand-gray dark:bg-brand-dark-2 shadow-md hover:shadow-xl transition-shadow duration-300">
+      <div className="max-w-4xl mx-auto p-8 rounded-lg bg-brand-dark-2 shadow-md hover:shadow-xl transition-shadow duration-300">
         <AnimatedSection>
             <div className="flex items-start">
                 <VolunteerIcon />
                 <div>
                     <div className="flex flex-col sm:flex-row justify-between sm:items-center">
-                        <h3 className="text-2xl font-bold text-brand-dark dark:text-white">Senior Volenteer At Aims Foundation, Bogura</h3>
-                        <p className="text-gray-500 dark:text-gray-500 text-sm mt-1 sm:mt-0 flex-shrink-0 sm:ml-4">May 2017 – Present</p>
+                        <h3 className="text-2xl font-bold text-white">Senior Volenteer At Aims Foundation, Bogura</h3>
+                        <p className="text-gray-500 text-sm mt-1 sm:mt-0 flex-shrink-0 sm:ml-4">May 2017 – Present</p>
                     </div>
                     
                     <ul className="mt-6 space-y-4">
                         {experiences.map((exp, index) => (
                            <li key={index} className="pl-4 border-l-2 border-brand-blue-500/30">
-                               <p className="font-semibold text-brand-dark dark:text-gray-200">{exp.title}: <span className="font-normal text-gray-600 dark:text-gray-400">{exp.description}</span></p>
+                               <p className="font-semibold text-gray-200">{exp.title}: <span className="font-normal text-gray-400">{exp.description}</span></p>
                            </li>
                         ))}
                     </ul>

@@ -34,7 +34,7 @@ const Projects: React.FC = () => {
     return (
         <section id="projects" className="py-20 scroll-mt-20">
             <AnimatedSection>
-                <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-brand-dark dark:text-white">
+                <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-white">
                     Projects
                 </h2>
                 <div className="w-24 h-1 bg-brand-blue-500 mx-auto mt-4 mb-12"></div>
@@ -43,15 +43,15 @@ const Projects: React.FC = () => {
             <div className="max-w-4xl mx-auto space-y-12">
                 {projectsData.map((project, index) => (
                     <AnimatedSection key={index} delay={index * 150}>
-                        <div className="bg-brand-gray dark:bg-brand-dark-2 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                            <h3 className="flex items-center text-2xl font-bold text-brand-dark dark:text-white mb-4">
+                        <div className="bg-brand-dark-2 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                            <h3 className="flex items-center text-2xl font-bold text-white mb-4">
                                 <PlayIcon />
                                 {project.title}
                             </h3>
-                            <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400 mb-4 pl-8">
+                            <ul className="list-disc list-inside space-y-2 text-gray-400 mb-4 pl-8">
                                 <li dangerouslySetInnerHTML={{ __html: project.description }} />
                             </ul>
-                            <p className="text-gray-700 dark:text-gray-300 pl-8">
+                            <p className="text-gray-300 pl-8">
                                 <strong className="font-semibold">Tools used:</strong> {project.tools}
                             </p>
                         </div>

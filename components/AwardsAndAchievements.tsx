@@ -11,20 +11,20 @@ const AwardsAndAchievements: React.FC = () => {
   return (
     <div className="text-left">
       <AnimatedSection>
-        <h2 className="text-4xl md:text-5xl font-bold text-brand-dark dark:text-white text-center">
+        <h2 className="text-4xl md:text-5xl font-bold text-white text-center">
           Awards and Achievements
         </h2>
         <div className="w-24 h-1 bg-brand-blue-500 mx-auto mt-4 mb-12"></div>
       </AnimatedSection>
 
-      <div className="max-w-4xl mx-auto p-8 rounded-lg bg-brand-gray dark:bg-brand-dark-2 shadow-md hover:shadow-xl transition-shadow duration-300">
+      <div className="max-w-4xl mx-auto p-8 rounded-lg bg-brand-dark-2 shadow-md hover:shadow-xl transition-shadow duration-300">
         <AnimatedSection>
             <div className="flex items-start">
                 <TrophyIcon/>
                 <div>
-                    <h3 className="text-2xl font-bold text-brand-dark dark:text-white">Employee of the month for 3 months</h3>
-                    <p className="text-gray-600 dark:text-gray-400">Renssoft Solution Ltd.</p>
-                    <ul className="list-disc list-inside mt-4 space-y-2 text-gray-500 dark:text-gray-400">
+                    <h3 className="text-2xl font-bold text-white">Employee of the month for 3 months</h3>
+                    <p className="text-gray-400">Renssoft Solution Ltd.</p>
+                    <ul className="list-disc list-inside mt-4 space-y-2 text-gray-400">
                         <li>For March (2022), July (2023), February (2024)</li>
                     </ul>
                 </div>

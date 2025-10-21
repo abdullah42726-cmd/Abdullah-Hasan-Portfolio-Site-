@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Logo from './icons/Logo';
 import WhatsAppIcon from './icons/WhatsAppIcon';
 import ExternalLinkIcon from './icons/ExternalLinkIcon';
-import ThemeToggle from './ThemeToggle';
 
 interface NavLink {
   name: string;
@@ -118,7 +117,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
     if (activeLink === href) {
       return `bg-brand-blue-500 text-white rounded-full ${baseClasses}`;
     }
-    return `text-brand-dark dark:text-white hover:bg-black/10 dark:hover:bg-white/10 rounded-md ${baseClasses}`;
+    return `text-white hover:bg-white/10 rounded-md ${baseClasses}`;
   };
 
   const getMobileLinkClassName = (link: NavLink) => {
@@ -137,7 +136,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
             {/* Left side: Logo */}
             <a href="#home" onClick={(e) => handleNavClick(e, { name: 'Home', href: '#home' })}>
-                <Logo className="h-10 w-auto" pathClassName="fill-brand-dark dark:fill-white" />
+                <Logo className="h-10 w-auto" pathClassName="fill-white" />
             </a>
             {/* Right side: Navigation Menu */}
             <nav className="glass-effect rounded-full p-2 flex items-center gap-1">
@@ -146,7 +145,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
                         {link.name}
                     </a>
                 ))}
-                <div className="h-6 w-px bg-gray-200 dark:bg-white/10 mx-2"></div>
+                <div className="h-6 w-px bg-white/10 mx-2"></div>
                 <div className="flex items-center space-x-1">
                     <a 
                         href="https://wa.me/8801725796895"
@@ -161,11 +160,10 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
                         href='https://drive.google.com/file/d/1HqozSuhNjKC7O-Bxl0RkTX_ReeNV39Oh/view?usp=sharing'
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-brand-dark dark:text-white hover:text-brand-blue-500 p-2 rounded-full transition-colors flex items-center text-sm font-medium whitespace-nowrap"
+                        className="text-white hover:text-brand-blue-500 p-2 rounded-full transition-colors flex items-center text-sm font-medium whitespace-nowrap"
                     >
                         Resume <ExternalLinkIcon className="w-4 h-4 ml-1.5" />
                     </a>
-                    <ThemeToggle />
                 </div>
             </nav>
         </div>
@@ -175,7 +173,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
       <header className={`lg:hidden fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? scrolledStyles : ''}`}>
         <div className="flex items-center justify-between h-20 px-4">
           <a href="#home" onClick={(e) => handleNavClick(e, {name: 'Home', href: '#home'})}>
-             <Logo className="h-9 w-auto" pathClassName={!isScrolled && !isMenuOpen ? 'fill-white' : 'fill-brand-dark dark:fill-white'} />
+             <Logo className="h-9 w-auto" pathClassName={'fill-white'} />
           </a>
           <button 
             onClick={() => setIsMenuOpen(!isMenuOpen)} 
@@ -183,8 +181,8 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
             aria-label="Open menu"
             aria-expanded={isMenuOpen}
           >
-            <div className={`w-6 h-0.5 ${isMenuOpen || !isScrolled ? 'bg-white' : 'bg-brand-dark dark:bg-white'} transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-[2px]' : ''}`}></div>
-            <div className={`w-6 h-0.5 mt-1.5 ${isMenuOpen || !isScrolled ? 'bg-white' : 'bg-brand-dark dark:bg-white'} transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-[4px]' : ''}`}></div>
+            <div className={`w-6 h-0.5 bg-white transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-[2px]' : ''}`}></div>
+            <div className={`w-6 h-0.5 mt-1.5 bg-white transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-[4px]' : ''}`}></div>
           </button>
         </div>
       </header>
@@ -203,9 +201,6 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
               </a>
             )
           ))}
-           <div className="absolute bottom-10">
-                <ThemeToggle />
-            </div>
         </nav>
       </div>
     </>

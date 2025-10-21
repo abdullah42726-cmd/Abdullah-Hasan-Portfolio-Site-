@@ -82,7 +82,7 @@ const FigmaLogo = () => (
 
 
 const Logo: React.FC<{ name: string; component: React.ReactNode }> = ({ name, component }) => (
-    <div title={name} className="flex justify-center items-center p-4 text-gray-400 dark:text-gray-500 grayscale hover:grayscale-0 dark:hover:text-gray-300 hover:scale-110 transition-all duration-300 cursor-pointer">
+    <div title={name} className="flex justify-center items-center p-4 text-gray-500 grayscale hover:grayscale-0 hover:text-gray-300 hover:scale-110 transition-all duration-300 cursor-pointer">
         {component}
     </div>
 );
@@ -102,7 +102,7 @@ const LogoCloud: React.FC = () => {
     return (
         <section className="py-20 text-center">
             <AnimatedSection>
-              <h2 className="text-xl font-semibold text-gray-600 dark:text-gray-400 mb-8">Trusted by The Best</h2>
+              <h2 className="text-xl font-semibold text-gray-400 mb-8">Trusted by The Best</h2>
             </AnimatedSection>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                 {logos.map((logo, index) => (
