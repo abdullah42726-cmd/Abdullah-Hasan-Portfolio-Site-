@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 // --- SVG LOGO PLACEHOLDERS ---
 // You can replace the content of these components with your actual SVG code.
@@ -81,13 +80,12 @@ const FigmaLogo = () => (
 
 
 const Logo: React.FC<{ name: string; component: React.ReactNode }> = ({ name, component }) => (
-    <div title={name} className="flex justify-center items-center p-4 text-gray-400 dark:text-gray-500 grayscale hover:grayscale-0 dark:hover:grayscale-0 hover:scale-110 transition-all duration-300 cursor-pointer">
+    <div title={name} className="flex justify-center items-center p-4 text-gray-400 grayscale hover:grayscale-0 hover:scale-110 transition-all duration-300 cursor-pointer">
         {component}
     </div>
 );
 
 const LogoCloud: React.FC = () => {
-    const { ref, isVisible } = useScrollAnimation();
     const logos = [
         { name: 'Google', component: <GoogleLogo /> },
         { name: 'Amazon', component: <AmazonLogo /> },
@@ -100,9 +98,9 @@ const LogoCloud: React.FC = () => {
     ];
 
     return (
-        <section ref={ref} className="py-20 text-center">
-            <h2 className={`text-xl font-semibold text-gray-600 dark:text-gray-300 mb-8 scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`}>Trusted by The Best</h2>
-            <div className={`grid grid-cols-2 md:grid-cols-4 gap-8 scroll-animate ${isVisible ? 'scroll-animate-visible' : ''}`} style={{ transitionDelay: '150ms' }}>
+        <section className="py-20 text-center">
+            <h2 className="text-xl font-semibold text-gray-600 mb-8">Trusted by The Best</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                 {logos.map(logo => <Logo key={logo.name} name={logo.name} component={logo.component} />)}
             </div>
         </section>
