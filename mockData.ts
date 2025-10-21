@@ -3,9 +3,11 @@ import { User, Post, PortfolioItem, Service, Message } from './types';
 // In a real app, this would be a database.
 // Passwords should be hashed. For this demo, they are plaintext.
 export const mockUsers: User[] = [
-    { id: 1, name: "Kalamanik1", email: "admin@example.com", password: "ABdullah42726@#", role: "admin", verified: true },
-    { id: 2, name: "Alice", email: "alice@example.com", password: "password123", role: "user", verified: true },
-    { id: 3, name: "Bob", email: "bob@example.com", password: "password123", role: "user", verified: true },
+    // FIX: Changed user IDs from numbers to strings to match the User interface.
+    // FIX: Removed password property as it's not part of the User type.
+    { id: '1', name: "Kalamanik1", email: "admin@example.com", role: "admin", verified: true },
+    { id: '2', name: "Alice", email: "alice@example.com", role: "user", verified: true },
+    { id: '3', name: "Bob", email: "bob@example.com", role: "user", verified: true },
 ];
 
 export const mockPortfolioData: PortfolioItem[] = [
@@ -52,8 +54,9 @@ export const mockPostsData: Post[] = [
         imageUrl: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800", 
         content: "Detailed content about UI/UX magic...",
         comments: [
-            { id: 101, author: 'Alice', date: '2023-11-11', text: 'Great insights! Really loved the breakdown of the design process.' },
-            { id: 102, author: 'Bob', date: '2023-11-12', text: 'This was super helpful. Thanks for sharing!' }
+            // FIX: Added required `post_id` property to comment objects.
+            { id: 101, post_id: 1, author: 'Alice', date: '2023-11-11', text: 'Great insights! Really loved the breakdown of the design process.' },
+            { id: 102, post_id: 1, author: 'Bob', date: '2023-11-12', text: 'This was super helpful. Thanks for sharing!' }
         ]
     },
     { 
@@ -77,7 +80,8 @@ export const mockPostsData: Post[] = [
         imageUrl: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=800", 
         content: "Exploring the Cinetrade platform...",
         comments: [
-            { id: 103, author: 'Alice', date: '2023-08-15', text: 'Fascinating concept. The web design looks clean.' }
+            // FIX: Added required `post_id` property to comment object.
+            { id: 103, post_id: 3, author: 'Alice', date: '2023-08-15', text: 'Fascinating concept. The web design looks clean.' }
         ]
     },
     { 

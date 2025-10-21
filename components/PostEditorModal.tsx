@@ -1,15 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-
-interface Post {
-    id: number | null;
-    title: string;
-    author: string;
-    category: string;
-    date: string;
-    status: 'Published' | 'Draft';
-    content?: string;
-    imageUrl?: string;
-}
+import { Post } from '../types';
 
 interface PostEditorModalProps {
     isOpen: boolean;
@@ -19,8 +9,8 @@ interface PostEditorModalProps {
 }
 
 const PostEditorModal: React.FC<PostEditorModalProps> = ({ isOpen, onClose, onSave, postData }) => {
+    // FIX: Removed `id: null` to conform to the `Post` type from `types.ts` where `id` is optional (number | undefined).
     const initialPostState: Post = {
-        id: null,
         title: '',
         author: 'Abdullah Hasan',
         category: '',

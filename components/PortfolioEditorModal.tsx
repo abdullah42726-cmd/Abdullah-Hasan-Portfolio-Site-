@@ -12,8 +12,8 @@ interface PortfolioEditorModalProps {
 }
 
 const PortfolioEditorModal: React.FC<PortfolioEditorModalProps> = ({ isOpen, onClose, onSave, itemData }) => {
+    // FIX: Removed `id: null` to conform to the `PortfolioItem` type from `types.ts` where `id` is optional (number | undefined).
     const initialItemState: PortfolioItem = {
-        id: null,
         title: '',
         description: '',
         coverImage: '',

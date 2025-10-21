@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Post, User, Comment } from '../types';
+import { supabase } from '../supabaseClient';
 
 interface CommentFormProps {
     onSubmit: (commentText: string) => void;
@@ -41,7 +42,7 @@ const CommentsSection: React.FC<{ post: Post; currentUser: User | null; onAddCom
             <h2 className="text-3xl font-bold text-brand-dark dark:text-white mb-6">Comments ({post.comments?.length || 0})</h2>
             
             {currentUser ? (
-                <CommentForm onSubmit={(text) => onAddComment(post.id, text)} />
+                post.id && <CommentForm onSubmit={(text) => onAddComment(post.id!, text)} />
             ) : (
                 <div className="text-center p-6 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg">
                     <p className="text-gray-600 dark:text-gray-400">You need to be logged in to post a comment.</p>
@@ -73,10 +74,46 @@ const CommentsSection: React.FC<{ post: Post; currentUser: User | null; onAddCom
 interface BlogPostPageProps {
     post: Post;
     currentUser: User | null;
-    onAddComment: (postId: number, commentText: string) => void;
+    onAddComment: (postId: number, commentText: string) => Promise<void>;
+    onLoginClick: () => void;
 }
 
-const BlogPostPage: React.FC<BlogPostPageProps> = ({ post, currentUser, onAddComment }) => {
+const BlogPostPage: React.FC<BlogPostPageProps> = ({ post, currentUser, onAddComment, onLoginClick }) => {
+    const [postWithComments, setPostWithComments] = useState<Post>(post);
+
+    useEffect(() => {
+        const fetchComments = async () => {
+            if (!post.id) return;
+            const { data, error } = await supabase
+                .from('comments')
+                .select('*')
+                .eq('post_id', post.id)
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                console.error("Error fetching comments:", error);
+            } else {
+                setPostWithComments(prevPost => ({ ...prevPost, comments: data || [] }));
+            }
+        };
+
+        fetchComments();
+    }, [post.id]);
+
+    const handleAddCommentWrapper = async (postId: number, commentText: string) => {
+        await onAddComment(postId, commentText);
+        // Refetch comments after adding a new one
+         const { data, error } = await supabase
+            .from('comments')
+            .select('*')
+            .eq('post_id', post.id)
+            .order('created_at', { ascending: false });
+        if (!error && data) {
+            setPostWithComments(prevPost => ({ ...prevPost, comments: data }));
+        }
+    };
+
+
     return (
         <div className="bg-white dark:bg-brand-dark font-sans">
             <main className="max-w-screen-md mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -94,14 +131,13 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post, currentUser, onAddCom
                     <img src={post.imageUrl} alt={post.title} className="w-full rounded-2xl mb-8" />
 
                     <div className="prose prose-lg max-w-none text-gray-800 dark:text-gray-200">
-                        {/* In a real scenario, this would render HTML from a rich text editor */}
-                        <p>{post.content}</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. </p>
-                        <p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himeneos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. </p>
+                        {post.content?.split('\n').map((paragraph, index) => (
+                          <p key={index}>{paragraph}</p>  
+                        ))}
                     </div>
                 </article>
 
-                <CommentsSection post={post} currentUser={currentUser} onAddComment={onAddComment} onLoginClick={() => { /* This should probably navigate to login view */ }} />
+                <CommentsSection post={postWithComments} currentUser={currentUser} onAddComment={handleAddCommentWrapper} onLoginClick={onLoginClick} />
             </main>
         </div>
     );

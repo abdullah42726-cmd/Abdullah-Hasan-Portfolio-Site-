@@ -179,7 +179,8 @@ const Dashboard: React.FC<DashboardProps> = ({
                                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                     <div className="flex items-center justify-end space-x-4">
                                                         <button onClick={() => handleEditPost(post)} className="text-slate-400 hover:text-brand-blue-400"><PencilIcon className="w-5 h-5"/></button>
-                                                        <button onClick={() => onDeletePost(post.id)} className="text-slate-400 hover:text-red-500"><TrashIcon className="w-5 h-5"/></button>
+                                                        {/* FIX: Use non-null assertion for post.id as it will always exist for a post being deleted. */}
+                                                        <button onClick={() => onDeletePost(post.id!)} className="text-slate-400 hover:text-red-500"><TrashIcon className="w-5 h-5"/></button>
                                                     </div>
                                                 </td>
                                             </tr>

@@ -31,7 +31,7 @@ interface FooterProps {
   isHomePage: boolean;
   theme: 'light' | 'dark';
   onToggleTheme: () => void;
-  onSendMessage: (name: string, email: string, message: string) => boolean;
+  onSendMessage: (name: string, email: string, message: string) => Promise<boolean>;
 }
 
 const Footer: React.FC<FooterProps> = ({ onDashboardClick, onNavigateHome, isHomePage, theme, onToggleTheme, onSendMessage }) => {
@@ -73,7 +73,7 @@ const Footer: React.FC<FooterProps> = ({ onDashboardClick, onNavigateHome, isHom
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
 
@@ -89,20 +89,17 @@ const Footer: React.FC<FooterProps> = ({ onDashboardClick, onNavigateHome, isHom
         }
 
         setStatus('submitting');
-        // Simulate form submission
-        setTimeout(() => {
-            const success = onSendMessage(name, email, message);
-            if (success) {
-                setStatus('success');
-                setName('');
-                setEmail('');
-                setMessage('');
-                setTimeout(() => setStatus('idle'), 3000); // Reset form status after 3 seconds
-            } else {
-                setError('Failed to send message. Please try again later.');
-                setStatus('error');
-            }
-        }, 500);
+        const success = await onSendMessage(name, email, message);
+        if (success) {
+            setStatus('success');
+            setName('');
+            setEmail('');
+            setMessage('');
+            setTimeout(() => setStatus('idle'), 3000); // Reset form status after 3 seconds
+        } else {
+            setError('Failed to send message. Please try again later.');
+            setStatus('error');
+        }
     };
 
 
