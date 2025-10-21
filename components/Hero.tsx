@@ -30,8 +30,6 @@ const Hero: React.FC<HeroProps> = ({ onNavigateToPortfolio }) => {
   return (
     <section id="home" className="relative grid lg:grid-cols-2 items-center min-h-screen pt-32 pb-20 lg:pt-20 lg:pb-12 overflow-hidden">
       
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-brand-blue-200/50 via-blue-100/50 to-white dark:from-brand-dark dark:via-brand-blue-500/10 dark:to-brand-dark"></div>
-      
       {/* Left Column: Text Content */}
       <div className="relative z-10 text-center lg:text-left px-4 sm:px-6 lg:px-8">
         <AnimatedSection animation="pop-in">

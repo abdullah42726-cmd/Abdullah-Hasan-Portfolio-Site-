@@ -17,7 +17,8 @@ export default defineConfig(({ mode }) => {
       resolve: {
         alias: {
           // Fix: Replace `__dirname` with `process.cwd()` to resolve "Cannot find name '__dirname'" error in ESM context.
-          '@': path.resolve(process.cwd(), '.'),
+          // Fix: Reverted to using `__dirname` as it is correctly resolved in this Node.js context, avoiding a TypeScript type error with `process.cwd()`.
+          '@': path.resolve(__dirname, '.'),
         }
       }
     };
