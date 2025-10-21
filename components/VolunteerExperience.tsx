@@ -36,7 +36,7 @@ const VolunteerExperience: React.FC = () => {
         }
     ]
   return (
-    <section className="py-20 text-left">
+    <div className="text-left">
       <AnimatedSection>
         <h2 className="text-4xl md:text-5xl font-bold text-brand-dark dark:text-white text-center">
           Volunteer Experience
@@ -65,7 +65,7 @@ const VolunteerExperience: React.FC = () => {
             </div>
         </AnimatedSection>
       </div>
-    </section>
+    </div>
   );
 };
 

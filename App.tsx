@@ -114,11 +114,15 @@ const App: React.FC = () => {
                 <section id="about" className="scroll-mt-20">
                   <AboutMe />
                   <Experience />
-                  <VolunteerExperience />
+                  <Skills />
                   <Education />
                   <Certifications />
-                  <AwardsAndAchievements />
-                  <Skills />
+                  <section className="py-20">
+                    <div className="grid md:grid-cols-2 gap-12 items-start">
+                      <AwardsAndAchievements />
+                      <VolunteerExperience />
+                    </div>
+                  </section>
                   <WhyHireMe />
                 </section>
                 <Services />
