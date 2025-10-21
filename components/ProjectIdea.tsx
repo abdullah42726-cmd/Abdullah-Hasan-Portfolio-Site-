@@ -42,7 +42,7 @@ const ProjectIdea: React.FC = () => {
       </AnimatedSection>
 
       <AnimatedSection delay={300}>
-        <div className="flex flex-col items-center space-y-4 sm:flex-row sm:justify-center sm:items-center sm:space-y-0 sm:space-x-8 mt-12 text-sm text-gray-600 dark:text-gray-400">
+        <div className="flex flex-col items-center space-y-4 sm:flex-row sm:justify-center sm:items-center sm:space-y-0 sm:space-x-8 mt-16 text-sm text-gray-600 dark:text-gray-400">
           <div className="flex items-center space-x-2">
               <StarIcon className="text-yellow-400 w-5 h-5"/>
               <span>4.9/5 Average Ratings</span>
@@ -61,4 +61,4 @@ const ProjectIdea: React.FC = () => {
   );
 };
 
-export default ProjectIdea;
+export default React.memo(ProjectIdea);

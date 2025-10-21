@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import AnimatedSection from './AnimatedSection';
 
@@ -114,4 +115,4 @@ const LogoCloud: React.FC = () => {
     );
 };
 
-export default LogoCloud;
+export default React.memo(LogoCloud);

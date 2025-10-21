@@ -6,7 +6,7 @@ const ServiceCard: React.FC<{ title: string; imageUrl: string }> = ({ title, ima
   <div className="bg-brand-dark-2 rounded-3xl p-6 flex flex-col group transition-transform duration-300 hover:scale-105 hover:-translate-y-2">
     <h3 className="text-2xl font-bold">{title}</h3>
     <div className="flex-grow my-4 relative overflow-hidden rounded-2xl">
-        <img src={imageUrl} alt={title} className="w-full h-full object-cover"/>
+        <img src={imageUrl} alt={title} className="w-full h-full object-cover" loading="lazy" />
     </div>
     <div className="flex justify-end">
       <button className="bg-gray-800 group-hover:bg-brand-blue-500 transition-all duration-300 w-16 h-16 rounded-full flex items-center justify-center transform group-hover:scale-110">
@@ -46,4 +46,4 @@ const Services: React.FC = () => {
   );
 };
 
-export default Services;
+export default React.memo(Services);

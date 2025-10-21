@@ -21,7 +21,8 @@ const PortfolioCard: React.FC<{ item: PortfolioItem; onViewProject: (item: Portf
         <img 
           src={item.imageUrl} 
           alt={item.title} 
-          className="w-full h-64 object-cover transition-all duration-300 ease-in-out group-hover:scale-105" 
+          className="w-full h-64 object-cover transition-all duration-300 ease-in-out group-hover:scale-105"
+          loading="lazy"
         />
       </div>
       <h3 className="text-xl font-bold text-brand-dark dark:text-white group-hover:text-brand-blue-500 transition-colors">{item.title}</h3>
@@ -56,4 +57,4 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ items, onViewProject }) =
   );
 };
 
-export default PortfolioPage;
+export default React.memo(PortfolioPage);

@@ -12,10 +12,12 @@ const Marquee: React.FC = () => {
   const duplicatedItems = [...items, ...items];
 
   return (
-    <section className="bg-brand-blue-500 py-6 transform -rotate-2 my-20">
+    <section className="bg-brand-blue-500 py-6 transform -rotate-2 my-20 relative">
+      <div className="absolute top-0 bottom-0 left-0 w-24 z-10 bg-gradient-to-r from-brand-blue-500 to-transparent pointer-events-none"></div>
       <div className="flex flex-nowrap animate-marquee-scroll">
         {duplicatedItems.map((item, index) => <MarqueeItem key={index}>{item}</MarqueeItem>)}
       </div>
+      <div className="absolute top-0 bottom-0 right-0 w-24 z-10 bg-gradient-to-l from-brand-blue-500 to-transparent pointer-events-none"></div>
     </section>
   );
 };

@@ -32,7 +32,7 @@ const PlayIcon = () => (
 
 const Projects: React.FC = () => {
     return (
-        <section id="projects" className="py-20 scroll-mt-24">
+        <section id="projects" className="py-20 scroll-mt-20">
             <AnimatedSection>
                 <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-brand-dark dark:text-white">
                     Projects
@@ -62,4 +62,4 @@ const Projects: React.FC = () => {
     );
 };
 
-export default Projects;
+export default React.memo(Projects);

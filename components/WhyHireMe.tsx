@@ -21,9 +21,9 @@ const WhyHireMe: React.FC = () => {
       <div className="grid md:grid-cols-2 gap-12 items-center">
         {/* Visuals Column */}
         <AnimatedSection animation="fade-in-left">
-          <div className="relative h-[450px] flex justify-center items-center">
+          <div className="relative h-[400px] md:h-[450px] flex justify-center items-center">
             {/* Background circle */}
-            <div className="absolute w-[404px] h-[404px] bg-brand-blue-200 dark:bg-brand-blue-500 dark:opacity-30 rounded-full"></div>
+            <div className="absolute w-80 h-80 md:w-[404px] md:h-[404px] bg-brand-blue-200 dark:bg-brand-blue-500 dark:opacity-30 rounded-full"></div>
             
             {/* Image container - no clipping */}
             <div className="relative w-full h-full flex justify-center items-end">
@@ -31,6 +31,7 @@ const WhyHireMe: React.FC = () => {
                     src={imageUrl}
                     alt="Abdullah Hasan"
                     className="h-full w-auto object-contain"
+                    loading="lazy"
                 />
             </div>
           </div>

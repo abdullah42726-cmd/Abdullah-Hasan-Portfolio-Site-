@@ -33,8 +33,6 @@ const Skills: React.FC = () => {
             },
             { 
                 threshold: 0.2, // Trigger when 20% of the element is visible
-                // Fix: Removed 'triggerOnce' property as it's not a valid IntersectionObserverInit option.
-                // The "trigger once" functionality is handled by `observer.unobserve()` above.
             }
         );
 
@@ -60,7 +58,7 @@ const Skills: React.FC = () => {
 
     return (
          <section className="py-20">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="grid md:grid-cols-2 gap-20 items-center">
                 <AnimatedSection animation="fade-in-left">
                      <div>
                        <h2 className="text-5xl font-bold mb-6">
@@ -83,4 +81,4 @@ const Skills: React.FC = () => {
     );
 };
 
-export default Skills;
+export default React.memo(Skills);

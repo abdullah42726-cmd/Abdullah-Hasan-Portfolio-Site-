@@ -121,4 +121,4 @@ const Experience: React.FC = () => {
   );
 };
 
-export default Experience;
+export default React.memo(Experience);

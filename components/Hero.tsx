@@ -1,5 +1,4 @@
 import React from 'react';
-import StarIcon from './icons/StarIcon';
 import ArrowRightIcon from './icons/ArrowRightIcon';
 import AnimatedSection from './AnimatedSection';
 
@@ -26,14 +25,11 @@ const Hero: React.FC<HeroProps> = ({ onNavigateToPortfolio }) => {
     }
   };
   
-  // The image will be cached by the browser.
-  // To update it, change the URL to a new image link.
   const imageUrl = `https://i.imgur.com/Lasn8cQ.png`;
 
   return (
-    <section id="home" className="relative pt-12 pb-24 text-center overflow-x-clip">
+    <section id="home" className="relative grid lg:grid-cols-2 items-center min-h-screen pt-32 pb-20 lg:pt-20 lg:pb-12 overflow-hidden">
       
-      {/* Animated Background */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div 
           className="absolute inset-0 bg-gradient-to-r from-brand-blue-200/50 via-blue-100/50 to-white dark:from-brand-dark dark:via-brand-blue-500/10 dark:to-brand-dark animate-gradient-bg" 
@@ -41,10 +37,10 @@ const Hero: React.FC<HeroProps> = ({ onNavigateToPortfolio }) => {
         </div>
       </div>
       
-      {/* Top elements */}
-      <div className="relative z-10">
+      {/* Left Column: Text Content */}
+      <div className="relative z-10 text-center lg:text-left px-4 sm:px-6 lg:px-8">
         <AnimatedSection animation="pop-in">
-            <div className="inline-block relative animate-gentle-bounce">
+            <div className="inline-block relative">
                 <div className="absolute -top-3 -right-10 transform scale-75 -rotate-12">
                      <Swoosh className="w-12 h-auto text-brand-blue-500 animate-subtle-wave" />
                 </div>
@@ -55,69 +51,55 @@ const Hero: React.FC<HeroProps> = ({ onNavigateToPortfolio }) => {
         </AnimatedSection>
         
         <AnimatedSection animation="fade-in-up" delay={150}>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-brand-dark dark:text-white leading-tight mt-6 relative max-w-4xl mx-auto">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-brand-dark dark:text-white leading-tight mt-6 relative">
                 I'm <span className="text-brand-blue-500">Abdullah Hasan</span>,<br/>
                 <span className="text-3xl sm:text-4xl md:text-5xl">Graphics Designer &amp; Video Editor</span>
             </h1>
-             <Swoosh className="w-16 h-auto absolute top-full -mt-4 left-4 md:left-1/4 transform rotate-[-25deg] text-brand-blue-500 animate-subtle-wave" />
         </AnimatedSection>
-      </div>
-
-      {/* Main content area */}
-      <div className="mt-12 md:-mt-8 relative flex justify-center items-center h-[480px] md:h-[550px]">
         
-        {/* Left Testimonial */}
-        <AnimatedSection animation="fade-in-left" delay={300} className="hidden md:block absolute left-0 top-1/4 max-w-[220px] text-left z-20">
-            <div className="bg-white dark:bg-brand-dark-2 p-6 rounded-xl shadow-lg">
-                <span className="text-5xl text-gray-400 dark:text-gray-600 font-serif leading-none block -mb-4">“</span>
-                <p className="text-gray-700 dark:text-gray-300 text-sm font-medium">
-                    Abdullah's Exceptional design work ensures our website's success. Highly Recommended
-                </p>
+        <AnimatedSection animation="fade-in-up" delay={300}>
+            <p className="mt-6 text-lg text-gray-600 dark:text-gray-400 max-w-lg mx-auto lg:mx-0">
+              A creative professional with over 6 years of experience, crafting visually stunning designs and impactful video content that captivates audiences and drives results.
+            </p>
+        </AnimatedSection>
+       
+        <AnimatedSection delay={450} className="relative z-30 mt-8 flex justify-center lg:justify-start">
+            <div className="flex items-center rounded-full p-2 glass-effect gap-2">
+                <button onClick={onNavigateToPortfolio} className="bg-brand-blue-500 text-white px-6 py-3 rounded-full text-sm font-semibold flex items-center hover:bg-brand-blue-600 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1">
+                    Portfolio <ArrowRightIcon className="w-5 h-5 ml-2" />
+                </button>
+                <a href="#projects" onClick={handleNavClick} className="text-brand-dark dark:text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-white/50 dark:hover:bg-black/20 transition-colors whitespace-nowrap">
+                    View My Work
+                </a>
             </div>
         </AnimatedSection>
-
-        {/* Right Experience */}
-         <AnimatedSection animation="fade-in-right" delay={300} className="hidden md:block absolute right-0 top-1/4 max-w-xs text-left z-20">
-            <div className="bg-white dark:bg-brand-dark-2 p-6 rounded-xl shadow-lg">
-                <div className="flex text-brand-blue-500">
-                    <StarIcon className="w-5 h-5"/><StarIcon className="w-5 h-5"/><StarIcon className="w-5 h-5"/><StarIcon className="w-5 h-5"/><StarIcon className="w-5 h-5"/>
-                </div>
-                <p className="text-4xl font-bold text-brand-dark dark:text-white mt-2">6+ Years</p>
-                <p className="text-gray-500 dark:text-gray-400">Experience</p>
-            </div>
-        </AnimatedSection>
-
-        {/* Centerpiece Image & Background */}
-        <div className="absolute bottom-0 w-full max-w-[480px] md:max-w-[550px] h-full opacity-0 motion-safe:animate-slide-up-hero">
-          {/* The blue semi-circle background */}
-          <div className="absolute bottom-0 w-full h-1/2 bg-brand-blue-200 dark:opacity-80 rounded-t-full" />
-          {/* The image container */}
-          <div 
-            className="relative w-full h-full flex justify-center items-end"
-          >
-              <img 
-                  src={imageUrl}
-                  alt="Abdullah Hasan, Graphics Designer and Video Editor" 
-                  className="h-[95%] w-auto object-contain" 
-              />
-          </div>
-        </div>
       </div>
-      
-      {/* Buttons at the bottom */}
-       <AnimatedSection delay={450} className="relative -mt-24 sm:-mt-16 z-30 flex justify-center">
-        <div className="flex items-center rounded-full p-2 glass-effect">
-            <button onClick={onNavigateToPortfolio} className="bg-brand-blue-500 text-white px-8 py-3 rounded-full text-sm font-semibold flex items-center hover:bg-brand-blue-600 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1">
-                Portfolio <ArrowRightIcon className="w-5 h-5 ml-2" />
-            </button>
-            <a href="#about" onClick={handleNavClick} className="text-brand-dark dark:text-white px-8 py-3 rounded-full text-sm font-semibold hover:bg-white/50 dark:hover:bg-black/20 transition-colors">
-                View My Work
-            </a>
-            <a href="#contact" onClick={handleNavClick} className="text-brand-dark dark:text-white px-8 py-3 rounded-full text-sm font-semibold hover:bg-white/50 dark:hover:bg-black/20 transition-colors">
-                Hire me
-            </a>
-        </div>
-      </AnimatedSection>
+
+      {/* Right Column: Image and Stats */}
+      <div className="relative h-[60vh] lg:h-full flex items-center justify-center">
+          <AnimatedSection animation="fade-in-right" delay={200} className="w-full h-full">
+            <div className="relative w-full h-full flex items-center justify-center">
+                {/* Background Shape */}
+                <div className="absolute w-80 h-80 md:w-[450px] md:h-[450px] bg-brand-blue-200 dark:bg-brand-blue-500/20 rounded-full animate-gentle-bounce"></div>
+                
+                {/* Image */}
+                <img 
+                    src={imageUrl}
+                    alt="Abdullah Hasan" 
+                    className="absolute bottom-0 h-[90%] lg:h-full w-auto object-contain z-10" 
+                    loading="eager"
+                />
+
+                {/* Stat Card */}
+                <div className="absolute top-1/4 right-0 sm:right-10 lg:right-0 xl:right-10 z-20">
+                    <AnimatedSection animation="pop-in" delay={400} className="bg-white/50 dark:bg-brand-dark/50 backdrop-blur-md rounded-2xl p-4 md:p-6 text-center shadow-lg border border-white/20">
+                        <p className="text-4xl md:text-5xl font-extrabold text-brand-dark dark:text-white">6+</p>
+                        <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 leading-tight">Years<br/>Experience</p>
+                    </AnimatedSection>
+                </div>
+            </div>
+          </AnimatedSection>
+      </div>
 
     </section>
   );

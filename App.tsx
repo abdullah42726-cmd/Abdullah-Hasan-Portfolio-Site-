@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import LogoCloud from './components/LogoCloud';
@@ -93,6 +93,10 @@ const App: React.FC = () => {
   const handleCloseModal = () => {
     setSelectedPortfolioItem(null);
   };
+
+  const handleNavigateToPortfolio = useCallback(() => {
+    setPage('portfolio');
+  }, []);
   
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -106,8 +110,8 @@ const App: React.FC = () => {
            {page === 'home' ? (
             <>
               <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-                <Hero onNavigateToPortfolio={() => setPage('portfolio')} />
-                <section id="about" className="scroll-mt-24">
+                <Hero onNavigateToPortfolio={handleNavigateToPortfolio} />
+                <section id="about" className="scroll-mt-20">
                   <AboutMe />
                   <Experience />
                   <VolunteerExperience />
@@ -125,9 +129,7 @@ const App: React.FC = () => {
               <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
                 <ProjectIdea />
               </div>
-              <div className="overflow-hidden">
-                <Marquee />
-              </div>
+              <Marquee />
             </>
           ) : (
              <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">

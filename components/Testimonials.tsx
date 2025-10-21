@@ -7,7 +7,7 @@ const TestimonialCard: React.FC<{ name: string; role: string; text: string; avat
         <span className="text-8xl text-gray-700 font-serif absolute top-4 left-4 opacity-50">“</span>
         <div className="relative z-10">
             <div className="flex items-center mb-4">
-                <img src={avatarUrl} alt={name} className="w-14 h-14 rounded-full mr-4 border-2 border-brand-blue-500 object-cover"/>
+                <img src={avatarUrl} alt={name} className="w-14 h-14 rounded-full mr-4 border-2 border-brand-blue-500 object-cover" loading="lazy" />
                 <div>
                     <h4 className="font-bold text-lg">{name}</h4>
                     <p className="text-sm text-gray-400">{role}</p>
@@ -69,4 +69,4 @@ const Testimonials: React.FC = () => {
   );
 };
 
-export default Testimonials;
+export default React.memo(Testimonials);
