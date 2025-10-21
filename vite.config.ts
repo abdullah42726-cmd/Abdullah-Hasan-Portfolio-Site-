@@ -1,6 +1,8 @@
 import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
+// Fix: Import `cwd` from `node:process` to resolve TypeScript error where `process.cwd` was not found.
+import { cwd } from 'node:process';
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
@@ -17,8 +19,8 @@ export default defineConfig(({ mode }) => {
       resolve: {
         alias: {
           // Fix: Cannot find name '__dirname'.
-          // Replaced `__dirname` with `process.cwd()` because `__dirname` is not available in an ESM context.
-          '@': path.resolve(process.cwd(), '.'),
+          // Replaced `__dirname` with `cwd()` because `__dirname` is not available in an ESM context.
+          '@': path.resolve(cwd(), '.'),
         }
       }
     };
