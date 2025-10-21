@@ -25,7 +25,7 @@ const LinkedInIcon = () => (
 );
 
 const BehanceIcon = () => (
-    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" role="img" aria-hidden="true"><path d="M22.42 6.4h-6.74v-1.65h6.74v1.65zm-6.03 2.59h5.3v1.62h-5.3v-1.62zm10.61-5.51v13.04c0 1.93-1.57 3.5-3.5 3.5h-13.04c-1.93 0-3.5-1.57-3.5-3.5v-13.04c0-1.93 1.57-3.5 3.5-3.5h13.04c1.93 0 3.5 1.57 3.5 3.5zm-2 0c0-.83-.67-1.5-1.5-1.5h-13.04c-.83 0-1.5.67-1.5 1.5v13.04c0 .83.67 1.5 1.5 1.5h13.04c.83 0 1.5-.67 1.5-1.5v-13.04zm-4.51 9.11c-.53 0-.91-.35-.91-.87 0-.5.37-.88.9-.88h3.33v-1.13c-1.28-.4-2.73-.65-4.14-.65-3.19 0-5.26 1.76-5.26 4.72 0 2.81 1.95 4.59 4.97 4.59 2.73 0 4.55-1.63 4.55-4.04h-3.44zm-.3 2.37c-1.6 0-2.66-1-2.66-2.81 0-1.9 1.11-2.91 2.7-2.91.43 0 .85.06 1.25.14v5.58h-1.29z"/></svg>
+    <i className="fi fi-brands-behance text-2xl" aria-hidden="true"></i>
 );
 
 const Footer: React.FC = () => {
@@ -80,22 +80,19 @@ const Footer: React.FC = () => {
           <div>
              <h4 className="text-lg font-semibold mb-4">Get In Touch</h4>
              <p className="text-gray-400 text-sm mb-4">Have a project in mind? Let's talk!</p>
-             <a href="#contact" onClick={handleNavClick} className="inline-block bg-brand-blue-500 text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-brand-blue-600 transition-all duration-300 hover:scale-105 hover:-translate-y-1">
-                Contact Me
-             </a>
+             <div className="flex space-x-6 mt-6">
+                <SocialIcon href="https://www.facebook.com/ahasand" label="Facebook"><FacebookIcon /></SocialIcon>
+                <SocialIcon href="https://www.instagram.com/abdullah_hasan_d/" label="Instagram"><InstagramIcon /></SocialIcon>
+                <SocialIcon href="https://www.linkedin.com/in/abdullahhasan42726/" label="LinkedIn"><LinkedInIcon /></SocialIcon>
+                <SocialIcon href="https://www.behance.net/abdullahhasan1" label="Behance"><BehanceIcon /></SocialIcon>
+              </div>
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-sm text-gray-500 mb-4 sm:mb-0">
+        <div className="mt-12 pt-8 border-t border-gray-800 text-center">
+          <p className="text-sm text-gray-500">
             &copy; {new Date().getFullYear()} Abdullah Hasan. All Rights Reserved.
           </p>
-          <div className="flex space-x-6">
-            <SocialIcon href="https://www.facebook.com/ahasand" label="Facebook"><FacebookIcon /></SocialIcon>
-            <SocialIcon href="https://www.instagram.com/abdullah_hasan_d/" label="Instagram"><InstagramIcon /></SocialIcon>
-            <SocialIcon href="https://www.linkedin.com/in/abdullahhasan42726/" label="LinkedIn"><LinkedInIcon /></SocialIcon>
-            <SocialIcon href="https://www.behance.net/abdullahhasan1" label="Behance"><BehanceIcon /></SocialIcon>
-          </div>
         </div>
       </div>
       </AnimatedSection>

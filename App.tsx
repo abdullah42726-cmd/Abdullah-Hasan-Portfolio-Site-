@@ -113,8 +113,12 @@ const App: React.FC = () => {
                   <AboutMe />
                   <Experience />
                   <Skills />
-                  <Education />
-                  <Certifications />
+                  <section className="py-20">
+                    <div className="grid md:grid-cols-2 gap-12 items-start">
+                      <Education />
+                      <Certifications />
+                    </div>
+                  </section>
                   <section className="py-20">
                     <div className="grid md:grid-cols-2 gap-12 items-start">
                       <AwardsAndAchievements />

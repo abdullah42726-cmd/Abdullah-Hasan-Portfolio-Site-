@@ -3,6 +3,16 @@ import AnimatedSection from './AnimatedSection';
 
 const projectsData = [
     {
+        title: "Velour Valencie Website Design and Development (Ongoing Project)",
+        description: "Designed and developed the e-commerce website for <a href='https://velourvalencie.com' target='_blank' rel='noopener noreferrer' class='text-brand-blue-500 hover:underline'>velourvalencie.com</a>, a premium leather goods brand, focusing on a luxury user experience and showcasing high-quality products.",
+        tools: "WordPress, Elementor, Figma"
+    },
+    {
+        title: "Xpert Phone Repair Website Design (Ongoing Project)",
+        description: "Designed and developed <a href='https://xpertphonerepair.com' target='_blank' rel='noopener noreferrer' class='text-brand-blue-500 hover:underline'>xpertphonerepair.com</a> on WordPress, creating a responsive, user-friendly site that showcases phone repair services and products.",
+        tools: "WordPress, Elementor, Figma"
+    },
+    {
         title: "Medical Content Design",
         description: "Developed 1000+ social media posts and 400+ videos for medical professionals, improving engagement and brand visibility.",
         tools: "Adobe Photoshop, Illustrator, After Effects, Premiere Pro, Davinci Resolve, Capcut PC"
@@ -16,11 +26,6 @@ const projectsData = [
         title: "E-Commerce Website Design (FARA IT Fusion)",
         description: "Designed UI/UX for an e-commerce platform, improving conversion rates by 10% with user-friendly interface and responsive design.",
         tools: "Figma"
-    },
-    {
-        title: "Xpert Phone Repair Website Design (Ongoing Project)",
-        description: "Designed and developed <a href='https://xpertphonerepair.com' target='_blank' rel='noopener noreferrer' class='text-brand-blue-500 hover:underline'>xpertphonerepair.com</a> on WordPress, creating a responsive, user-friendly site that showcases phone repair services and products.",
-        tools: "WordPress, Elementor, Figma"
     }
 ];
 

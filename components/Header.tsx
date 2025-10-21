@@ -40,17 +40,48 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
         return; 
     }
 
-    const sections = document.querySelectorAll('section[id]');
+    // Get sections in DOM order to determine which is "last" on the page
+    const sections = Array.from(document.querySelectorAll('section[id]'));
+    const sectionIdsInOrder = sections.map(s => `#${s.id}`);
+
+    // Keep track of which sections are currently visible in the viewport
+    const visibleSections = new Map<string, IntersectionObserverEntry>();
     
     observer.current = new IntersectionObserver((entries) => {
+        // Update the map of visible sections based on intersection changes
         entries.forEach(entry => {
-            if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
-                setActiveLink(`#${entry.target.id}`);
+            if (entry.isIntersecting) {
+                visibleSections.set(`#${entry.target.id}`, entry);
+            } else {
+                visibleSections.delete(`#${entry.target.id}`);
             }
         });
+        
+        // Determine the active link by finding the last section in the DOM
+        // that is currently visible.
+        let lastVisibleSectionId = '';
+        // Iterate backwards through the ordered list of section IDs
+        for (let i = sectionIdsInOrder.length - 1; i >= 0; i--) {
+            if (visibleSections.has(sectionIdsInOrder[i])) {
+                lastVisibleSectionId = sectionIdsInOrder[i];
+                break; // Found the last visible section
+            }
+        }
+
+        // Only update state if the active link has changed
+        if (lastVisibleSectionId && activeLink !== lastVisibleSectionId) {
+             setActiveLink(lastVisibleSectionId);
+        } else if (visibleSections.size === 0 && window.scrollY < 200) {
+            // Fallback for being at the top of the page
+            setActiveLink('#home');
+        }
+
     }, { 
-        rootMargin: '-50% 0px -50% 0px',
-        threshold: 0.5
+        // Define an observation area in the top half of the viewport.
+        // A section is "intersecting" if it enters this area.
+        // -80px top margin accounts for the fixed header height.
+        rootMargin: '-80px 0px -40% 0px',
+        threshold: 0 // Trigger as soon as any part of the section enters the area
     });
 
     sections.forEach(section => {
@@ -64,7 +95,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
         observer.current.disconnect();
       }
     };
-  }, [currentPage]);
+  }, [currentPage, activeLink]);
 
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto';
@@ -96,14 +127,13 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
     } else {
       document.querySelector(link.href)?.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [currentPage, onNavigate, setActiveLink]);
+  }, [currentPage, onNavigate]);
   
   const mainNavLinks: NavLink[] = [
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
     { name: 'Service', href: '#services' },
     { name: 'Projects', href: '#projects' },
-    { name: 'Portfolio', href: '#portfolio-page' },
   ];
 
   const allMobileLinks: NavLink[] = [
@@ -189,7 +219,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
 
       {/* Mobile Menu Overlay */}
       <div className={`lg:hidden fixed inset-0 bg-brand-dark bg-opacity-95 backdrop-blur-sm z-40 transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onClick={() => setIsMenuOpen(false)}>
-        <nav className="flex flex-col items-center justify-center h-full space-y-8 text-2xl font-bold">
+        <nav className="flex flex-col items-center h-full space-y-6 text-xl font-bold overflow-y-auto pt-24 pb-8">
           {allMobileLinks.map(link => (
             link.external ? (
               <a key={link.name} href={link.href} target="_blank" rel="noopener noreferrer" className={`flex items-center ${getMobileLinkClassName(link)}`}>

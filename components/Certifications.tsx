@@ -17,7 +17,7 @@ const CheckmarkIcon = () => (
 
 const Certifications: React.FC = () => {
   return (
-    <section className="py-20">
+    <div className="h-full flex flex-col">
       <AnimatedSection>
         <h2 className="text-4xl md:text-5xl font-bold text-white text-center">
           Certifications
@@ -25,7 +25,7 @@ const Certifications: React.FC = () => {
         <div className="w-24 h-1 bg-brand-blue-500 mx-auto mt-4 mb-12"></div>
       </AnimatedSection>
       
-      <div className="max-w-4xl mx-auto">
+      <div className="flex-grow">
         <ul className="space-y-6">
           {certifications.map((cert, index) => (
             <AnimatedSection delay={index * 100} key={index}>
@@ -37,7 +37,7 @@ const Certifications: React.FC = () => {
           ))}
         </ul>
       </div>
-    </section>
+    </div>
   );
 };
 

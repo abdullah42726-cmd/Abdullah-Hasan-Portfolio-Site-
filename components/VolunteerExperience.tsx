@@ -36,7 +36,7 @@ const VolunteerExperience: React.FC = () => {
         }
     ]
   return (
-    <div className="text-left">
+    <div className="text-left h-full flex flex-col">
       <AnimatedSection>
         <h2 className="text-4xl md:text-5xl font-bold text-white text-center">
           Volunteer Experience
@@ -44,8 +44,8 @@ const VolunteerExperience: React.FC = () => {
         <div className="w-24 h-1 bg-brand-blue-500 mx-auto mt-4 mb-12"></div>
       </AnimatedSection>
 
-      <div className="max-w-4xl mx-auto p-8 rounded-lg bg-brand-dark-2 shadow-md hover:shadow-xl transition-shadow duration-300">
-        <AnimatedSection>
+      <AnimatedSection className="flex-grow">
+        <div className="max-w-4xl mx-auto p-8 rounded-lg bg-brand-dark-2 shadow-md hover:shadow-xl transition-shadow duration-300 h-full">
             <div className="flex items-start">
                 <VolunteerIcon />
                 <div>
@@ -63,8 +63,8 @@ const VolunteerExperience: React.FC = () => {
                     </ul>
                 </div>
             </div>
-        </AnimatedSection>
-      </div>
+        </div>
+      </AnimatedSection>
     </div>
   );
 };

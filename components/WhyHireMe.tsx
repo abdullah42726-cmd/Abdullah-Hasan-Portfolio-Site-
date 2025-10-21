@@ -30,9 +30,11 @@ const WhyHireMe: React.FC = () => {
                 <img
                     src={imageUrl}
                     alt="Abdullah Hasan"
-                    className="h-full w-auto object-contain"
+                    className="h-full w-auto object-contain z-10"
                     loading="lazy"
                 />
+                {/* Gradient Overlay for blending effect */}
+                <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-brand-dark-2 to-transparent z-20 pointer-events-none"></div>
             </div>
           </div>
         </AnimatedSection>
