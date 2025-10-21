@@ -72,8 +72,6 @@ const Hero: React.FC<HeroProps> = ({ onNavigateToPortfolio }) => {
       <div className="relative h-[60vh] lg:h-full flex items-center justify-center">
           <AnimatedSection animation="fade-in-right" delay={200} className="w-full h-full">
             <div className="relative w-full h-full flex items-center justify-center">
-                {/* Background Shape */}
-                <div className="absolute w-80 h-80 md:w-[450px] md:h-[450px] bg-brand-blue-200 dark:bg-brand-blue-500/20 rounded-full animate-gentle-bounce"></div>
                 
                 {/* Image */}
                 <img 
