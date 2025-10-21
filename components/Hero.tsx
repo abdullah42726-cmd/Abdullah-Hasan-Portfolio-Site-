@@ -24,7 +24,7 @@ const Hero: React.FC = () => {
   
   // The image will be cached by the browser.
   // To update it, change the URL to a new image link.
-  const imageUrl = `https://i.imgur.com/bFQGSGk.png`;
+  const imageUrl = `https://i.imgur.com/Lasn8cQ.png`;
 
   return (
     <section id="home" className="relative pt-12 pb-24 text-center overflow-x-clip">

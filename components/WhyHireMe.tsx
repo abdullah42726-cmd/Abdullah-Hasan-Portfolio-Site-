@@ -12,31 +12,25 @@ const WhyHireMe: React.FC = () => {
     }
   };
   
-  // The image will be cached by the browser.
-  // To update it, change the URL to a new image link.
-  const imageUrl = `https://i.imgur.com/bFQGSGk.png`;
+  // Updated image to a full-body portrait with a transparent background.
+  const imageUrl = `https://i.imgur.com/ZoHJxFb.png`;
 
   return (
     <section className="bg-brand-gray rounded-3xl p-8 md:p-12 my-20">
       <div className="grid md:grid-cols-2 gap-12 items-center">
         {/* Visuals Column */}
-        <div className="relative h-[450px] flex justify-center items-end">
-          {/* Blue circle purely for background color */}
-          <div className="absolute w-[404px] h-[404px] bg-brand-blue-500 rounded-full bottom-0"></div>
-
-          {/* The image, positioned on top, with a clip-path */}
-          <img
-              src={imageUrl}
-              alt="Abdullah Hasan"
-              className="relative h-[505px] object-contain"
-              style={{
-                  // This creates a circular clip area with a 202px radius (half of 404px).
-                  // The center of the circle is positioned horizontally at 50% and vertically
-                  // at 303px from the top of the image. This aligns the bottom of the clip
-                  // circle with the bottom of the image, while leaving the top part (head) unclipped.
-                  clipPath: 'circle(202px at 50% 303px)'
-              }}
-          />
+        <div className="relative h-[450px] flex justify-center items-center">
+          {/* Background circle */}
+          <div className="absolute w-[404px] h-[404px] bg-brand-blue-200 rounded-full"></div>
+          
+          {/* Image container - no clipping */}
+          <div className="relative w-full h-full flex justify-center items-end">
+              <img
+                  src={imageUrl}
+                  alt="Abdullah Hasan"
+                  className="h-full w-auto object-contain"
+              />
+          </div>
         </div>
         
         {/* Text Content Column */}
