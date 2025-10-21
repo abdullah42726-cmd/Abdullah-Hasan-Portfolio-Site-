@@ -59,7 +59,7 @@ const Skills: React.FC = () => {
     ];
 
     return (
-         <section id="skills" className="py-20">
+         <section className="py-20">
             <div className="grid md:grid-cols-2 gap-12 items-center">
                 <AnimatedSection animation="fade-in-left">
                      <div>

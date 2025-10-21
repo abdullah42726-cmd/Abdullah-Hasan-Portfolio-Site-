@@ -11,7 +11,12 @@ interface NavLink {
   specialStyle?: 'whatsapp' | 'resume';
 }
 
-const Header: React.FC = () => {
+interface HeaderProps {
+    onNavigate: (page: 'home' | 'portfolio') => void;
+    currentPage: 'home' | 'portfolio';
+}
+
+const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState('#home');
@@ -27,12 +32,17 @@ const Header: React.FC = () => {
   }, []);
   
   useEffect(() => {
-    const sections = document.querySelectorAll('section[id]');
-    
     if (observer.current) {
         observer.current.disconnect();
     }
 
+    if (currentPage === 'portfolio') {
+        setActiveLink('#portfolio-page');
+        return; 
+    }
+
+    const sections = document.querySelectorAll('section[id]');
+    
     observer.current = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
@@ -55,29 +65,43 @@ const Header: React.FC = () => {
         observer.current.disconnect();
       }
     };
-  }, []);
+  }, [currentPage]);
 
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto';
   }, [isMenuOpen]);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, link: NavLink) => {
     e.preventDefault();
-    const targetId = e.currentTarget.getAttribute('href');
-    if (targetId) {
-      const targetElement = document.querySelector(targetId);
-      if (targetElement) {
-        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }
     setIsMenuOpen(false);
+
+    if (link.href === '#home') {
+      onNavigate('home');
+      setTimeout(() => document.querySelector('#home')?.scrollIntoView({ behavior: 'smooth' }), 0);
+      return;
+    }
+
+    if (link.href === '#portfolio-page') {
+      onNavigate('portfolio');
+      return;
+    }
+    
+    if (currentPage !== 'home') {
+      onNavigate('home');
+      setTimeout(() => {
+        document.querySelector(link.href)?.scrollIntoView({ behavior: 'smooth' });
+      }, 100); 
+    } else {
+      document.querySelector(link.href)?.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const navLinks: NavLink[] = [
     { name: 'Home', href: '#home' },
-    { name: 'About', href: '#experience' },
+    { name: 'About', href: '#about' },
     { name: 'Service', href: '#services' },
-    { name: 'Project', href: '#portfolio' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Portfolio', href: '#portfolio-page' },
     { name: 'Connect', href: '#contact', specialStyle: 'whatsapp' },
     { name: 'Resume', href: 'https://drive.google.com/file/d/1HqozSuhNjKC7O-Bxl0RkTX_ReeNV39Oh/view?usp=sharing', external: true, specialStyle: 'resume' },
   ];
@@ -102,112 +126,81 @@ const Header: React.FC = () => {
   const navBarClassName = `rounded-full px-4 py-2 transition-all duration-300 flex items-center`;
   const navBarScrolledStyles = 'text-brand-dark dark:text-white glass-effect';
   const navBarTopStyles = 'bg-brand-dark text-white';
-  
-  const renderDesktopLink = (link: NavLink) => {
-    const baseClasses = 'px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 hover:scale-105 hover:-translate-y-0.5';
 
-    if (link.specialStyle === 'whatsapp') {
-      return (
+  const DesktopNav: React.FC = () => (
+    <nav className="hidden lg:flex items-center space-x-2">
+      <div className={`${navBarClassName} ${showScrolledState ? navBarScrolledStyles : navBarTopStyles}`}>
+        {navLinks.filter(l => !l.specialStyle).map(link => (
+          <a key={link.name} href={link.href} onClick={(e) => handleNavClick(e, link)} className={getLinkClassName(link.href)}>
+            {link.name}
+          </a>
+        ))}
+      </div>
+      <div className={`${navBarClassName} ${showScrolledState ? navBarScrolledStyles : navBarTopStyles}`}>
         <a 
-          key={`${link.name}-desktop`} 
-          href={link.href} 
-          onClick={handleNavClick}
-          className={`${baseClasses} bg-[#25D366] hover:bg-[#1DAE52] text-white`}>
-          <WhatsAppIcon className="w-5 h-5" />
-          {link.name}
-        </a>
-      );
-    }
-    
-    if (link.specialStyle === 'resume') {
-       return (
-        <a 
-          key={`${link.name}-desktop`} 
-          href={link.href} 
+          href="https://wa.me/8801725796895"
           target="_blank"
           rel="noopener noreferrer"
-          className={`${baseClasses} bg-brand-blue-500 hover:bg-brand-blue-600 text-white`}>
-          {link.name}
-          <ExternalLinkIcon className="w-5 h-5" />
+          className="text-[#25D366] hover:text-[#1DAE52] p-2 rounded-full transition-colors flex items-center"
+          aria-label="Chat on WhatsApp"
+        >
+          <WhatsAppIcon className="w-5 h-5" />
         </a>
-      );
-    }
-
-    return (
-       <a 
-        key={`${link.name}-desktop`} 
-        href={link.href} 
-        onClick={handleNavClick}
-        className={getLinkClassName(link.href)}>
-        {link.name}
-      </a>
-    );
-  };
-  
-  return (
-    <header className="sticky top-0 z-50 py-4 animate-fade-in-down">
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* --- Desktop Navigation --- */}
-        <nav className={`hidden md:flex justify-between items-center ${navBarClassName} ${showScrolledState ? navBarScrolledStyles : navBarTopStyles}`}>
-          <a href="#home" onClick={handleNavClick} aria-label="Go to homepage">
-              <Logo className="h-8 w-auto" pathClassName={showScrolledState ? 'fill-brand-dark dark:fill-white' : 'fill-white'} />
-          </a>
-          <div className="flex items-center">
-            <div className="flex items-center space-x-2">
-                {navLinks.map(renderDesktopLink)}
-            </div>
-            <div className="ml-4">
-              <ThemeToggle />
-            </div>
-          </div>
-        </nav>
-
-        {/* --- Mobile Navigation --- */}
-        <div className="md:hidden">
-            <nav className={`relative z-50 justify-between ${navBarClassName} ${showScrolledState ? navBarScrolledStyles : navBarTopStyles}`}>
-                <a href="#home" onClick={handleNavClick} className="flex items-center space-x-2 font-bold text-lg">
-                    <Logo className="h-8 w-auto" pathClassName={showScrolledState ? 'fill-brand-dark dark:fill-white' : 'fill-white'}/>
-                </a>
-                <div className="flex items-center">
-                  <ThemeToggle />
-                  <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2" aria-label="Toggle menu" aria-expanded={isMenuOpen}>
-                      {isMenuOpen ? (
-                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                      ) : (
-                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
-                      )}
-                  </button>
-                </div>
-            </nav>
-        </div>
+         <a 
+          href='https://drive.google.com/file/d/1HqozSuhNjKC7O-Bxl0RkTX_ReeNV39Oh/view?usp=sharing'
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-brand-blue-500 p-2 rounded-full transition-colors flex items-center text-sm font-medium"
+        >
+          Resume <ExternalLinkIcon className="w-4 h-4 ml-1.5" />
+        </a>
+        <ThemeToggle />
       </div>
+    </nav>
+  );
 
-      {/* --- Mobile Menu Overlay --- */}
-      <div 
-        className={`md:hidden fixed inset-0 bg-brand-dark z-40 transition-opacity duration-300 ease-in-out ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-        aria-hidden={!isMenuOpen}
+  const MobileNav: React.FC = () => (
+    <div className="lg:hidden">
+      <button 
+        onClick={() => setIsMenuOpen(!isMenuOpen)} 
+        className="z-50 relative"
+        aria-label="Open menu"
+        aria-expanded={isMenuOpen}
       >
-        <div className="flex flex-col items-center justify-center h-full space-y-6">
-          {navLinks.map((link, index) => (
-            <a 
-              key={link.name} 
-              href={link.href} 
-              onClick={link.external ? () => setIsMenuOpen(false) : handleNavClick} 
-              target={link.external ? '_blank' : undefined}
-              rel={link.external ? 'noopener noreferrer' : undefined}
-              className={`text-3xl font-semibold transition-all duration-300 flex items-center justify-center gap-3 ${getMobileLinkClassName(link)}`}
-              style={{
-                opacity: isMenuOpen ? 1 : 0,
-                transform: isMenuOpen ? 'translateY(0)' : 'translateY(20px)',
-                transitionDelay: isMenuOpen ? `${index * 70}ms` : '0ms'
-              }}
-            >
-              {link.specialStyle === 'whatsapp' && <WhatsAppIcon className="w-7 h-7" />}
-              {link.name}
-              {link.specialStyle === 'resume' && <ExternalLinkIcon className="w-7 h-7" />}
-            </a>
+        <div className={`w-6 h-0.5 ${isScrolled || isMenuOpen ? 'bg-brand-dark dark:bg-white' : 'bg-white'} transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-[2px]' : ''}`}></div>
+        <div className={`w-6 h-0.5 ${isScrolled || isMenuOpen ? 'bg-brand-dark dark:bg-white' : 'bg-white'} mt-1.5 transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-[4px]' : ''}`}></div>
+      </button>
+
+      {/* Fullscreen Overlay */}
+      <div className={`fixed inset-0 bg-brand-dark bg-opacity-95 backdrop-blur-sm z-40 transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onClick={() => setIsMenuOpen(false)}>
+        <nav className="flex flex-col items-center justify-center h-full space-y-8 text-2xl font-bold">
+          {navLinks.map(link => (
+            link.external ? (
+              <a key={link.name} href={link.href} target="_blank" rel="noopener noreferrer" className={`flex items-center ${getMobileLinkClassName(link)}`}>
+                {link.name} <ExternalLinkIcon className="w-5 h-5 ml-2"/>
+              </a>
+            ) : (
+               <a key={link.name} href={link.href} onClick={(e) => handleNavClick(e, link)} className={getMobileLinkClassName(link)}>
+                {link.name}
+              </a>
+            )
           ))}
-        </div>
+           <div className="absolute bottom-10">
+                <ThemeToggle />
+            </div>
+        </nav>
+      </div>
+    </div>
+  );
+
+  return (
+    <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50">
+      <div className="flex items-center justify-between w-full">
+         <a href="#home" onClick={(e) => handleNavClick(e, {name: 'Home', href: '#home'})} className={`absolute left-0 top-1/2 -translate-y-1/2 transition-all duration-300 ${showScrolledState ? '' : 'lg:-translate-x-[calc(100%+20px)]'}`}>
+             <Logo className="h-10 w-auto" pathClassName={showScrolledState ? 'fill-brand-dark dark:fill-white' : 'fill-white'} />
+        </a>
+        <DesktopNav />
+        <MobileNav />
       </div>
     </header>
   );

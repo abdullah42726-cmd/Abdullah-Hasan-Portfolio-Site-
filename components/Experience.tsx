@@ -95,7 +95,7 @@ const Experience: React.FC = () => {
   ];
 
   return (
-    <section id="experience" className="py-20 text-center">
+    <section className="py-20 text-center">
       <AnimatedSection>
         <h2 className="text-4xl md:text-5xl font-bold mb-16">
           <span className="text-brand-dark dark:text-white">My Work</span> <span className="text-brand-blue-500">Experience</span>

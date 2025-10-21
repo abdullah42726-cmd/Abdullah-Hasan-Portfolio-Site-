@@ -4,6 +4,7 @@ export interface PortfolioItem {
     description: string;
     imageUrl: string;
     category: string;
+    liveUrl?: string;
 }
 
 // FIX: Added User interface to resolve import errors in Login, SignUp, and VerificationPage components.

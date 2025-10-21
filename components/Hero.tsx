@@ -10,8 +10,11 @@ const Swoosh: React.FC<{ className?: string }> = ({ className }) => (
     </svg>
 );
 
+interface HeroProps {
+    onNavigateToPortfolio: () => void;
+}
 
-const Hero: React.FC = () => {
+const Hero: React.FC<HeroProps> = ({ onNavigateToPortfolio }) => {
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const targetId = e.currentTarget.getAttribute('href');
@@ -29,6 +32,14 @@ const Hero: React.FC = () => {
 
   return (
     <section id="home" className="relative pt-12 pb-24 text-center overflow-x-clip">
+      
+      {/* Animated Background */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-gradient-to-r from-brand-blue-200/50 via-blue-100/50 to-white dark:from-brand-dark dark:via-brand-blue-500/10 dark:to-brand-dark animate-gradient-bg" 
+          style={{ backgroundSize: '200% 200%' }}>
+        </div>
+      </div>
       
       {/* Top elements */}
       <div className="relative z-10">
@@ -96,8 +107,11 @@ const Hero: React.FC = () => {
       {/* Buttons at the bottom */}
        <AnimatedSection delay={450} className="relative -mt-24 sm:-mt-16 z-30 flex justify-center">
         <div className="flex items-center rounded-full p-2 glass-effect">
-            <a href="#portfolio" onClick={handleNavClick} className="bg-brand-blue-500 text-white px-8 py-3 rounded-full text-sm font-semibold flex items-center hover:bg-brand-blue-600 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1">
+            <button onClick={onNavigateToPortfolio} className="bg-brand-blue-500 text-white px-8 py-3 rounded-full text-sm font-semibold flex items-center hover:bg-brand-blue-600 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1">
                 Portfolio <ArrowRightIcon className="w-5 h-5 ml-2" />
+            </button>
+            <a href="#about" onClick={handleNavClick} className="text-brand-dark dark:text-white px-8 py-3 rounded-full text-sm font-semibold hover:bg-white/50 dark:hover:bg-black/20 transition-colors">
+                View My Work
             </a>
             <a href="#contact" onClick={handleNavClick} className="text-brand-dark dark:text-white px-8 py-3 rounded-full text-sm font-semibold hover:bg-white/50 dark:hover:bg-black/20 transition-colors">
                 Hire me
