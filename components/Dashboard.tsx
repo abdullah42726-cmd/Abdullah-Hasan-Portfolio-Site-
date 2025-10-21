@@ -9,6 +9,7 @@ import EnvelopeOpenIcon from './icons/EnvelopeOpenIcon';
 import PostEditorModal from './PostEditorModal';
 import PortfolioEditorModal from './PortfolioEditorModal';
 import ServiceEditorModal from './ServiceEditorModal';
+import MessageViewerModal from './MessageViewerModal';
 import PaginationControls from './PaginationControls';
 import { useTableManager } from '../hooks/useTableManager';
 import { Post, PortfolioItem, Service, Message } from '../types';
@@ -63,6 +64,9 @@ const Dashboard: React.FC<DashboardProps> = ({
 
     const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
     const [editingService, setEditingService] = useState<Service | null>(null);
+    
+    const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
+    const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
 
     const { 
         currentItems: currentPosts, 
@@ -111,6 +115,14 @@ const Dashboard: React.FC<DashboardProps> = ({
     const handleAddNewService = () => { setEditingService(null); setIsServiceModalOpen(true); };
     const handleEditService = (service: Service) => { setEditingService(service); setIsServiceModalOpen(true); };
     const handleSaveServiceWithClose = (service: Service) => { onSaveService(service); setIsServiceModalOpen(false); }
+    
+    const handleViewMessage = (message: Message) => {
+        setSelectedMessage(message);
+        setIsMessageModalOpen(true);
+        if (message.status === 'unread') {
+            onUpdateMessageStatus(message.id, 'read');
+        }
+    };
 
     const unreadMessagesCount = messages.filter(m => m.status === 'unread').length;
 
@@ -279,7 +291,11 @@ const Dashboard: React.FC<DashboardProps> = ({
                                     </thead>
                                     <tbody className="divide-y divide-slate-700">
                                         {currentMessages.map(msg => (
-                                            <tr key={msg.id} className={`transition-colors ${msg.status === 'unread' ? 'font-semibold bg-brand-blue-500/10' : 'hover:bg-slate-700/50'}`}>
+                                            <tr 
+                                                key={msg.id} 
+                                                onClick={() => handleViewMessage(msg)}
+                                                className={`cursor-pointer transition-colors ${msg.status === 'unread' ? 'font-semibold bg-brand-blue-500/10 hover:bg-brand-blue-500/20' : 'hover:bg-slate-700/50'}`}
+                                            >
                                                 <td className="px-6 py-4 whitespace-nowrap"><span className={`px-2 inline-flex text-xs leading-5 rounded-full ${msg.status === 'read' ? 'bg-slate-600/50 text-slate-300' : 'bg-brand-blue-500/30 text-brand-blue-200'}`}>{msg.status}</span></td>
                                                 <td className="px-6 py-4 whitespace-nowrap">
                                                     <div className="text-sm text-white">{msg.name}</div>
@@ -289,10 +305,10 @@ const Dashboard: React.FC<DashboardProps> = ({
                                                 <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm text-slate-400">{new Date(msg.date).toLocaleString()}</div></td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                     <div className="flex items-center justify-end space-x-4">
-                                                        <button onClick={() => onUpdateMessageStatus(msg.id, msg.status === 'read' ? 'unread' : 'read')} className="text-slate-400 hover:text-brand-blue-400" title={msg.status === 'read' ? 'Mark as unread' : 'Mark as read'}>
+                                                        <button onClick={(e) => { e.stopPropagation(); onUpdateMessageStatus(msg.id, msg.status === 'read' ? 'unread' : 'read'); }} className="text-slate-400 hover:text-brand-blue-400" title={msg.status === 'read' ? 'Mark as unread' : 'Mark as read'}>
                                                             {msg.status === 'read' ? <EnvelopeIcon className="w-5 h-5"/> : <EnvelopeOpenIcon className="w-5 h-5"/>}
                                                         </button>
-                                                        <button onClick={() => onDeleteMessage(msg.id)} className="text-slate-400 hover:text-red-500" title="Delete message"><TrashIcon className="w-5 h-5"/></button>
+                                                        <button onClick={(e) => { e.stopPropagation(); onDeleteMessage(msg.id); }} className="text-slate-400 hover:text-red-500" title="Delete message"><TrashIcon className="w-5 h-5"/></button>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -350,6 +366,7 @@ const Dashboard: React.FC<DashboardProps> = ({
             <PostEditorModal isOpen={isPostModalOpen} onClose={() => setIsPostModalOpen(false)} onSave={handleSavePostWithClose} postData={editingPost} />
             <PortfolioEditorModal isOpen={isPortfolioModalOpen} onClose={() => setIsPortfolioModalOpen(false)} onSave={handleSavePortfolioItemWithClose} itemData={editingPortfolioItem} />
             <ServiceEditorModal isOpen={isServiceModalOpen} onClose={() => setIsServiceModalOpen(false)} onSave={handleSaveServiceWithClose} serviceData={editingService} />
+            <MessageViewerModal isOpen={isMessageModalOpen} onClose={() => setIsMessageModalOpen(false)} message={selectedMessage} />
         </div>
     );
 };

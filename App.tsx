@@ -152,28 +152,27 @@ const App: React.FC = () => {
   };
   
   const handleAddComment = (postId: number, commentText: string) => {
-      if (!currentUser) return;
-      
-      const newComment: Comment = {
-          id: Date.now(),
-          author: currentUser.name,
-          date: new Date().toISOString().split('T')[0],
-          text: commentText,
-      };
-      
-      const updatedPosts = posts.map(p => {
-          if (p.id === postId) {
-              return { ...p, comments: [newComment, ...(p.comments || [])] };
-          }
-          return p;
-      });
-      
-      setPosts(updatedPosts);
-      
-      // Also update the active post state if it's the one being commented on
-      if(activePost && activePost.id === postId) {
-          setActivePost(prev => prev ? { ...prev, comments: [newComment, ...(prev.comments || [])]} : null);
-      }
+    if (!currentUser) return;
+
+    const newComment: Comment = {
+      id: Date.now(),
+      author: currentUser.name,
+      date: new Date().toISOString().split('T')[0],
+      text: commentText,
+    };
+
+    setPosts(prevPosts =>
+      prevPosts.map(p => {
+        if (p.id === postId) {
+          return { ...p, comments: [newComment, ...(p.comments || [])] };
+        }
+        return p;
+      })
+    );
+
+    if (activePost && activePost.id === postId) {
+      setActivePost(prev => (prev ? { ...prev, comments: [newComment, ...(prev.comments || [])] } : null));
+    }
   };
   
   const handleBackToHome = (targetId?: string) => {
@@ -195,41 +194,41 @@ const App: React.FC = () => {
 
   const handleSavePost = (postToSave: Post) => {
     if (postToSave.id) {
-        setPosts(posts.map(p => p.id === postToSave.id ? postToSave : p));
+      setPosts(prevPosts => prevPosts.map(p => (p.id === postToSave.id ? postToSave : p)));
     } else {
-        const newPost = { ...postToSave, id: Date.now() };
-        setPosts([newPost, ...posts]);
+      const newPost = { ...postToSave, id: Date.now() };
+      setPosts(prevPosts => [newPost, ...prevPosts]);
     }
   };
 
   const handleDeletePost = (postId: number) => {
-      setPosts(posts.filter(p => p.id !== postId));
+    setPosts(prevPosts => prevPosts.filter(p => p.id !== postId));
   };
 
   const handleSavePortfolioItem = (itemToSave: PortfolioItem) => {
-      if (itemToSave.id) {
-          setPortfolioItems(portfolioItems.map(i => i.id === itemToSave.id ? itemToSave : i));
-      } else {
-          const newItem = { ...itemToSave, id: Date.now() };
-          setPortfolioItems([newItem, ...portfolioItems]);
-      }
+    if (itemToSave.id) {
+      setPortfolioItems(prevItems => prevItems.map(i => (i.id === itemToSave.id ? itemToSave : i)));
+    } else {
+      const newItem = { ...itemToSave, id: Date.now() };
+      setPortfolioItems(prevItems => [newItem, ...prevItems]);
+    }
   };
 
   const handleDeletePortfolioItem = (itemId: number) => {
-      setPortfolioItems(portfolioItems.filter(i => i.id !== itemId));
+    setPortfolioItems(prevItems => prevItems.filter(i => i.id !== itemId));
   };
   
   const handleSaveService = (serviceToSave: Service) => {
     if (serviceToSave.id) {
-        setServices(services.map(s => s.id === serviceToSave.id ? serviceToSave : s));
+      setServices(prevServices => prevServices.map(s => (s.id === serviceToSave.id ? serviceToSave : s)));
     } else {
-        const newService = { ...serviceToSave, id: Date.now() };
-        setServices([newService, ...services]);
+      const newService = { ...serviceToSave, id: Date.now() };
+      setServices(prevServices => [newService, ...prevServices]);
     }
   };
 
   const handleDeleteService = (serviceId: number) => {
-      setServices(services.filter(s => s.id !== serviceId));
+    setServices(prevServices => prevServices.filter(s => s.id !== serviceId));
   };
 
   const handleSendMessage = (name: string, email: string, message: string): boolean => {
@@ -246,13 +245,13 @@ const App: React.FC = () => {
   };
 
   const handleUpdateMessageStatus = (messageId: number, status: 'read' | 'unread') => {
-    setMessages(messages.map(msg => 
-      msg.id === messageId ? { ...msg, status } : msg
-    ));
+    setMessages(prevMessages =>
+      prevMessages.map(msg => (msg.id === messageId ? { ...msg, status } : msg))
+    );
   };
 
   const handleDeleteMessage = (messageId: number) => {
-    setMessages(messages.filter(msg => msg.id !== messageId));
+    setMessages(prevMessages => prevMessages.filter(msg => msg.id !== messageId));
   };
 
 
