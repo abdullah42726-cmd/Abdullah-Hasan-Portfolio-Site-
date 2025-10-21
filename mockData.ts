@@ -1,4 +1,4 @@
-import { User, Post, PortfolioItem, Service } from './types';
+import { User, Post, PortfolioItem, Service, Message } from './types';
 
 // In a real app, this would be a database.
 // Passwords should be hashed. For this demo, they are plaintext.
@@ -114,4 +114,23 @@ export const mockServicesData: Service[] = [
       description: "Designing high-converting landing pages that capture leads and drive sales.",
       content: "A landing page is a critical tool for any marketing campaign. I design compelling landing pages with clear calls-to-action, persuasive copy, and engaging visuals. I focus on conversion rate optimization (CRO) principles to maximize the effectiveness of every page, helping you achieve your business goals."
     },
+];
+
+export const mockMessagesData: Message[] = [
+    {
+        id: 1,
+        name: 'John Doe',
+        email: 'john.doe@example.com',
+        message: 'Hello! I was wondering if you are available for a new project. Your portfolio looks great!',
+        date: '2024-05-20T10:00:00Z',
+        status: 'unread',
+    },
+    {
+        id: 2,
+        name: 'Jane Smith',
+        email: 'jane.smith@example.com',
+        message: 'This is a test message to see how the dashboard handles incoming contact form submissions. Keep up the good work!',
+        date: '2024-05-19T15:30:00Z',
+        status: 'read',
+    }
 ];

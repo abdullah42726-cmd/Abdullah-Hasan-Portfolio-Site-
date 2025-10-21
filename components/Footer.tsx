@@ -31,9 +31,10 @@ interface FooterProps {
   isHomePage: boolean;
   theme: 'light' | 'dark';
   onToggleTheme: () => void;
+  onSendMessage: (name: string, email: string, message: string) => boolean;
 }
 
-const Footer: React.FC<FooterProps> = ({ onDashboardClick, onNavigateHome, isHomePage, theme, onToggleTheme }) => {
+const Footer: React.FC<FooterProps> = ({ onDashboardClick, onNavigateHome, isHomePage, theme, onToggleTheme, onSendMessage }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
@@ -90,12 +91,18 @@ const Footer: React.FC<FooterProps> = ({ onDashboardClick, onNavigateHome, isHom
         setStatus('submitting');
         // Simulate form submission
         setTimeout(() => {
-            setStatus('success');
-            setName('');
-            setEmail('');
-            setMessage('');
-            setTimeout(() => setStatus('idle'), 3000); // Reset form status after 3 seconds
-        }, 1000);
+            const success = onSendMessage(name, email, message);
+            if (success) {
+                setStatus('success');
+                setName('');
+                setEmail('');
+                setMessage('');
+                setTimeout(() => setStatus('idle'), 3000); // Reset form status after 3 seconds
+            } else {
+                setError('Failed to send message. Please try again later.');
+                setStatus('error');
+            }
+        }, 500);
     };
 
 

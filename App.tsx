@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import { User, Post, Comment, PortfolioItem, Service } from './types';
-import { mockPostsData, mockUsers, mockPortfolioData, mockServicesData } from './mockData';
+import { User, Post, Comment, PortfolioItem, Service, Message } from './types';
+import { mockPostsData, mockUsers, mockPortfolioData, mockServicesData, mockMessagesData } from './mockData';
 
 // Reverted from lazy-loading to direct imports
 import LogoCloud from './components/LogoCloud';
@@ -35,6 +35,7 @@ const App: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>(mockPostsData);
   const [portfolioItems, setPortfolioItems] = useState<PortfolioItem[]>(mockPortfolioData);
   const [services, setServices] = useState<Service[]>(mockServicesData);
+  const [messages, setMessages] = useState<Message[]>(mockMessagesData);
   const [userToVerify, setUserToVerify] = useState<User | null>(null);
   const [scrollToSection, setScrollToSection] = useState<string | null>(null);
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -231,6 +232,29 @@ const App: React.FC = () => {
       setServices(services.filter(s => s.id !== serviceId));
   };
 
+  const handleSendMessage = (name: string, email: string, message: string): boolean => {
+    const newMessage: Message = {
+        id: Date.now(),
+        name,
+        email,
+        message,
+        date: new Date().toISOString(),
+        status: 'unread',
+    };
+    setMessages(prevMessages => [newMessage, ...prevMessages]);
+    return true; // Indicate success
+  };
+
+  const handleUpdateMessageStatus = (messageId: number, status: 'read' | 'unread') => {
+    setMessages(messages.map(msg => 
+      msg.id === messageId ? { ...msg, status } : msg
+    ));
+  };
+
+  const handleDeleteMessage = (messageId: number) => {
+    setMessages(messages.filter(msg => msg.id !== messageId));
+  };
+
 
   const renderContent = () => {
     if (view === 'dashboard' && currentUser?.role === 'admin') {
@@ -239,12 +263,15 @@ const App: React.FC = () => {
                 posts={posts}
                 portfolioItems={portfolioItems}
                 services={services}
+                messages={messages}
                 onSavePost={handleSavePost}
                 onDeletePost={handleDeletePost}
                 onSavePortfolioItem={handleSavePortfolioItem}
                 onDeletePortfolioItem={handleDeletePortfolioItem}
                 onSaveService={handleSaveService}
                 onDeleteService={handleDeleteService}
+                onUpdateMessageStatus={handleUpdateMessageStatus}
+                onDeleteMessage={handleDeleteMessage}
             />;
     }
     
@@ -328,6 +355,7 @@ const App: React.FC = () => {
             isHomePage={isHomePage}
             theme={theme}
             onToggleTheme={toggleTheme}
+            onSendMessage={handleSendMessage}
           />
           <BackToTopButton />
         </>

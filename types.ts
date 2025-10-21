@@ -42,3 +42,12 @@ export interface Service {
     imageUrl: string;
     content: string; // Long description/content for the individual page
 }
+
+export interface Message {
+  id: number;
+  name: string;
+  email: string;
+  message: string;
+  date: string;
+  status: 'unread' | 'read';
+}
