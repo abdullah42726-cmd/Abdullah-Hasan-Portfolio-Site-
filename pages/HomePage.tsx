@@ -5,7 +5,6 @@ import Services from '../components/Services';
 import Experience from '../components/Experience';
 import WhyHireMe from '../components/WhyHireMe';
 import Skills from '../components/Skills';
-import Testimonials from '../components/Testimonials';
 import ProjectIdea from '../components/ProjectIdea';
 import Marquee from '../components/Marquee';
 import Education from '../components/Education';
@@ -51,7 +50,6 @@ const HomePage: React.FC<HomePageProps> = ({ services, onServiceClick, onViewWor
                 <Portfolio />
                 <LogoCloud />
             </div>
-            <Testimonials />
             <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
                 <ProjectIdea />
             </div>
