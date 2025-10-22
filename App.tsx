@@ -48,7 +48,7 @@ const App: React.FC = () => {
           <Preloader isLoading={isLoading} />
           
           <div className={`transition-opacity duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'} overflow-x-hidden`}>
-            <Header onNavHomeClick={handleGoHome} onNavPortfolioClick={handleGoToPortfolio} isHomePage={page === 'home'} />
+            <Header onNavHomeClick={handleGoHome} isHomePage={page === 'home'} />
             <main>
               {page === 'home' && <HomePage services={services} onServiceClick={handleSelectService} onViewWorkClick={handleGoToPortfolio} />}
               {page === 'service' && <ServicePage service={selectedService} allServices={services} onBack={handleGoHome} onServiceSelect={handleSelectService} />}
