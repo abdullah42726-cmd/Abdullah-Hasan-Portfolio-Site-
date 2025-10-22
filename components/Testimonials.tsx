@@ -3,13 +3,13 @@ import StarIcon from './icons/StarIcon';
 import AnimatedSection from './AnimatedSection';
 
 const TestimonialCard: React.FC<{ name: string; role: string; text: string; avatarUrl: string }> = ({ name, role, text, avatarUrl }) => (
-    <div className="bg-brand-dark-2 rounded-3xl p-8 relative h-full transition-transform duration-300 hover:-translate-y-2">
+    <div className="glass-effect rounded-3xl p-8 relative h-full transition-transform duration-300 hover:-translate-y-2">
         <span className="text-8xl text-gray-700 font-serif absolute top-4 left-4 opacity-50">“</span>
         <div className="relative z-10">
             <div className="flex items-center mb-4">
                 <img src={avatarUrl} alt={name} className="w-14 h-14 rounded-full mr-4 border-2 border-brand-blue-500 object-cover" loading="lazy" />
                 <div>
-                    <h4 className="font-bold text-lg">{name}</h4>
+                    <h4 className="font-bold text-lg text-white">{name}</h4>
                     <p className="text-sm text-gray-400">{role}</p>
                 </div>
             </div>
@@ -51,7 +51,7 @@ const Testimonials: React.FC = () => {
         <div className="max-w-screen-xl mx-auto">
             <AnimatedSection>
                 <div className="text-center max-w-2xl mx-auto mb-12">
-                    <h2 className="text-4xl md:text-5xl font-bold">Testimonials That <br/> Speak to My Results</h2>
+                    <h2 className="text-4xl md:text-5xl font-bold text-white">Testimonials That <br/> Speak to My Results</h2>
                     <p className="text-gray-400 mt-4">
                     Don't just take my word for it. Here's what my clients have to say about our collaboration and the impact my work has had on their projects.
                     </p>

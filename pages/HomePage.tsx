@@ -13,19 +13,20 @@ import Certifications from '../components/Certifications';
 import AwardsAndAchievements from '../components/AwardsAndAchievements';
 import VolunteerExperience from '../components/VolunteerExperience';
 import AboutMe from '../components/AboutMe';
-import Projects from '../components/Projects';
+import Portfolio from '../components/Portfolio';
 import { Service } from '../types';
 
 interface HomePageProps {
     services: Service[];
     onServiceClick: (service: Service) => void;
+    onViewWorkClick: () => void;
 }
 
-const HomePage: React.FC<HomePageProps> = ({ services, onServiceClick }) => {
+const HomePage: React.FC<HomePageProps> = ({ services, onServiceClick, onViewWorkClick }) => {
     return (
         <>
             <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-                <Hero />
+                <Hero onViewWorkClick={onViewWorkClick} />
                 <section id="about" className="scroll-mt-20">
                 <AboutMe />
                 <Experience />
@@ -45,7 +46,7 @@ const HomePage: React.FC<HomePageProps> = ({ services, onServiceClick }) => {
                 <WhyHireMe />
                 </section>
                 <Services services={services} onServiceClick={onServiceClick} />
-                <Projects />
+                <Portfolio />
                 <LogoCloud />
             </div>
             <Testimonials />

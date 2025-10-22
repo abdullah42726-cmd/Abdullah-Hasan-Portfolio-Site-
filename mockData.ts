@@ -39,4 +39,28 @@ export const mockPortfolioData: PortfolioItem[] = [
         category: "Apparel Design",
         liveUrl: "https://www.behance.net/embed/project/134848195?ilo0=1",
     },
+    {
+        id: 4,
+        title: "Mobile App UI/UX",
+        description: "A comprehensive UI/UX design for a lifestyle mobile application, focusing on user-centric design principles to create a seamless and enjoyable experience.",
+        imageUrl: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?q=80&w=800",
+        category: "UI/UX Design",
+        liveUrl: "https://www.behance.net/embed/project/134848195?ilo0=1", // Placeholder URL
+    },
+    {
+        id: 5,
+        title: "Promotional Video Editing",
+        description: "Edited a series of promotional videos for a product launch, incorporating motion graphics, sound design, and color grading to create a high-impact final product.",
+        imageUrl: "https://images.unsplash.com/photo-1574717024633-591b31a80e73?q=80&w=800",
+        category: "Video Editing",
+        liveUrl: "https://www.behance.net/embed/project/134848195?ilo0=1", // Placeholder URL
+    },
+    {
+        id: 6,
+        title: "Packaging Design for Cosmetics",
+        description: "Designed product packaging for a new line of organic cosmetics, creating a visually appealing and brand-consistent look that stands out on shelves.",
+        imageUrl: "https://images.unsplash.com/photo-1590439471364-192aa70c0b53?q=80&w=800",
+        category: "Packaging Design",
+        liveUrl: "https://www.behance.net/embed/project/134848195?ilo0=1", // Placeholder URL
+    },
 ];

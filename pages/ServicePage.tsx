@@ -39,6 +39,19 @@ const ServicePage: React.FC<ServicePageProps> = ({ service, allServices, onBack,
                 <div className="w-24 h-1 bg-brand-blue-500 mt-6 mb-10"></div>
             </AnimatedSection>
 
+            {service.imageUrl && (
+                <AnimatedSection delay={150}>
+                    <div className="my-10 rounded-2xl overflow-hidden shadow-lg">
+                        <img 
+                            src={service.imageUrl} 
+                            alt={`${service.title} service visual representation`} 
+                            className="w-full h-auto max-h-[450px] object-cover" 
+                            loading="lazy"
+                        />
+                    </div>
+                </AnimatedSection>
+            )}
+
             <div className="grid lg:grid-cols-3 gap-12">
                 <div className="lg:col-span-2">
                     <AnimatedSection delay={200}>

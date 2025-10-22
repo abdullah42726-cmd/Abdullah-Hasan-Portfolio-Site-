@@ -9,6 +9,7 @@ export interface Service {
     details: string[];
     longDescription: string;
     pricing: Pricing;
+    imageUrl?: string;
 }
 
 export interface PortfolioItem {

@@ -14,9 +14,10 @@ const HandWaveIcon: React.FC<{ className?: string }> = ({ className }) => (
 
 
 interface HeroProps {
+    onViewWorkClick: () => void;
 }
 
-const Hero: React.FC<HeroProps> = () => {
+const Hero: React.FC<HeroProps> = ({ onViewWorkClick }) => {
   const jobTitle = "Graphics Designer & Video Editor";
   const [typedTitle, setTypedTitle] = useState('');
   const [isTypingComplete, setIsTypingComplete] = useState(false);
@@ -41,17 +42,6 @@ const Hero: React.FC<HeroProps> = () => {
 
     return () => clearTimeout(startDelay);
   }, []); // Empty dependency array ensures this runs only once on mount
-
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    const targetId = e.currentTarget.getAttribute('href');
-    if (targetId) {
-      const targetElement = document.querySelector(targetId);
-      if (targetElement) {
-        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }
-  };
   
   const imageUrl = `https://i.imgur.com/Lasn8cQ.png`;
 
@@ -94,7 +84,7 @@ const Hero: React.FC<HeroProps> = () => {
                 <a href="https://www.behance.net/abdullahhasan1" target="_blank" rel="noopener noreferrer" className="bg-brand-blue-500 text-white px-6 py-3 rounded-full text-sm font-semibold flex items-center hover:bg-brand-blue-600 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1">
                     Portfolio <BehanceIcon className="text-xl ml-2" />
                 </a>
-                <a href="#projects" onClick={handleNavClick} className="text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-black/20 transition-colors whitespace-nowrap">
+                <a href="#projects" onClick={(e) => { e.preventDefault(); onViewWorkClick(); }} className="text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-black/20 transition-colors whitespace-nowrap">
                     View My Work
                 </a>
             </div>

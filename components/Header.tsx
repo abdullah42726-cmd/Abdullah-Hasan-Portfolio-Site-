@@ -12,6 +12,7 @@ interface NavLink {
 
 interface HeaderProps {
     onNavHomeClick: () => void;
+    onNavPortfolioClick: () => void;
     isHomePage: boolean;
 }
 
@@ -22,7 +23,7 @@ const mainNavLinks: NavLink[] = [
     { name: 'Projects', href: '#projects' },
 ];
 
-const Header: React.FC<HeaderProps> = ({ onNavHomeClick, isHomePage }) => {
+const Header: React.FC<HeaderProps> = ({ onNavHomeClick, onNavPortfolioClick, isHomePage }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState('#home');
@@ -138,6 +139,11 @@ const Header: React.FC<HeaderProps> = ({ onNavHomeClick, isHomePage }) => {
     e.preventDefault();
     setIsMenuOpen(false);
 
+    if (link.href === '#projects') {
+        onNavPortfolioClick();
+        return;
+    }
+
     if (!isHomePage) {
         onNavHomeClick();
     }
@@ -152,7 +158,7 @@ const Header: React.FC<HeaderProps> = ({ onNavHomeClick, isHomePage }) => {
         setActiveLink(link.href);
     }, isHomePage ? 0 : 150);
 
-  }, [isHomePage, onNavHomeClick]);
+  }, [isHomePage, onNavHomeClick, onNavPortfolioClick]);
   
   const allMobileLinks: NavLink[] = [
     ...mainNavLinks,
