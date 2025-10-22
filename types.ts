@@ -1,3 +1,16 @@
+export interface Pricing {
+    planName: string;
+    price: string;
+    features: string[];
+}
+
+export interface Service {
+    title: string;
+    details: string[];
+    longDescription: string;
+    pricing: Pricing;
+}
+
 export interface PortfolioItem {
     id: number | null;
     title: string;

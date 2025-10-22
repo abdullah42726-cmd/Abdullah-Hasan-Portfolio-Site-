@@ -10,13 +10,35 @@ interface NavLink {
   specialStyle?: 'whatsapp' | 'resume';
 }
 
-interface HeaderProps {}
+interface HeaderProps {
+    onNavHomeClick: () => void;
+    isHomePage: boolean;
+}
 
-const Header: React.FC<HeaderProps> = () => {
+const mainNavLinks: NavLink[] = [
+    { name: 'Home', href: '#home' },
+    { name: 'About', href: '#about' },
+    { name: 'Service', href: '#services' },
+    { name: 'Projects', href: '#projects' },
+];
+
+const Header: React.FC<HeaderProps> = ({ onNavHomeClick, isHomePage }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState('#home');
   const observer = useRef<IntersectionObserver | null>(null);
+  const activeLinkRef = useRef(activeLink);
+
+  // Fix: Corrected the type of `navRef` from `useRef<HTMLElement>` to `useRef<HTMLDivElement>` to match the `div` element it is attached to, resolving the TypeScript type mismatch error.
+  const navRef = useRef<HTMLDivElement>(null);
+  const linkRefs = useRef<React.RefObject<HTMLAnchorElement>[]>(
+    mainNavLinks.map(() => React.createRef())
+  );
+  const [capsuleStyle, setCapsuleStyle] = useState({});
+
+  useEffect(() => {
+    activeLinkRef.current = activeLink;
+  }, [activeLink]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,20 +49,45 @@ const Header: React.FC<HeaderProps> = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
+  const calculateCapsuleStyle = useCallback(() => {
+    if (!isHomePage) {
+        setCapsuleStyle({ opacity: 0, transform: 'scale(0.5)' });
+        return;
+    }
+    const activeLinkIndex = mainNavLinks.findIndex(link => link.href === activeLink);
+    const activeLinkDomElement = linkRefs.current[activeLinkIndex]?.current;
+
+    if (activeLinkDomElement) {
+        setCapsuleStyle({
+            left: `${activeLinkDomElement.offsetLeft}px`,
+            width: `${activeLinkDomElement.offsetWidth}px`,
+            opacity: 1,
+            transform: 'scale(1)',
+        });
+    } else {
+        setCapsuleStyle({ opacity: 0, transform: 'scale(0.5)' });
+    }
+  }, [activeLink, isHomePage]);
+
+  useEffect(() => {
+    calculateCapsuleStyle();
+    window.addEventListener('resize', calculateCapsuleStyle);
+    return () => window.removeEventListener('resize', calculateCapsuleStyle);
+  }, [calculateCapsuleStyle]);
+
+
   useEffect(() => {
     if (observer.current) {
         observer.current.disconnect();
     }
+    
+    if (!isHomePage) return;
 
-    // Get sections in DOM order to determine which is "last" on the page
     const sections = Array.from(document.querySelectorAll('section[id]'));
     const sectionIdsInOrder = sections.map(s => `#${s.id}`);
-
-    // Keep track of which sections are currently visible in the viewport
     const visibleSections = new Map<string, IntersectionObserverEntry>();
     
     observer.current = new IntersectionObserver((entries) => {
-        // Update the map of visible sections based on intersection changes
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 visibleSections.set(`#${entry.target.id}`, entry);
@@ -49,31 +96,25 @@ const Header: React.FC<HeaderProps> = () => {
             }
         });
         
-        // Determine the active link by finding the last section in the DOM
-        // that is currently visible.
         let lastVisibleSectionId = '';
-        // Iterate backwards through the ordered list of section IDs
         for (let i = sectionIdsInOrder.length - 1; i >= 0; i--) {
             if (visibleSections.has(sectionIdsInOrder[i])) {
                 lastVisibleSectionId = sectionIdsInOrder[i];
-                break; // Found the last visible section
+                break;
             }
         }
 
-        // Only update state if the active link has changed
-        if (lastVisibleSectionId && activeLink !== lastVisibleSectionId) {
+        if (lastVisibleSectionId && activeLinkRef.current !== lastVisibleSectionId) {
              setActiveLink(lastVisibleSectionId);
         } else if (visibleSections.size === 0 && window.scrollY < 200) {
-            // Fallback for being at the top of the page
-            setActiveLink('#home');
+            if(activeLinkRef.current !== '#home'){
+                setActiveLink('#home');
+            }
         }
 
     }, { 
-        // Define an observation area in the top half of the viewport.
-        // A section is "intersecting" if it enters this area.
-        // -80px top margin accounts for the fixed header height.
         rootMargin: '-80px 0px -40% 0px',
-        threshold: 0 // Trigger as soon as any part of the section enters the area
+        threshold: 0
     });
 
     sections.forEach(section => {
@@ -87,7 +128,7 @@ const Header: React.FC<HeaderProps> = () => {
         observer.current.disconnect();
       }
     };
-  }, [activeLink]);
+  }, [isHomePage]);
 
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto';
@@ -96,40 +137,37 @@ const Header: React.FC<HeaderProps> = () => {
   const handleNavClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, link: NavLink) => {
     e.preventDefault();
     setIsMenuOpen(false);
-    
-    setActiveLink(link.href);
 
-    const targetElement = document.querySelector(link.href);
-    if (targetElement) {
-        targetElement.scrollIntoView({ behavior: 'smooth' });
+    if (!isHomePage) {
+        onNavHomeClick();
     }
-  }, []);
-  
-  const mainNavLinks: NavLink[] = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Service', href: '#services' },
-    { name: 'Projects', href: '#projects' },
-  ];
+    
+    setTimeout(() => {
+        const targetElement = document.querySelector(link.href);
+        if (targetElement) {
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+        } else if (link.href === '#home') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        setActiveLink(link.href);
+    }, isHomePage ? 0 : 150);
 
+  }, [isHomePage, onNavHomeClick]);
+  
   const allMobileLinks: NavLink[] = [
     ...mainNavLinks,
     { name: 'Connect', href: '#contact' },
     { name: 'Resume', href: 'https://drive.google.com/file/d/1HqozSuhNjKC7O-Bxl0RkTX_ReeNV39Oh/view?usp=sharing', external: true, specialStyle: 'resume' },
   ];
 
-  const getDesktopLinkClassName = (href: string) => {
-    const baseClasses = 'px-4 py-2 text-sm font-medium transition-colors';
-    if (activeLink === href) {
-      return `bg-brand-blue-500 text-white rounded-full ${baseClasses}`;
-    }
-    return `text-white hover:bg-white/10 rounded-md ${baseClasses}`;
+  const getDesktopLinkClassName = () => {
+    return 'relative z-10 px-4 py-2 text-sm font-medium transition-colors rounded-full text-white hover:bg-white/10';
   };
 
   const getMobileLinkClassName = (link: NavLink) => {
     if (link.href === '#contact') return "text-white bg-[#25D366] px-6 py-2 rounded-full";
     if (link.specialStyle === 'resume') return "text-brand-blue-200 hover:text-brand-blue-500";
-    if (activeLink === link.href) return "text-brand-blue-200";
+    if (activeLink === link.href && isHomePage) return "text-brand-blue-200";
     return "text-white hover:text-brand-blue-500";
   };
   
@@ -137,20 +175,31 @@ const Header: React.FC<HeaderProps> = () => {
   
   return (
     <>
-      {/* --- Desktop Header (Logo Left, Capsule Menu Right) --- */}
+      {/* --- Desktop Header --- */}
       <header className="hidden lg:block fixed top-0 left-0 right-0 z-50">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
-            {/* Left side: Logo */}
             <a href="#home" onClick={(e) => handleNavClick(e, { name: 'Home', href: '#home' })}>
                 <Logo className="h-10 w-auto" pathClassName="fill-white" />
             </a>
-            {/* Right side: Navigation Menu */}
             <nav className="glass-effect rounded-full p-2 flex items-center gap-1">
-                {mainNavLinks.map(link => (
-                    <a key={link.name} href={link.href} onClick={(e) => handleNavClick(e, link)} className={getDesktopLinkClassName(link.href)}>
-                        {link.name}
-                    </a>
-                ))}
+                <div ref={navRef} className="relative flex items-center gap-1">
+                    <span
+                      className="absolute top-0 h-full bg-brand-blue-500 rounded-full transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)]"
+                      style={capsuleStyle}
+                      aria-hidden="true"
+                    />
+                    {mainNavLinks.map((link, index) => (
+                        <a 
+                            key={link.name}
+                            ref={linkRefs.current[index]}
+                            href={link.href}
+                            onClick={(e) => handleNavClick(e, link)}
+                            className={`${getDesktopLinkClassName()} ${activeLink === link.href && isHomePage ? 'text-white' : 'text-white'}`}
+                        >
+                            {link.name}
+                        </a>
+                    ))}
+                </div>
                 <div className="h-6 w-px bg-white/10 mx-2"></div>
                 <div className="flex items-center space-x-1">
                     <a 
@@ -175,7 +224,7 @@ const Header: React.FC<HeaderProps> = () => {
         </div>
       </header>
       
-      {/* --- Mobile Header (Full Width Bar) --- */}
+      {/* --- Mobile Header --- */}
       <header className={`lg:hidden fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? scrolledStyles : ''}`}>
         <div className="flex items-center justify-between h-20 px-4">
           <a href="#home" onClick={(e) => handleNavClick(e, {name: 'Home', href: '#home'})}>
