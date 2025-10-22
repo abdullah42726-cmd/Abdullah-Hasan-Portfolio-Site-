@@ -29,7 +29,7 @@ const Certifications: React.FC = () => {
         <ul className="space-y-6">
           {certifications.map((cert, index) => (
             <AnimatedSection delay={index * 100} key={index}>
-              <li className="flex items-center p-4 rounded-lg bg-brand-dark-2 shadow-sm hover:shadow-md transition-shadow duration-300">
+              <li className="about-glass-effect flex items-center p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
                 <CheckmarkIcon />
                 <span className="text-lg text-white">{cert}</span>
               </li>

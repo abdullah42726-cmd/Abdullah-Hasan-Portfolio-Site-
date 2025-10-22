@@ -33,7 +33,7 @@ const AwardsAndAchievements: React.FC = () => {
       </AnimatedSection>
 
       <AnimatedSection delay={100} className="flex-grow">
-        <div className="max-w-4xl mx-auto p-8 rounded-lg bg-brand-dark-2 shadow-md hover:shadow-xl transition-shadow duration-300 h-full">
+        <div className="about-glass-effect max-w-4xl mx-auto p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-full">
           <ul className="space-y-6">
             {awards.map((award, index) => (
               <li key={index} className="flex items-start">

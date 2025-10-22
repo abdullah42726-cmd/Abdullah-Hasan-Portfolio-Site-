@@ -6,6 +6,7 @@ const AboutMe: React.FC = () => {
     <section className="py-20">
       <div className="grid lg:grid-cols-1 gap-16 items-center">
         <AnimatedSection>
+          <div className="about-glass-effect p-8 rounded-2xl">
             <h2 className="text-4xl md:text-5xl font-bold text-white text-center lg:text-left">
               About Me
             </h2>
@@ -13,6 +14,7 @@ const AboutMe: React.FC = () => {
             <p className="mx-auto lg:mx-0 text-lg text-gray-400 text-left leading-relaxed">
               Creative professional with <strong>5+ years</strong> of experience in <strong>graphic design, video editing,</strong> and <strong>UI/UX design</strong>. Skilled in <strong>Adobe Creative Cloud, Figma,</strong> and <strong>DaVinci Resolve</strong>, I create visually impactful content that enhances user engagement and drives business growth through innovative design solutions and high-quality visuals.
             </p>
+          </div>
         </AnimatedSection>
       </div>
     </section>

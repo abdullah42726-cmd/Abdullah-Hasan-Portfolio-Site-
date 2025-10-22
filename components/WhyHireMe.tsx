@@ -17,7 +17,7 @@ const WhyHireMe: React.FC = () => {
   const imageUrl = `https://i.imgur.com/ZoHJxFb.png`;
 
   return (
-    <section className="bg-brand-dark-2 rounded-3xl p-8 md:p-12 my-20">
+    <section className="about-glass-effect rounded-3xl p-8 md:p-12 my-20">
       <div className="grid md:grid-cols-2 gap-12 items-center">
         {/* Visuals Column */}
         <AnimatedSection animation="fade-in-left">

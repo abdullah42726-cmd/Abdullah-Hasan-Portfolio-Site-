@@ -45,7 +45,7 @@ const VolunteerExperience: React.FC = () => {
       </AnimatedSection>
 
       <AnimatedSection className="flex-grow">
-        <div className="max-w-4xl mx-auto p-8 rounded-lg bg-brand-dark-2 shadow-md hover:shadow-xl transition-shadow duration-300 h-full">
+        <div className="about-glass-effect max-w-4xl mx-auto p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-full">
             <div className="flex items-start">
                 <VolunteerIcon />
                 <div>

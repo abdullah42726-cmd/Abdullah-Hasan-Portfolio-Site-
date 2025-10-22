@@ -27,23 +27,25 @@ const HomePage: React.FC<HomePageProps> = ({ services, onServiceClick, onViewWor
         <>
             <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
                 <Hero onViewWorkClick={onViewWorkClick} />
-                <section id="about" className="scroll-mt-20">
-                <AboutMe />
-                <Experience />
-                <Skills />
-                <section className="py-20">
-                    <div className="grid md:grid-cols-2 gap-12 items-start">
-                    <Education />
-                    <Certifications />
+                <section id="about" className="scroll-mt-20 my-20 blueprint-bg rounded-3xl overflow-hidden">
+                    <AboutMe />
+                    <Experience />
+                    <Skills />
+                    <section className="py-20">
+                        <div className="grid md:grid-cols-2 gap-12 items-start">
+                        <Education />
+                        <Certifications />
+                        </div>
+                    </section>
+                    <section className="py-20">
+                        <div className="grid md:grid-cols-2 gap-12 items-start">
+                        <AwardsAndAchievements />
+                        <VolunteerExperience />
+                        </div>
+                    </section>
+                    <div className="why-hire-me-wrapper">
+                        <WhyHireMe />
                     </div>
-                </section>
-                <section className="py-20">
-                    <div className="grid md:grid-cols-2 gap-12 items-start">
-                    <AwardsAndAchievements />
-                    <VolunteerExperience />
-                    </div>
-                </section>
-                <WhyHireMe />
                 </section>
                 <Services services={services} onServiceClick={onServiceClick} />
                 <Portfolio />

@@ -39,7 +39,7 @@ const Education: React.FC = () => {
       </AnimatedSection>
 
       <AnimatedSection delay={100} className="flex-grow">
-        <div className="p-8 rounded-lg bg-brand-dark-2 shadow-md hover:shadow-xl transition-shadow duration-300 h-full flex flex-col">
+        <div className="about-glass-effect p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-full flex flex-col">
           <div className="space-y-6">
             {educationHistory.map((edu, index) => (
               <div key={edu.degree}>
