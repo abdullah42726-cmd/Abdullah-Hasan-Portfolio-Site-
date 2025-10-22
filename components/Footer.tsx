@@ -5,6 +5,7 @@
 import React from 'react';
 import Logo from './icons/Logo';
 import AnimatedSection from './AnimatedSection';
+import BehanceIcon from './icons/BehanceIcon';
 
 const SocialIcon: React.FC<{ children: React.ReactNode, href: string, label: string }> = ({ children, href, label }) => (
   <a href={href} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors" aria-label={label}>
@@ -22,10 +23,6 @@ const InstagramIcon = () => (
 
 const LinkedInIcon = () => (
     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" role="img" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.7c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.7h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-);
-
-const BehanceIcon = () => (
-    <i className="fi fi-brands-behance text-2xl" aria-hidden="true"></i>
 );
 
 const Footer: React.FC = () => {
@@ -84,7 +81,7 @@ const Footer: React.FC = () => {
                 <SocialIcon href="https://www.facebook.com/ahasand" label="Facebook"><FacebookIcon /></SocialIcon>
                 <SocialIcon href="https://www.instagram.com/abdullah_hasan_d/" label="Instagram"><InstagramIcon /></SocialIcon>
                 <SocialIcon href="https://www.linkedin.com/in/abdullahhasan42726/" label="LinkedIn"><LinkedInIcon /></SocialIcon>
-                <SocialIcon href="https://www.behance.net/abdullahhasan1" label="Behance"><BehanceIcon /></SocialIcon>
+                <SocialIcon href="https://www.behance.net/abdullahhasan1" label="Behance"><BehanceIcon className="text-2xl" /></SocialIcon>
               </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ArrowRightIcon from './icons/ArrowRightIcon';
+import BehanceIcon from './icons/BehanceIcon';
 import AnimatedSection from './AnimatedSection';
 
 const HandWaveIcon: React.FC<{ className?: string }> = ({ className }) => (
@@ -14,10 +14,9 @@ const HandWaveIcon: React.FC<{ className?: string }> = ({ className }) => (
 
 
 interface HeroProps {
-    onNavigateToPortfolio: () => void;
 }
 
-const Hero: React.FC<HeroProps> = ({ onNavigateToPortfolio }) => {
+const Hero: React.FC<HeroProps> = () => {
   const jobTitle = "Graphics Designer & Video Editor";
   const [typedTitle, setTypedTitle] = useState('');
   const [isTypingComplete, setIsTypingComplete] = useState(false);
@@ -92,9 +91,9 @@ const Hero: React.FC<HeroProps> = ({ onNavigateToPortfolio }) => {
        
         <AnimatedSection delay={450} className="relative z-30 mt-8 flex justify-center lg:justify-start">
             <div className="flex items-center rounded-full p-2 glass-effect gap-2">
-                <button onClick={onNavigateToPortfolio} className="bg-brand-blue-500 text-white px-6 py-3 rounded-full text-sm font-semibold flex items-center hover:bg-brand-blue-600 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1">
-                    Portfolio <ArrowRightIcon className="w-5 h-5 ml-2" />
-                </button>
+                <a href="https://www.behance.net/abdullahhasan1" target="_blank" rel="noopener noreferrer" className="bg-brand-blue-500 text-white px-6 py-3 rounded-full text-sm font-semibold flex items-center hover:bg-brand-blue-600 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1">
+                    Portfolio <BehanceIcon className="text-xl ml-2" />
+                </a>
                 <a href="#projects" onClick={handleNavClick} className="text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-black/20 transition-colors whitespace-nowrap">
                     View My Work
                 </a>

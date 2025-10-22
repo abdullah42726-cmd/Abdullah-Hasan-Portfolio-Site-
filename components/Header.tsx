@@ -10,12 +10,9 @@ interface NavLink {
   specialStyle?: 'whatsapp' | 'resume';
 }
 
-interface HeaderProps {
-    onNavigate: (page: 'home' | 'portfolio') => void;
-    currentPage: 'home' | 'portfolio';
-}
+interface HeaderProps {}
 
-const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
+const Header: React.FC<HeaderProps> = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState('#home');
@@ -33,11 +30,6 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
   useEffect(() => {
     if (observer.current) {
         observer.current.disconnect();
-    }
-
-    if (currentPage === 'portfolio') {
-        setActiveLink('#portfolio-page');
-        return; 
     }
 
     // Get sections in DOM order to determine which is "last" on the page
@@ -95,7 +87,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
         observer.current.disconnect();
       }
     };
-  }, [currentPage, activeLink]);
+  }, [activeLink]);
 
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto';
@@ -105,29 +97,13 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
     e.preventDefault();
     setIsMenuOpen(false);
     
-    // Set active link immediately for instant feedback
     setActiveLink(link.href);
 
-    if (link.href === '#home') {
-      onNavigate('home');
-      setTimeout(() => document.querySelector('#home')?.scrollIntoView({ behavior: 'smooth' }), 0);
-      return;
+    const targetElement = document.querySelector(link.href);
+    if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth' });
     }
-
-    if (link.href === '#portfolio-page') {
-      onNavigate('portfolio');
-      return;
-    }
-    
-    if (currentPage !== 'home') {
-      onNavigate('home');
-      setTimeout(() => {
-        document.querySelector(link.href)?.scrollIntoView({ behavior: 'smooth' });
-      }, 100); 
-    } else {
-      document.querySelector(link.href)?.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [currentPage, onNavigate]);
+  }, []);
   
   const mainNavLinks: NavLink[] = [
     { name: 'Home', href: '#home' },
