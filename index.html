@@ -85,107 +85,81 @@
                 'to': { transform: 'rotate(360deg)' },
               },
               'blink-caret': {
-                'from, to': { opacity: '1' },
-                '50%': { opacity: '0' },
+                'from, to': { borderColor: 'transparent' },
+                '50%': { borderColor: 'currentColor' },
               },
               'logo-pulse': {
-                '0%, 100%': { 
-                  transform: 'scale(1)',
-                  opacity: '1',
-                },
-                '50%': {
-                  transform: 'scale(1.05)',
-                  opacity: '0.9',
-                },
-              },
+                '0%, 100%': { transform: 'scale(1)', opacity: 1 },
+                '50%': { transform: 'scale(1.05)', opacity: 0.9 },
+              }
             }
           }
         }
       }
     </script>
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.4.2/uicons-brands/css/uicons-brands.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.4.0/uicons-brands/css/uicons-brands.css'>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --brand-dark: #1A1A1A;
+        --brand-blue: #4361ee;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--brand-dark);
+      }
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: radial-gradient(ellipse at 50% 0%, rgba(67, 97, 238, 0.1) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: -1;
+      }
+      .glass-effect {
+        background-color: transparent !important; /* Overriding default dark mode bg if any */
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      
+      .about-glass-effect {
+        background-color: transparent !important;
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      
+      .animate-on-scroll {
+        opacity: 0;
+      }
+
+    </style>
 <script type="importmap">
 {
   "imports": {
     "react/": "https://aistudiocdn.com/react@^19.2.0/",
     "react": "https://aistudiocdn.com/react@^19.2.0",
     "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "vite": "https://aistudiocdn.com/vite@^7.1.11",
+    "vite": "https://aistudiocdn.com/vite@^7.1.12",
     "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.0.4",
     "path": "https://aistudiocdn.com/path@^0.12.7"
   }
 }
 </script>
-<style>
-  html {
-    scroll-behavior: smooth;
-  }
-  /* This class is used to hide elements before they are animated into view, preventing a "flicker" effect. */
-  .animate-on-scroll {
-    opacity: 0;
-  }
-  .glass-effect {
-    background: rgba(255, 255, 255, 0);
-    box-shadow: 20px 20px 40px -6px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(9.1px);
-    -webkit-backdrop-filter: blur(9.1px);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  .about-glass-effect {
-    background: rgba(40, 40, 40, 0.2);
-    box-shadow: 20px 20px 40px -6px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-  }
-  .blueprint-bg {
-    position: relative;
-    background-color: #1A1A1A;
-    /* Subtle grid lines */
-    background-image:
-      linear-gradient(rgba(67, 97, 238, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(67, 97, 238, 0.1) 1px, transparent 1px);
-    background-size: 3rem 3rem; /* Grid size */
-    border: 1px solid rgba(67, 97, 238, 0.2);
-  }
-
-  .blueprint-bg::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    /* Radial gradient for the soft light effect */
-    background: radial-gradient(ellipse at center, rgba(67, 97, 238, 0.1) 0%, rgba(26, 26, 26, 0) 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* Make sure direct children are on top of the pseudo-element */
-  .blueprint-bg > * {
-    position: relative;
-    z-index: 1;
-  }
-  
-  /* Wrapper to handle WhyHireMe component's internal margin */
-  .why-hire-me-wrapper {
-      padding-top: 5rem; /* Replicates my-20's top margin as padding */
-      padding-bottom: 5rem; /* Replicates my-20's bottom margin as padding */
-  }
-  .why-hire-me-wrapper > section {
-      margin-top: 0 !important;
-      margin-bottom: 0 !important;
-  }
-</style>
-<link rel="stylesheet" href="/index.css">
 </head>
-<body class="bg-brand-dark transition-colors duration-300">
+<body>
     <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
+    <script type="module" src="/index-1.tsx"></script>
 </body>
 </html>

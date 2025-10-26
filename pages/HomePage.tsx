@@ -26,7 +26,7 @@ const HomePage: React.FC<HomePageProps> = ({ services, onServiceClick, onViewWor
         <>
             <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
                 <Hero onViewWorkClick={onViewWorkClick} />
-                <section id="about" className="scroll-mt-20 my-20 blueprint-bg rounded-3xl overflow-hidden">
+                <section id="about" className="scroll-mt-20 my-20">
                     <AboutMe />
                     <Experience />
                     <Skills />
