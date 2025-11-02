@@ -75,7 +75,7 @@ const Hero: React.FC<HeroProps> = ({ onViewWorkClick }) => {
         
         <AnimatedSection animation="fade-in-up" delay={300}>
             <p className="mt-6 text-lg text-gray-400 max-w-lg mx-auto lg:mx-0">
-              A creative professional with over 6 years of experience, crafting visually stunning designs and impactful video content that captivates audiences and drives results.
+              A creative professional with over 7 years of experience, crafting visually stunning designs and impactful video content that captivates audiences and drives results.
             </p>
         </AnimatedSection>
        
@@ -110,7 +110,7 @@ const Hero: React.FC<HeroProps> = ({ onViewWorkClick }) => {
                 {/* Stat Card */}
                 <div className="absolute top-1/4 right-0 sm:right-10 lg:right-0 xl:right-10 z-20">
                     <AnimatedSection animation="pop-in" delay={400} className="bg-brand-dark/50 backdrop-blur-md rounded-2xl p-4 md:p-6 text-center shadow-lg border border-white/20 animate-gentle-bounce">
-                        <p className="text-4xl md:text-5xl font-extrabold text-white">6+</p>
+                        <p className="text-4xl md:text-5xl font-extrabold text-white">7+</p>
                         <p className="text-sm md:text-base text-gray-400 leading-tight">Years<br/>Experience</p>
                     </AnimatedSection>
                 </div>
