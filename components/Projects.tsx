@@ -7,6 +7,64 @@ interface ProjectsProps {
   items: PortfolioItem[];
 }
 
+// Sub-component to handle individual image loading states
+const ProjectCard: React.FC<{ item: PortfolioItem; onClick: (item: PortfolioItem) => void; delay: number }> = ({ item, onClick, delay }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  return (
+    <AnimatedSection delay={delay}>
+      <div 
+        className="group relative overflow-hidden rounded-lg cursor-pointer bg-brand-dark-2 shadow-lg"
+        onClick={() => onClick(item)}
+        onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onClick(item)}
+        role="button"
+        tabIndex={0}
+        aria-label={`View details for ${item.title}`}
+      >
+        {/* Image Container with Skeleton Loader */}
+        <div className="relative h-64 w-full overflow-hidden bg-gray-800">
+          
+          {/* Skeleton Pulse (Visible until image loads) */}
+          {!isLoaded && (
+            <div className="absolute inset-0 bg-gray-700/50 animate-pulse z-10" />
+          )}
+
+          <img 
+            src={item.imageUrl} 
+            alt={item.title} 
+            onLoad={() => setIsLoaded(true)}
+            className={`w-full h-full object-cover transform transition-all duration-700 ease-out
+              ${isLoaded ? 'opacity-100 scale-100 group-hover:scale-110' : 'opacity-0 scale-105'}
+            `}
+            loading="lazy"
+            decoding="async"
+          />
+          
+          {/* Dark Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 transition-opacity duration-300"></div>
+        </div>
+
+        {/* Content Content */}
+        <div className="absolute bottom-0 left-0 p-6 w-full z-20 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+          <span className="inline-block text-xs font-semibold bg-brand-blue-500 text-white px-2 py-1 rounded mb-2 shadow-sm">
+            {item.category}
+          </span>
+          <h3 className="text-xl font-bold text-white leading-tight group-hover:text-brand-blue-200 transition-colors">
+            {item.title}
+          </h3>
+        </div>
+
+        {/* Hover Action Overlay */}
+        <div className="absolute inset-0 bg-brand-blue-500/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm z-30">
+          <span className="text-white text-lg font-bold tracking-wide border-2 border-white px-6 py-2 rounded-full transform scale-90 group-hover:scale-100 transition-transform duration-300">
+            View Project
+          </span>
+        </div>
+      </div>
+    </AnimatedSection>
+  );
+};
+
 const Projects: React.FC<ProjectsProps> = ({ items }) => {
   const [selectedItem, setSelectedItem] = useState<PortfolioItem | null>(null);
 
@@ -33,10 +91,10 @@ const Projects: React.FC<ProjectsProps> = ({ items }) => {
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-4 py-2 text-sm md:text-base font-medium rounded-full transition-colors duration-300 ${
+              className={`px-5 py-2 text-sm md:text-base font-medium rounded-full transition-all duration-300 border ${
                 activeCategory === category
-                  ? 'bg-brand-blue-500 text-white'
-                  : 'bg-brand-dark-2 text-gray-300 hover:bg-brand-blue-500/50'
+                  ? 'bg-brand-blue-500 text-white border-brand-blue-500 shadow-lg shadow-brand-blue-500/25'
+                  : 'bg-transparent text-gray-400 border-gray-700 hover:border-gray-500 hover:text-white'
               }`}
             >
               {category}
@@ -47,32 +105,12 @@ const Projects: React.FC<ProjectsProps> = ({ items }) => {
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredItems.map((item, index) => (
-          <AnimatedSection key={item.id} delay={index * 100}>
-            <div 
-              className="group relative overflow-hidden rounded-lg cursor-pointer"
-              onClick={() => setSelectedItem(item)}
-              onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setSelectedItem(item)}
-              role="button"
-              tabIndex={0}
-              aria-label={`View details for ${item.title}`}
-            >
-              <img 
-                src={item.imageUrl} 
-                alt={item.title} 
-                className="w-full h-60 object-cover transform group-hover:scale-110 transition-transform duration-500" 
-                loading="lazy"
-                decoding="async"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-              <div className="absolute bottom-0 left-0 p-6">
-                <span className="text-sm bg-brand-blue-500/80 text-white px-2 py-1 rounded">{item.category}</span>
-                <h3 className="text-xl font-bold text-white mt-2">{item.title}</h3>
-              </div>
-              <div className="absolute inset-0 bg-brand-blue-500 flex items-center justify-center opacity-0 group-hover:opacity-90 transition-opacity duration-500">
-                <span className="text-white text-lg font-semibold">View Project</span>
-              </div>
-            </div>
-          </AnimatedSection>
+          <ProjectCard 
+            key={item.id} 
+            item={item} 
+            onClick={setSelectedItem} 
+            delay={index * 100} 
+          />
         ))}
       </div>
 

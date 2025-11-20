@@ -1,5 +1,6 @@
 import React from 'react';
 import AnimatedSection from './AnimatedSection';
+import ProjectGallery from './ProjectGallery';
 
 const PlayIcon = () => (
     <svg className="w-5 h-5 text-brand-blue-500 mr-3 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
@@ -96,6 +97,10 @@ const Portfolio: React.FC = () => {
                 <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-white">Projects</h2>
                 <div className="w-24 h-1 bg-brand-blue-500 mx-auto mt-4 mb-12"></div>
             </AnimatedSection>
+            
+            {/* Project Gallery Album */}
+            <ProjectGallery />
+
             <div className="max-w-4xl mx-auto space-y-12">
                 {projects.map((project, index) => (
                     <ProjectItem 
