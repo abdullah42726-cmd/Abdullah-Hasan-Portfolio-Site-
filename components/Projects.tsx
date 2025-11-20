@@ -56,7 +56,13 @@ const Projects: React.FC<ProjectsProps> = ({ items }) => {
               tabIndex={0}
               aria-label={`View details for ${item.title}`}
             >
-              <img src={item.imageUrl} alt={item.title} className="w-full h-60 object-cover transform group-hover:scale-110 transition-transform duration-500" />
+              <img 
+                src={item.imageUrl} 
+                alt={item.title} 
+                className="w-full h-60 object-cover transform group-hover:scale-110 transition-transform duration-500" 
+                loading="lazy"
+                decoding="async"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
               <div className="absolute bottom-0 left-0 p-6">
                 <span className="text-sm bg-brand-blue-500/80 text-white px-2 py-1 rounded">{item.category}</span>

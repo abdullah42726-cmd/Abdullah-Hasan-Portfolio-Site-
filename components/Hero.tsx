@@ -46,7 +46,7 @@ const Hero: React.FC<HeroProps> = ({ onViewWorkClick }) => {
   const imageUrl = `https://i.imgur.com/Lasn8cQ.png`;
 
   return (
-    <section id="home" className="relative grid lg:grid-cols-2 items-center min-h-screen pt-28 pb-16 lg:pt-20 lg:pb-12 overflow-hidden">
+    <section id="home" className="relative grid lg:grid-cols-2 items-center min-h-screen pt-20 pb-12 md:pt-28 md:pb-16 overflow-hidden">
       
       {/* Left Column: Text Content */}
       <div className="relative z-10 text-center lg:text-left px-4 sm:px-6 lg:px-8">
@@ -92,7 +92,7 @@ const Hero: React.FC<HeroProps> = ({ onViewWorkClick }) => {
       </div>
 
       {/* Right Column: Image and Stats */}
-      <div className="relative h-[50vh] lg:h-full flex items-center justify-center">
+      <div className="relative h-[40vh] md:h-[50vh] lg:h-full flex items-center justify-center mt-8 lg:mt-0">
           <AnimatedSection animation="fade-in-right" delay={200} className="w-full h-full">
             <div className="relative w-full h-full flex items-center justify-center">
                 
@@ -102,10 +102,12 @@ const Hero: React.FC<HeroProps> = ({ onViewWorkClick }) => {
                     alt="Abdullah Hasan" 
                     className="absolute bottom-0 h-[90%] lg:h-full w-auto object-contain z-10" 
                     loading="eager"
+                    // @ts-ignore - fetchPriority is a valid attribute in modern browsers but React types might strictly check it
+                    fetchPriority="high"
                 />
 
                 {/* Stat Card */}
-                <div className="absolute top-10 right-4 md:top-1/4 md:right-10 lg:right-0 xl:right-10 z-20">
+                <div className="absolute top-4 right-4 md:top-1/4 md:right-10 lg:right-0 xl:right-10 z-20">
                     <AnimatedSection animation="pop-in" delay={400} className="bg-brand-dark/50 backdrop-blur-md rounded-2xl p-4 md:p-6 text-center shadow-lg border border-white/20 animate-gentle-bounce">
                         <p className="text-4xl md:text-5xl font-extrabold text-white">6+</p>
                         <p className="text-sm md:text-base text-gray-400 leading-tight">Years<br/>Experience</p>

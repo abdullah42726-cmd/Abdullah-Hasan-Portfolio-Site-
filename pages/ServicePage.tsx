@@ -47,6 +47,7 @@ const ServicePage: React.FC<ServicePageProps> = ({ service, allServices, onBack,
                             alt={`${service.title} service visual representation`} 
                             className="w-full h-auto max-h-[450px] object-cover" 
                             loading="lazy"
+                            decoding="async"
                         />
                     </div>
                 </AnimatedSection>

@@ -32,6 +32,7 @@ const WhyHireMe: React.FC = () => {
                     alt="Abdullah Hasan"
                     className="h-full w-auto object-contain z-10"
                     loading="lazy"
+                    decoding="async"
                 />
             </div>
           </div>
