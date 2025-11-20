@@ -38,7 +38,27 @@ const albums: Album[] = [
       "https://i.imgur.com/z1obWzI.png",
       "https://i.imgur.com/a3pW3yp.png",
       "https://i.imgur.com/dfFQHvD.png",
-      "https://imgur.com/E0kbR9L.png"
+      "https://i.imgur.com/E0kbR9L.png"
+    ]
+  },
+  {
+    id: 2,
+    title: "Gallery Two",
+    coverUrl: "https://i.imgur.com/88IObhf.png",
+    images: [
+      "https://i.imgur.com/C7UxcFT.png",
+      "https://i.imgur.com/YO2mes6.png",
+      "https://i.imgur.com/XNaBc8o.png",
+      "https://i.imgur.com/rL7mkGu.png",
+      "https://i.imgur.com/vmKT1H3.png",
+      "https://i.imgur.com/W9zcbBm.png",
+      "https://i.imgur.com/Q8RxuXj.png",
+      "https://i.imgur.com/ufIE8xu.png",
+      "https://i.imgur.com/600Lqb2.png",
+      "https://i.imgur.com/dW9vCJ5.png",
+      "https://i.imgur.com/Jv3ZbX3.png",
+      "https://i.imgur.com/3bUhnrh.png",
+      "https://i.imgur.com/We0X1Fz.png"
     ]
   }
 ];
