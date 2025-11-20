@@ -104,9 +104,6 @@ const Hero: React.FC<HeroProps> = ({ onViewWorkClick }) => {
                     loading="eager"
                 />
 
-                {/* Gradient Overlay for blending effect */}
-                <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-brand-dark to-transparent z-10 pointer-events-none"></div>
-
                 {/* Stat Card */}
                 <div className="absolute top-1/4 right-0 sm:right-10 lg:right-0 xl:right-10 z-20">
                     <AnimatedSection animation="pop-in" delay={400} className="bg-brand-dark/50 backdrop-blur-md rounded-2xl p-4 md:p-6 text-center shadow-lg border border-white/20 animate-gentle-bounce">

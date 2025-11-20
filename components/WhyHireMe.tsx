@@ -17,7 +17,7 @@ const WhyHireMe: React.FC = () => {
   const imageUrl = `https://i.imgur.com/ZoHJxFb.png`;
 
   return (
-    <section className="about-glass-effect rounded-3xl p-8 md:p-12 my-20">
+    <section className="bg-brand-dark-2 border border-white/10 rounded-3xl p-8 md:p-12 my-20">
       <div className="grid md:grid-cols-2 gap-12 items-center">
         {/* Visuals Column */}
         <AnimatedSection animation="fade-in-left">
@@ -33,8 +33,6 @@ const WhyHireMe: React.FC = () => {
                     className="h-full w-auto object-contain z-10"
                     loading="lazy"
                 />
-                {/* Gradient Overlay for blending effect */}
-                <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-brand-dark-2 to-transparent z-20 pointer-events-none"></div>
             </div>
           </div>
         </AnimatedSection>
