@@ -6,7 +6,7 @@ const AboutMe: React.FC = () => {
     <section className="py-20">
       <div className="grid lg:grid-cols-1 gap-16 items-center">
         <AnimatedSection>
-          <div className="about-glass-effect p-8 rounded-2xl">
+          <div className="about-glass-effect p-8 rounded-2xl !border-0">
             <h2 className="text-4xl md:text-5xl font-bold text-white text-center lg:text-left">
               About Me
             </h2>
