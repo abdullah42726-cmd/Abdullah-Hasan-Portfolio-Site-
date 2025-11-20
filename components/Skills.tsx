@@ -60,7 +60,7 @@ const Skills: React.FC = () => {
          <section className="py-20">
             <div className="grid md:grid-cols-2 gap-20 items-center">
                 <AnimatedSection animation="fade-in-left">
-                     <div className="about-glass-effect p-8 rounded-2xl h-full">
+                     <div className="about-glass-effect p-8 rounded-2xl h-full !border-0">
                        <h2 className="text-5xl font-bold mb-6">
                          <span className="text-white">My Professional</span> <span className="text-brand-blue-500">Skillset</span>
                        </h2>
