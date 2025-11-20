@@ -32,14 +32,14 @@ const Education: React.FC = () => {
   return (
     <div className="h-full flex flex-col">
       <AnimatedSection>
-        <h2 className="text-4xl md:text-5xl font-bold text-white text-center">
+        <h2 className="text-3xl md:text-5xl font-bold text-white text-center">
           Education
         </h2>
         <div className="w-24 h-1 bg-brand-blue-500 mx-auto mt-4 mb-12"></div>
       </AnimatedSection>
 
       <AnimatedSection delay={100} className="flex-grow">
-        <div className="about-glass-effect p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-full flex flex-col">
+        <div className="about-glass-effect p-6 md:p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-full flex flex-col">
           <div className="space-y-6">
             {educationHistory.map((edu, index) => (
               <div key={edu.degree}>

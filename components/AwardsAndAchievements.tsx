@@ -26,14 +26,14 @@ const AwardsAndAchievements: React.FC = () => {
   return (
     <div className="text-left h-full flex flex-col">
       <AnimatedSection>
-        <h2 className="text-4xl md:text-5xl font-bold text-white text-center">
+        <h2 className="text-3xl md:text-5xl font-bold text-white text-center">
           Awards and Achievements
         </h2>
         <div className="w-24 h-1 bg-brand-blue-500 mx-auto mt-4 mb-12"></div>
       </AnimatedSection>
 
       <AnimatedSection delay={100} className="flex-grow">
-        <div className="about-glass-effect max-w-4xl mx-auto p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-full">
+        <div className="about-glass-effect max-w-4xl mx-auto p-6 md:p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-full">
           <ul className="space-y-6">
             {awards.map((award, index) => (
               <li key={index} className="flex items-start">

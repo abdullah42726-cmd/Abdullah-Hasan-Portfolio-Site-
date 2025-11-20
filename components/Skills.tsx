@@ -60,8 +60,8 @@ const Skills: React.FC = () => {
          <section className="py-20">
             <div className="grid md:grid-cols-2 gap-20 items-center">
                 <AnimatedSection animation="fade-in-left">
-                     <div className="about-glass-effect p-8 rounded-2xl h-full !border-0">
-                       <h2 className="text-5xl font-bold mb-6">
+                     <div className="about-glass-effect p-6 md:p-8 rounded-2xl h-full !border-0">
+                       <h2 className="text-3xl md:text-5xl font-bold mb-6">
                          <span className="text-white">My Professional</span> <span className="text-brand-blue-500">Skillset</span>
                        </h2>
                        <p className="text-gray-400 mt-6 max-w-md">
@@ -70,7 +70,7 @@ const Skills: React.FC = () => {
                     </div>
                 </AnimatedSection>
                 <AnimatedSection animation="fade-in-right" delay={200}>
-                    <div ref={skillsRef} className="about-glass-effect p-8 rounded-2xl h-full">
+                    <div ref={skillsRef} className="about-glass-effect p-6 md:p-8 rounded-2xl h-full">
                         {skillsData.map((skill) => (
                             <AnimatedSkillBar key={skill.name} name={skill.name} level={skill.level} isVisible={isVisible} />
                         ))}

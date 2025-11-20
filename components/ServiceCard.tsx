@@ -13,7 +13,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, index, onClick }) =>
     onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onClick(service)}
     role="button"
     tabIndex={0}
-    className="glass-effect rounded-3xl p-8 h-full flex flex-col group transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-brand-blue-500/10 cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-brand-dark focus:ring-brand-blue-500"
+    className="glass-effect rounded-3xl p-6 md:p-8 h-full flex flex-col group transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-brand-blue-500/10 cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-brand-dark focus:ring-brand-blue-500"
     aria-label={`View details for ${service.title}`}
     >
     <div className="flex justify-between items-start">

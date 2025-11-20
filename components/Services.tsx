@@ -5,10 +5,10 @@ import ServiceCard from './ServiceCard';
 
 const Services: React.FC<{ services: Service[], onServiceClick: (service: Service) => void }> = ({ services, onServiceClick }) => {
   return (
-    <section id="services" className="bg-brand-dark text-white rounded-3xl p-8 md:p-12 my-20 scroll-mt-20">
+    <section id="services" className="bg-brand-dark text-white rounded-3xl p-6 md:p-12 my-20 scroll-mt-20">
       <AnimatedSection>
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold">My Services</h2>
+          <h2 className="text-3xl md:text-5xl font-bold">My Services</h2>
           <p className="text-gray-400 mt-4 max-w-2xl mx-auto">
             I offer a range of creative services designed to elevate your brand and engage your audience. Click on any service to view details and pricing information.
           </p>

@@ -38,14 +38,14 @@ const VolunteerExperience: React.FC = () => {
   return (
     <div className="text-left h-full flex flex-col">
       <AnimatedSection>
-        <h2 className="text-4xl md:text-5xl font-bold text-white text-center">
+        <h2 className="text-3xl md:text-5xl font-bold text-white text-center">
           Volunteer Experience
         </h2>
         <div className="w-24 h-1 bg-brand-blue-500 mx-auto mt-4 mb-12"></div>
       </AnimatedSection>
 
       <AnimatedSection className="flex-grow">
-        <div className="about-glass-effect max-w-4xl mx-auto p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-full">
+        <div className="about-glass-effect max-w-4xl mx-auto p-6 md:p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-full">
             <div className="flex items-start">
                 <VolunteerIcon />
                 <div>

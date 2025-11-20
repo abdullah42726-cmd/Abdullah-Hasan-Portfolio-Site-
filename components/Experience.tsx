@@ -17,7 +17,7 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({ company, duration, role
   const isLeftOfTimeline = index % 2 === 0;
 
   const contentBlock = (
-    <div className="about-glass-effect p-6 rounded-2xl h-full">
+    <div className="about-glass-effect p-5 md:p-6 rounded-2xl h-full">
       <h3 className="text-xl md:text-2xl font-bold text-white">{company}</h3>
       <p className="text-sm md:text-base text-gray-400 mt-1 mb-2">{duration}</p>
       <h4 className="text-xl md:text-2xl font-bold text-white mt-4">{role}</h4>

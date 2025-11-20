@@ -3,7 +3,7 @@ import StarIcon from './icons/StarIcon';
 import AnimatedSection from './AnimatedSection';
 
 const TestimonialCard: React.FC<{ name: string; role: string; text: string; avatarUrl: string; }> = ({ name, role, text, avatarUrl }) => (
-    <div className="glass-effect rounded-3xl p-8 relative h-full transition-transform duration-300">
+    <div className="glass-effect rounded-3xl p-6 md:p-8 relative h-full transition-transform duration-300">
         <span className="text-8xl text-gray-700 font-serif absolute top-4 left-4 opacity-50">“</span>
         <div className="relative z-10">
             <div className="flex items-center mb-4">
@@ -47,11 +47,11 @@ const Testimonials: React.FC = () => {
     ];
 
   return (
-    <section className="bg-brand-dark text-white rounded-t-3xl p-8 md:p-12 my-20">
+    <section className="bg-brand-dark text-white rounded-t-3xl p-6 md:p-12 my-20">
         <div className="max-w-screen-xl mx-auto">
             <AnimatedSection>
                 <div className="text-center max-w-2xl mx-auto mb-12 h-[30vh] flex flex-col justify-center">
-                    <h2 className="text-4xl md:text-5xl font-bold text-white">Testimonials That <br/> Speak to My Results</h2>
+                    <h2 className="text-3xl md:text-5xl font-bold text-white">Testimonials That <br/> Speak to My Results</h2>
                     <p className="text-gray-400 mt-4">
                     Don't just take my word for it. Here's what my clients have to say about our collaboration and the impact my work has had on their projects.
                     </p>

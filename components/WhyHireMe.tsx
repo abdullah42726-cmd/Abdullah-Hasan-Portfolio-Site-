@@ -17,13 +17,13 @@ const WhyHireMe: React.FC = () => {
   const imageUrl = `https://i.imgur.com/ZoHJxFb.png`;
 
   return (
-    <section className="bg-brand-dark-2 border border-white/10 rounded-3xl p-8 md:p-12 my-20">
+    <section className="bg-brand-dark-2 border border-white/10 rounded-3xl p-6 md:p-12 my-20">
       <div className="grid md:grid-cols-2 gap-12 items-center">
         {/* Visuals Column */}
         <AnimatedSection animation="fade-in-left">
-          <div className="relative h-[400px] md:h-[450px] flex justify-center items-center">
+          <div className="relative h-[320px] md:h-[450px] flex justify-center items-center">
             {/* Background circle */}
-            <div className="absolute w-80 h-80 md:w-[404px] md:h-[404px] bg-brand-blue-500 opacity-30 rounded-full"></div>
+            <div className="absolute w-64 h-64 md:w-[404px] md:h-[404px] bg-brand-blue-500 opacity-30 rounded-full"></div>
             
             {/* Image container - no clipping */}
             <div className="relative w-full h-full flex justify-center items-end">
@@ -40,7 +40,7 @@ const WhyHireMe: React.FC = () => {
         {/* Text Content Column */}
         <AnimatedSection animation="fade-in-right" delay={200}>
           <div>
-            <h2 className="text-4xl md:text-5xl font-bold"><span className="text-white">Why</span> <span className="text-brand-blue-500">Hire me?</span></h2>
+            <h2 className="text-3xl md:text-5xl font-bold"><span className="text-white">Why</span> <span className="text-brand-blue-500">Hire me?</span></h2>
             <p className="text-gray-400 mt-6 max-w-md">
               With over 6 years of experience, I blend creative artistry with technical skill to deliver designs that not only look stunning but also drive results and captivate audiences.
             </p>
